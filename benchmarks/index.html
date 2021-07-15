@@ -78,11 +78,10 @@
                 <h1 class="title">Benchmarks</h1>
                               
                   <section id="pash-documentation" class="level1">
-                  <p>Quick Jump: <a href="#overview">overview</a> | <a href="#performance">performance</a> | <a href="#correctness">correctness</a> | <a href="#other">other</a> </p>
-                  <section id="overview-pash" class="level2">
+                  <p>Quick Jump: <a href="#latest-snapshot">latest snapshot</a> | <a href="#performance">performance</a> | <a href="#correctness">correctness</a> | <a href="#other">other</a> </p>
 
 <p>
-                    Among other goals, the PaSh continuous integration tracks performance and correctness metrics on the <code>main</code> branch over time.
+                    Among other metrics, the PaSh continuous integration infrastructure tracks performance and correctness metrics on the <code>main</code> branch over time.
                    Some of these results---for the most recent commits---are shown below; longer commit history, other branches, and more configurations are part of <a href="http://ctrl.binpa.sh">the control subsystem</a>.
 </p>
 
@@ -91,47 +90,63 @@
                   To get details about a specific commit, run <code>curl -s ci.binpa.sh/f821b4b</code>.
 </p>
 
-                  <h2>Overview</h2>
-                  As part of PaSh's continuous integration and testing pipeline we measure
-                  the performance of certain key metrics of the runtime. You can view these benchmarks here.
-                  You are currently viewing data for the most recent commits to the main branch.
+                  <section id="latest-snapshot" class="level2">
+                  <h2>Latest Snapshot</h2>
+<p>
+                  The next few plots show results only for the latest commit on <code>main</code>branch.
+</p>
 
+                  <h4>Small Tests</h4>
+<p>
+                  The plot below shows a comparison between the execution time of <code>bash</code>, <code>pash -w2</code>, and <code>pash -w8</code> for various short-running tests.
+</p>
                   <div id ="compiler-bp"></div>
+
+                  <h4>One-liners</h4>
+<p>
+                  The plot below shows a comparison between the execution time of <code>bash</code> and various <code>pash</code> configurations: using the <code>r_split</code> round-robin splitting configuration, using the modified <code>dgsh_tee</code> eager configuration, and using both configurations together. The <code>width</code> parameter ranges over <code>2</code>, <code>2</code>, and <code>16</code>.
+</p>
+
                   <div id ="oneliners-bp"></div>
-                  <section id="performance" class="level2">
+
                   <h2>Performance</h2>
-                  <h4>Unix50</h4>
-                  This contains 36 pipelines solving the Unix 50 game <a href='https://unixgame.io/unix50'>[Labs 2019].</a>
-                  This set is from a recent set of challenges celebrating of Unix's 50-year legacy, solvable by
-                  Unix pipelines. The problems were designed to highlight Unix's modular philosophy
-                  and they make extensive use of standard commands under a variety of flags, and 
-                  appear to be written by non-experts---contrary to the previous set, they often 
-                  use sub-optimal or non-Unix-y constructs. We execute each pipeline
-                  as-is, without any modification.
-                  <div id ="unix50"></div>
-                  <h4>Oneliners</h4>
-                  This set contains 9 pipelines: NFA-regex, Sort, 
-                  Top-N, WF, Spell, Difference, Bi-grams, Set-Difference, and Shortest-Scripts. 
-                  Pipelines in this set contain 2-7 stages, ranging from a scalable CPU-intensive grep 
-                  stage in NFA-regex to a non-parallelizable diff stage in Difference. These scripts 
-                  are written by Unix experts: a few pipelines are from Unix legends 
-                  <a href='https://dl.acm.org/doi/10.1145/5948.315654'>[Bentley 1985; Bentley et al. 1986; McIlroy et al. 1978]</a>, 
-                  one from a book on Unix scripting [Taylor 2004], and a few are from top Stackoverflow
-                  answers <a href='https://web.stanford.edu/class/cs124/kwc-unix-for-poets.pdf'>[Jurafsky 2017].</a>`
+<p>
+                  The next few plots show the performance of various benchmarks over time, as a timeseries (with the time captured by the commit ID)  on <code>main</code>branch.
+</p>
+
+                  <h4>Classic Unix One-liners</h4>
+<p>
+ This benchmark set contains 9 pipelines written by Unix experts:
+  a few pipelines are from Unix legends (e.g., <a href='https://dl.acm.org/doi/10.1145/5948.315654'>Top-N</a>, <a href="https://doi.org/10.1145/3532.315102">Spell</a>), 
+  one from <a href="https://nostarch.com/wcss2">a book on Unix scripting</a>, and a few are from top Stackoverflow answers.
+Pipelines contain 2–7 stages (avg.: 5.2), ranging from scalable CPU-intensive (e.g., <code>grep</code> stage in Nfa-regex) to non-parallelizable stages (e.g., <code>diff</code> stage in Diff).
+Inputs are script-specific and average 10GB per benchmark.
                   <div id ="oneliners"></div>
-                  <h4>Analytics-MTS</h4>
-                  The set contains 4 pipelines that were
-                  used to analyze real telemetry data from bus schedules during the COVID-19 response in one of
-                  Europe's largest cities <a href="https://insidestory.gr/article/noymera-leoforeia-athinas?token=0MFVISB8N6">
-                      [Tsaliki and Spinellis 2021]</a>. The pipelines compute several statistics on the
-                  transit system per day---such as average serving hours per day and average number of vehicles
-                  per day. Pipelines range between 9 and 10 stages (mean: 9.2) and use typical Unix staples such
-                  as sed, awk, sort, and uniq.
+</p>
+
+                  <h4>Unix50 from Bell Labs</h4>
+<p>
+                  This benchmark includes 36 pipelines solving <a href='https://unixgame.io/unix50'>the Unix 50 game.</a>
+                  The pipelines were designed to highlight Unix's modular philosophy, make extensive use of standard commands under a variety of flags, and appear to be written by non-experts.
+                  PaSh executes each pipeline as-is, without any modification.
+                  <div id ="unix50"></div>
+</p>
+
+
+                  <h4>Mass-transit analytics during COVID-19</h4>
+<p>
+This benchmark set contains 4 pipelines that were used to analyze <a href="https://insidestory.gr/article/noymera-leoforeia-athinas?token=0MFVISB8N6">real telemetry data from bus schedules during the COVID-19 response in a large European city</a>.
+The pipelines compute several average statistics on the transit system per day—such as daily serving hours and daily number of vehicles.
+Pipelines range between 9 and 10 stages (avg.: 9.2), use typical Unix staples <code>sed</code>, <code>sort</code>, and <code>uniq</code>, and operate on a fixed 34GB dataset that contains mass-transport data collected over a single year.
                   <div id ="analytics-mts"></div>
+</p>
+
                   <section id="correctness" class="level2">
                   <h2>Correctness</h2>
 
+<p>
                   This section tracks various statistics across tests checking the correctness of various PaSh components.
+</p>
 
 									<table>
 										<thead>
