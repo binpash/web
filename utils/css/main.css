@@ -224,22 +224,22 @@ em {
 }
 
 footer {
-    border-top: 1px solid #ddd;
-    font-size: 14px;
-    color: #ccc;
-    text-align: justify;
-    padding-top: 5px;
-    margin-top: 3em;
-    margin-bottom: 1em;
+  padding-top: 0px;
+  border-top: 1px solid #ddd;
+  font-size: 14px;
+  color: #ccc;
+  text-align: justify;
+  margin-top: 3em;
+  margin-bottom: 1em;
 }
 
 footer a img {
 	margin-bottom: -0.25em;
-    height:18px;
+  height:18px;
 	width:auto;
 }
 
-footer table {
+footer table.foot {
 	width: 100%;
 	margin: 0px;
 	padding: 0px;
@@ -247,8 +247,9 @@ footer table {
 	border: 0px;
 }
 
-footer table td, table th {
-    vertical-align: bottom;
+footer table td.foot, table th.foot {
+  vertical-align: bottom;
+  text-align: left;
 	margin: 0px;
 	border: 0px;
 	padding: 0px;
@@ -520,6 +521,41 @@ hr {
     border-top: 1px solid #eeeeee;
 }
 
+/* Simulate Pandoc's table output styles */
+table {
+  border-top: 2px solid black;
+  border-bottom: 2px solid black;
+
+	width: 100%;
+/*
+	margin: 0px;
+	padding: 0px;
+	margin: 0px;
+	border: 0px;
+
+  border-collapse: collapse;
+  border-spacing: 0;
+  margin-left: auto;
+  margin-right: auto;
+*/
+}
+
+th {
+  border-bottom: 1px solid black;
+}
+
+td, th {
+  padding: 5px;
+  text-align: right;
+}
+
+tr {
+  width: 1px;
+  white-space: nowrap;
+  vertical-align: top;
+}
+
+/*
 table {
 	width: 80%;
 	margin: 0px;
@@ -533,13 +569,15 @@ table {
     border-spacing: 0;
     margin-left: auto;
     margin-right: auto;
+}
+*/
+
 /*
     margin:0;
     display: block;
     text-align: center;
     box-sizing: inherit;
 */
-}
 
 caption {
     text-align: left;
@@ -549,10 +587,11 @@ caption {
     caption-side: bottom;
 }
 
-table tr.odd {
-    background: #eee;
+table tr.even {
+    background: #F5F5F5;
 }
 
+/*
 table td,
 table th {
     vertical-align: bottom;
@@ -564,6 +603,7 @@ table th {
     font-weight: 800;
     color: black;
 }
+*/
 @media (min-width: 1170px) {
     pre {
         font-size: 14px;
