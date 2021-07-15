@@ -78,7 +78,7 @@
     <h3 class="extras">Light-touch Data-Parallel Shell Scripting</h3>
       
                   <h2>Overview</h2>
-                  <p><strong>PaSh</strong> is a system for parallelizing POSIX shell scripts. Broadly, PaSh includes three components: (1) a compiler that, given as input a POSIX shell script, emits a POSIX shell script that includes explicit data-parallel fragments for which PaSh has deemed such parallelization semantics-preserving, (2) a set of PaSh-related runtime primitives for supporting the execution of the parallel script fragments, available as in the <code>PATH</code> as normal commands, and (3) a crowd-sourced library of annotations characterizing several properties of common Unix/Linux commands relevant to parallelization.</p>
+                  <p>PaSh aims at the correct and automated parallelization of POSIX shell scripts. Broadly, PaSh includes three components: (1) a compiler that, given as input a POSIX shell script, emits a POSIX shell script that includes explicit data-parallel fragments for which PaSh has deemed such parallelization semantics-preserving, (2) a set of PaSh-related runtime primitives for supporting the execution of the parallel script fragments, available as in the <code>PATH</code> as normal commands, and (3) a crowd-sourced library of annotations characterizing several properties of common Unix/Linux commands relevant to parallelization.</p>
                   <p>To parallelize, say, <code>./evaluation/intro/hello-world.sh</code> with a parallelization width of <code>2</code>, from the top-level directory of the repository run:</p>
                   <div class="sourceCode" id="cb1"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">./pa.sh</span> ./evaluation/intro/hello-world.sh</span></code></pre></div>
                   <p>Run <code>./pa.sh --help</code> to get more information about the available commands. See <a href="docs/tutorial">docs/tutorial</a> for a longer tutorial.</p>
@@ -89,7 +89,7 @@
     <ul>
       <li>Run <code>curl up.binpa.sh | sh</code> from your terminal,</li>
       <li><a href="https://github.com/binpash/pash"> Clone the repo</a> and run <code>./scripts/distro-deps.sh; ./scripts/setup-pash.sh</code>,</li>
-      <li>Fetch a Docker by running <code>XXX update DockerHub XXX</code>, or</li>
+      <li>Fetch a Docker by running <code>docker pull binpash/pash-18.04</code>, or</li>
       <li>Built the Docker container <a href="https://github.com/binpash/pash/blob/main/docs/tutorial.md#docker">from scratch</a>.</li>
     </ul>
                   <p>
@@ -151,7 +151,7 @@
         <table border="0">
             <tr>
                 <td align="left">
-                    version <a href="https://github.com/binpash/pash/releases">0.3.2</a> | revision <a href="./changelog.txt"> d2ee3b1 </a> | Make WSL2 installation instructions more detailed
+                    version <a href="https://github.com/binpash/pash/releases">0.3.2</a> | revision <a href="https://github.com/binpash/pash/commit/HEAD"> d2ee3b1 </a> | Make WSL2 installation instructions more detailed
                 </td>
                 <td align="right">
                     <a href="http://status.binpa.sh"><img src="https://img.shields.io/badge/status-OK-red.svg?style=flat" alt="Status OK"></a>
