@@ -1,0 +1,88 @@
+<!-- CSS -->
+/* Force scrollbars onto browser window */
+body {
+    margin-bottom: 200%;
+}
+
+/* Box styles */
+.myBox {
+    border: none;
+    font: 20px ;
+    height: 200px;
+    width: 80%;
+    overflow: scroll;
+}
+
+table {
+    width: 50%;
+    max-width: 50%;
+    margin: 10px 0;
+    border-collapse: collapse;
+    border-spacing: 0;
+    display: table;
+    table-layout: auto;
+}
+
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+th, td {
+    text-align: left;
+}
+#t01 tr:nth-child(even) {
+    background-color: #eee;
+}
+#t01 tr:nth-child(odd) {
+    background-color: #fff;
+}
+#t01 th {
+    background-color: black;
+    color: white;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+#container {
+    display: flex;
+}
+
+#left {
+    flex: 0 0 65%;
+}
+
+#right {
+    flex: 1;
+}
+
+body {
+    font-family: 'Roboto';
+    padding-left:50px;
+}
+
+* {
+    text-align: center !important;
+    margin: auto !important;
+}
+
+.first{
+    width:70%;
+    height:300px;
+    position:absolute;
+    border:1px solid red;
+}
+.second{
+    border:2px solid blue;
+    width:40%;
+    height:200px;
+    position: relative;
+    top: 315px;
+}
+
+#description {
+    width: 50%;
+    display:block;
+    font-size:14px;
+}
