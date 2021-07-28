@@ -442,8 +442,7 @@ function draw_timeseries(bench_name, d) {
             g.selectAll("text")
                 .style("text-anchor", "middle")
                 .attr("x", -axisPad*2)
-                .attr('fill', '#000000')
-                .attr("font-size", '12px')
+                .attr("opacity", 0.0)
 
             g.selectAll("line")
                 .attr('stroke', '#000000')
@@ -460,6 +459,11 @@ function draw_timeseries(bench_name, d) {
         .attr("x", -height / 2 + margin.bottom)
         .text("Execution Time (s)")
         .style("font-size", "12px")
+
+
+     // Finally append the Y axis line
+    svg.append("g")                  
+        .call(d3.axisLeft(yScale));  
 
     // Append X axis label
     svg.append('g')
