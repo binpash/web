@@ -1,0 +1,61 @@
+Id Host Date Time Commit Commit-Message Benchmark Branch Results Name
+24 livestar 2021-7-23;5:38:24 d77a8569 Update text on CORRECTNESS main Summary: 48/52 tests passed. COMPILER
+24 livestar 2021-7-23;5:38:24 d77a8569 Update text on CORRECTNESS main Summary: 2/2 tests passed. INTRO
+24 livestar 2021-7-23;5:38:24 d77a8569 Update text on CORRECTNESS main Summary: 6/6 tests passed. INTERFACE
+20 livestar 2021-7-22;21:35:45 d77a8569 Update text on CORRECTNESS main Summary: 48/52 tests passed. COMPILER
+20 livestar 2021-7-22;21:35:45 d77a8569 Update text on CORRECTNESS main Summary: 2/2 tests passed. INTRO
+20 livestar 2021-7-22;21:35:45 d77a8569 Update text on CORRECTNESS main Summary: 6/6 tests passed. INTERFACE
+19 livestar 2021-7-22;21:26:31 d77a8569 Update text on PERFORMANCE main Summary: 10/10 tests passed. oneliners
+19 livestar 2021-7-22;21:26:31 d77a8569 Update text on PERFORMANCE main Summary: 4/4 tests passed. analytics-mts
+19 livestar 2021-7-22;21:26:31 d77a8569 Update text on PERFORMANCE main Summary: 36/36 tests passed. unix50
+18 livestar 2021-7-22;18:5:35 d77a8569 Update text on CORRECTNESS main Summary: 48/52 tests passed. COMPILER
+18 livestar 2021-7-22;18:5:35 d77a8569 Update text on CORRECTNESS main Summary: 2/2 tests passed. INTRO
+18 livestar 2021-7-22;18:5:35 d77a8569 Update text on CORRECTNESS main Summary: 6/6 tests passed. INTERFACE
+17 livestar 2021-7-22;17:56:22 d77a8569 Update text on PERFORMANCE main Summary: 10/10 tests passed. oneliners
+17 livestar 2021-7-22;17:56:22 d77a8569 Update text on PERFORMANCE main Summary: 4/4 tests passed. analytics-mts
+17 livestar 2021-7-22;17:56:22 d77a8569 Update text on PERFORMANCE main Summary: 36/36 tests passed. unix50
+16 livestar 2021-7-22;14:36:9 d77a8569 Update text on CORRECTNESS main Summary: 48/52 tests passed. COMPILER
+16 livestar 2021-7-22;14:36:9 d77a8569 Update text on CORRECTNESS main Summary: 2/2 tests passed. INTRO
+16 livestar 2021-7-22;14:36:9 d77a8569 Update text on CORRECTNESS main Summary: 6/6 tests passed. INTERFACE
+15 livestar 2021-7-22;14:26:55 d77a8569 Update text on PERFORMANCE main Summary: 10/10 tests passed. oneliners
+15 livestar 2021-7-22;14:26:55 d77a8569 Update text on PERFORMANCE main Summary: 4/4 tests passed. analytics-mts
+15 livestar 2021-7-22;14:26:55 d77a8569 Update text on PERFORMANCE main Summary: 36/36 tests passed. unix50
+14 livestar 2021-7-22;11:6:43 7bae1366 Fix pipe       CORRECTNESS main Summary: 48/52 tests passed. COMPILER
+14 livestar 2021-7-22;11:6:43 7bae1366 Fix pipe       CORRECTNESS main Summary: 2/2 tests passed. INTRO
+14 livestar 2021-7-22;11:6:43 7bae1366 Fix pipe       CORRECTNESS main Summary: 6/6 tests passed. INTERFACE
+13 livestar 2021-7-22;10:57:29 7bae1366 Fix pipe       PERFORMANCE main Summary: 10/10 tests passed. oneliners
+13 livestar 2021-7-22;10:57:29 7bae1366 Fix pipe       PERFORMANCE main Summary: 4/4 tests passed. analytics-mts
+13 livestar 2021-7-22;10:57:29 7bae1366 Fix pipe       PERFORMANCE main Summary: 36/36 tests passed. unix50
+12 livestar 2021-7-19;23:45:57 9b2d76c4 Add name tag o CORRECTNESS main Summary: 48/52 tests passed. COMPILER
+12 livestar 2021-7-19;23:45:57 9b2d76c4 Add name tag o CORRECTNESS main Summary: 2/2 tests passed. INTRO
+12 livestar 2021-7-19;23:45:57 9b2d76c4 Add name tag o CORRECTNESS main Summary: 6/6 tests passed. INTERFACE
+11 livestar 2021-7-19;23:36:49 9b2d76c4 Add name tag o PERFORMANCE main Summary: 10/10 tests passed. oneliners
+11 livestar 2021-7-19;23:36:49 9b2d76c4 Add name tag o PERFORMANCE main Summary: 4/4 tests passed. analytics-mts
+11 livestar 2021-7-19;23:36:49 9b2d76c4 Add name tag o PERFORMANCE main Summary: 36/36 tests passed. unix50
+10 livestar 2021-7-19;10:28:44 f2a181ae docs: Hide com CORRECTNESS main Summary: 48/52 tests passed. COMPILER
+10 livestar 2021-7-19;10:28:44 f2a181ae docs: Hide com CORRECTNESS main Summary: 2/2 tests passed. INTRO
+10 livestar 2021-7-19;10:28:44 f2a181ae docs: Hide com CORRECTNESS main Summary: 6/6 tests passed. INTERFACE
+8 livestar 2021-7-16;15:4:7 48ef8825 Update tutoria CORRECTNESS main Summary: 48/52 tests passed. COMPILER
+8 livestar 2021-7-16;15:4:7 48ef8825 Update tutoria CORRECTNESS main Summary: 2/2 tests passed. INTRO
+8 livestar 2021-7-16;15:4:7 48ef8825 Update tutoria CORRECTNESS main Summary: 6/6 tests passed. INTERFACE
+7 livestar 2021-7-16;14:54:32 48ef8825 Update tutoria PERFORMANCE main Summary: 10/10 tests passed. oneliners
+7 livestar 2021-7-16;14:54:32 48ef8825 Update tutoria PERFORMANCE main Summary: 4/4 tests passed. analytics-mts
+7 livestar 2021-7-16;14:54:32 48ef8825 Update tutoria PERFORMANCE main Summary: 36/36 tests passed. unix50
+6 livestar 2021-7-16;11:29:34 234fbd44 Dockerfiles fo CORRECTNESS main Summary: 52/52 tests passed. COMPILER
+6 livestar 2021-7-16;11:29:34 234fbd44 Dockerfiles fo CORRECTNESS main Summary: 2/2 tests passed. INTRO
+6 livestar 2021-7-16;11:29:34 234fbd44 Dockerfiles fo CORRECTNESS main Summary: 6/6 tests passed. INTERFACE
+5 livestar 2021-7-16;11:19:45 958a2cd1 Fix to match t CORRECTNESS main Summary: 52/52 tests passed. COMPILER
+5 livestar 2021-7-16;11:19:45 958a2cd1 Fix to match t CORRECTNESS main Summary: 2/2 tests passed. INTRO
+5 livestar 2021-7-16;11:19:45 958a2cd1 Fix to match t CORRECTNESS main Summary: 6/6 tests passed. INTERFACE
+4 livestar 2021-7-16;11:10:4 958a2cd1 Fix to match t PERFORMANCE main Summary: 10/10 tests passed. oneliners
+4 livestar 2021-7-16;11:10:4 958a2cd1 Fix to match t PERFORMANCE main Summary: 4/4 tests passed. analytics-mts
+4 livestar 2021-7-16;11:10:4 958a2cd1 Fix to match t PERFORMANCE main Summary: 36/36 tests passed. unix50
+3 livestar 2021-7-16;7:52:26 958a2cd1 Fix to match t CORRECTNESS main Summary: 52/52 tests passed. COMPILER
+3 livestar 2021-7-16;7:52:26 958a2cd1 Fix to match t CORRECTNESS main Summary: 2/2 tests passed. INTRO
+3 livestar 2021-7-16;7:52:26 958a2cd1 Fix to match t CORRECTNESS main Summary: 6/6 tests passed. INTERFACE
+2 livestar 2021-7-16;7:42:45 958a2cd1 Fix to match t CORRECTNESS main Summary: 52/52 tests passed. COMPILER
+2 livestar 2021-7-16;7:42:45 958a2cd1 Fix to match t CORRECTNESS main Summary: 2/2 tests passed. INTRO
+2 livestar 2021-7-16;7:42:45 958a2cd1 Fix to match t CORRECTNESS main Summary: 6/6 tests passed. INTERFACE
+1 livestar 2021-7-16;7:32:3 958a2cd1 Fix to match t PERFORMANCE main Summary: 10/10 tests passed. oneliners
+1 livestar 2021-7-16;7:32:3 958a2cd1 Fix to match t PERFORMANCE main Summary: 4/4 tests passed. analytics-mts
+1 livestar 2021-7-16;7:32:3 958a2cd1 Fix to match t PERFORMANCE main Summary: 36/36 tests passed. unix50
