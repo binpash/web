@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>PaSh Hackathon &mdash; February 24th, 2022 @ MIT</title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <link href="../favicon.ico" rel="shortcut icon" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:100,200,300,400">
+      <style type="text/css">code{white-space: pre;}</style>
+  <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+        <style type="text/css">
+  .twoWrapper { display: table;  width: 100%;}
+  .twoLeft { display: table-cell; width: 70%; }
+  .twoRight { display: table-cell; width: 30%; }
+  div.sourceCode { overflow-x: auto; }
+  table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+    margin: 0; padding: 0; vertical-align: baseline; border: none; }
+  table.sourceCode { width: 100%; line-height: 100%; }
+  td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+  td.sourceCode { padding-left: 5px; }
+  code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+  code > span.dt { color: #902000; } /* DataType */
+  code > span.dv { color: #40a070; } /* DecVal */
+  code > span.bn { color: #40a070; } /* BaseN */
+  code > span.fl { color: #40a070; } /* Float */
+  code > span.ch { color: #4070a0; } /* Char */
+  code > span.st { color: #4070a0; } /* String */
+  code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+  code > span.ot { color: #007020; } /* Other */
+  code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+  code > span.fu { color: #06287e; } /* Function */
+  code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+  code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  code > span.cn { color: #880000; } /* Constant */
+  code > span.sc { color: #4070a0; } /* SpecialChar */
+  code > span.vs { color: #4070a0; } /* VerbatimString */
+  code > span.ss { color: #bb6688; } /* SpecialString */
+  code > span.im { } /* Import */
+  code > span.va { color: #19177c; } /* Variable */
+  code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+  code > span.op { color: #666666; } /* Operator */
+  code > span.bu { } /* BuiltIn */
+  code > span.ex { } /* Extension */
+  code > span.pp { color: #bc7a00; } /* Preprocessor */
+  code > span.at { color: #7d9029; } /* Attribute */
+  code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+  code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+  code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+  code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    </style>
+        <link rel="stylesheet" href="../utils/css/main.css">
+           
+    <link rel="stylesheet" type="text/css" href="../utils/fbox/jquery.fancybox.css?v=2.1.5" media="screen" />
+    <link rel="stylesheet" type="text/css" href="../utils/fbox/helpers/jquery.fancybox-buttons.css?v=1.0.5" />
+    <link rel="stylesheet" type="text/css" href="../utils/fbox/helpers/jquery.fancybox-thumbs.css?v=1.0.7" />
+    </head>
+  <body>
+    <div class="container-fluid">
+            <header>
+		  <div class="column">
+			  <div class="navigation">
+		  	    <a href="/docs/tutorial">tutorial</a> / 
+		  	  	<a href="/docs">docs</a> /
+		  	  	<a href="/benchmarks">benchmarks</a> /
+		  	    <a href="http://github.com/binpash">github</a>
+			  </div>
+        <div class="breadcrumb">
+          <a href="/">
+          <img class="logo" src="../pash_logo2.jpg" width="15%"/>
+          </a>
+          <!-- <a style="vertical-align: text-top;" href="/">PaSh</a> -->
+        </div>
+		  </div>
+		</header>
+    <h1 class="title">PaSh Hackathon &mdash; Thursday, February 24th, 2022</h1>
+    <h3 class="extras">MIT &mdash; CSAIL's Star Conference Room, 32-D463 of Building 32</h3>
+
+
+    <p>We are organizing a hackathon around PaSh—a shell script parallelization system—on Thursday February 24th, 9AM–9PM at MIT. Meals, snacks, and a good time
+      will be all be provided!</p>
+
+    <div style="font-size: xx-large; text-align: center; display: block;">Please
+    <a href="https://forms.gle/3yZceT6Yof2LHSnM8">let us know if you
+        plan on coming</a>.</div>
+
+    <h2>Details</h2>
+
+    <p>PaSh is a system for automatically parallelizing (and soon, distributing) shell scripts. Work on PaSh has led to <a href="https://dl.acm.org/doi/10.1145/3447786.3456228">quite</a> <a href="https://dl.acm.org/doi/10.1145/3473570">a few</a> <a href="https://dl.acm.org/doi/10.1145/3458336.3465294">publications</a> and awards (Best Paper @ EuroSys 2021, 1st place @ POPL SRC, Distinguished Presentation @ HotOS 2021). PaSh is hosted under the umbrella of the Linux Foundation.</p>
+
+<p>
+The hackathon is aimed at three groups of people:
+<ul>
+  <li>People interested in getting involved in the development of PaSh.</li>
+  <li>People that use shell scripts that would benefit from
+    parallelization and would like to experiment with PaSh.</li>
+  <li>People that are interested in developing tooling and additional support for the shell and shell scripts (not necessarily having to do with parallelization) that can build on top of the PaSh infrastructure.</li>
+</ul>
+</p>
+
+<p>
+The hackathon will start with an introduction from the main PaSh developers and a brief tutorial on how to use PaSh to parallelize non-trivial scripts. Then, people will split up (in groups or individually) to hack on tasks that fall under three categories (roughly corresponding to the participant categories above):
+<ul>
+  <li>Improving PaSh by addressing open Github issues, extending it to
+  support more use cases, refactoring the code, adding documentation,
+  or improving its installation.</li>
+  <li>Using PaSh to parallelize different types of scripts—ideally
+  ones that arise from real use cases. The goal here is to push the
+  limits of PaSh, identify bugs, document its usage, and find flaws in
+  the workflow.</li>
+  <li>Using PaSh’s components to build prototypes for other uses, such
+  as shell script testing or performance optimizations.</li>
+</ul>
+</p>
+
+<p>The main PaSh developers will be around to help with these and other tasks, answer questions about the code and PaSh’s internals, and discuss anything related to PaSh and the shell.</p>
+
+<p>There will be food provided to all participants for lunch and dinner during the hackathon as well as coffee and cookies.</p>
+
+
+<h2>Coordinates</h2>
+
+<ul>
+  <li><strong>Date/Time:</strong> Thursday, February 24th, 9am - 9pm</li>
+  <li><strong>Location:</strong> CSAIL's Star Conference Room, 32-D463 of Building 32 (MIT CSAIL)</li>
+</ul>
+
+<h2>Schedule</h2>
+
+<table>
+<tbody>
+  <tr><td>09–10</td><td>Project introduction, Setup, and Tutorial</td></tr>
+  <tr><td>10–12</td><td>Grab issues, propose others, design and implement</td></tr>
+  <tr><td>12–13</td><td>Lunch served in Star, continue hacking</td></tr>
+  <tr><td>13–16</td><td>Hack</td></tr>
+  <tr><td>16–17</td><td>Keynote & Guest MIT PLSE Talk: Michael Greenberg on "Formal Support for the POSIX Shell"</td></tr>
+  <tr><td>17–21</td><td>Hack some more (+dinner)</td></tr>
+</tbody>
+</table>
+
+<h3>Keynote info</h3>
+
+<div><strong>Title:</strong> Formal Support for the POSIX Shell</div>
+<div><strong>Speaker:</strong> <a href="https://greenberg.science/">Michael Greenberg (Stevens Institute of Technology)</a></div>
+<div><p><strong>Abstract:</strong> The POSIX shell is a widely deployed, powerful tool for managing computer systems. The shell is the expert’s control panel, a necessary tool for configuring, compiling, installing, maintaining, and deploying systems. Even though it is powerful, critical infrastructure, the POSIX shell is maligned and misunderstood. Its power and its subtlety make for a dangerous combination.</p>
+
+  <p>How can we support the POSIX shell? I'll describe two recent lines of work---Smoosh, a formal, mechanized, executable small-step semantics for the POSIX shell---and ffs---a tool for helping users manipulate semi-structured data (like JSON and YAML) in the shell.</p></div>
+
+<h2>Contact</h2>
+
+For any questions or more info,
+please <a href="mailto:nikos@vasilak.is,kallas@seas.upenn.edu,michael@greenberg.science?&subject=PaSh%20Hackathon">contact
+the organizers</a>: <a href="http://nikos.vasilak.is/">Nikos
+Vasilakis</a>, <a href="https://angelhof.github.io/">Konstantinos
+Kallas</a>, and <a href="https://greenberg.science">Michael
+Greenberg</a>.
+
+
+    </div>  <!-- /.container -->
+        <footer>
+        <table border="0" class="foot">
+            <tr class="foot">
+                <td align="left" class="foot">
+                    version <a href="https://github.com/binpash/pash/releases">0.4</a> | revision <a href="https://github.com/binpash/pash/commit/HEAD"> 2b4db9d </a> | Create Code of Conduct.
+                </td>
+            <td align="right" class="foot">
+                <a href="http://status.binpa.sh"><img src="https://img.shields.io/badge/status-OK-red.svg?style=flat" alt="Status OK"></a>
+            </td>
+        </tr>
+        <tr class="foot">
+            <td align="left" class="foot">
+                <br>
+                Copyright PaSh Project a Series of LF Projects, LLC. For website
+                terms of use, privacy policy, trademark <br>guidelines and other policies 
+                please see <a href="https://www.lfprojects.org/policies/">www.lfprojects.org/policies/</a>.
+            </td>
+        </tr>
+        </table>
+    </footer>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+           
+      <script type="text/javascript" src="./utils/fbox/jquery.fancybox.js?v=2.1.5"></script>
+      <script type="text/javascript" src="./utils/fbox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+      <script type="text/javascript" src="./utils/fbox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+       <script src="./utils/js/main.js"></script>
+      </body>
+</html>

@@ -2,7 +2,7 @@
 <html>
   <head>
     <title>PaSh: Light-touch Data-Parallel Shell Scripting</title>
-    <meta charset="utf-8">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:100,200,300,400">
@@ -77,6 +77,10 @@
     <h1 class="title">PaSh<sup><sup><a href="https://github.com/binpash/pash/releases" class="top-version" style="color:white">v0.5</a></sup></sup></h1>
     <h3 class="extras">Light-touch Data-Parallel Shell Scripting</h3>
       
+    <div style="font-size: xx-large; text-align: center; display: block;">Please join us at our <br>
+    <a href="events/2022feb24_hackathon.html">hackathon at MIT on Thursday, February 24th, 2022</a>!</div>
+
+
                   <h2>Overview</h2>
                   <p>PaSh aims at the correct and automated parallelization of POSIX shell scripts. Broadly, PaSh includes three components: (1) a compiler that, given as input a POSIX shell script, emits a POSIX shell script that includes explicit data-parallel fragments for which PaSh has deemed such parallelization semantics-preserving, (2) a set of PaSh-related runtime primitives for supporting the execution of the parallel script fragments, available as in the <code>PATH</code> as normal commands, and (3) a crowd-sourced library of annotations characterizing several properties of common Unix/Linux commands relevant to parallelization.</p>
                   <p>To parallelize, say, <code>./evaluation/intro/hello-world.sh</code> with a parallelization width of <code>2</code>, from the top-level directory of the repository run:</p>
