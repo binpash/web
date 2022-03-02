@@ -51,7 +51,11 @@ function commit-msg {
 # $2: extras to be *added* to the extras title section
 ###
 function generate-html {
-  DIR=${1:-"."}
+  # get the md filename
+  filename=$(basename $1)
+  # get the directory $filename is stored
+  dir=$(dirname $1)
+  DIR=${dir:-"."}
   CSSDIR=$(realpath ./)
   W="$DIR"
   TOC_DEPTH="2"
@@ -64,14 +68,30 @@ function generate-html {
         TOC_DEPTH="3"
   fi
 
+  if [[ "$(basename $dir)" = "docs" ]]; then
+      export self_tab=$(cat <<-END
+<a href="./tutorial/index.html">tutorial</a> /     
+<a class="self" href="./docs">docs</a> /
+<a href="./benchmarks">benchmarks</a> / 
+END
+)
+
+elif [[ "$(basename $dir)" = "tutorial" ]]; then
+    export self_tab=$(cat <<-END
+<a class="self">tutorial</a>  /
+<a href="../index.html">docs</a>  /
+<a href="./benchmarks">benchmarks</a> /
+END
+)
+  fi
+
   generate-styles $CSSDIR
     echo $CSSDIR
 #$DIR/metadata.yaml\
 #    --biblio=./bib/bib.bib\
 #    --csl=./utils/acm-sigchi-proceedings.csl\
-
   # -f markdown+smart -t markdown-smart
-  pandoc -s $DIR/README.md\
+  pandoc -s $DIR/$filename\
     --variable revision="$(cd $DIR/;git rev-parse --short HEAD)"\
     --variable version="$VERSION"\
     --variable more="${2}"\
@@ -79,6 +99,7 @@ function generate-html {
     --variable where="$W"\
     --variable pash_logo="${CSSDIR}/pash_logo2.jpg"\
     --variable title="PaSh: Light-touch Data-Parallel Shell Scripting"\
+    --variable self_page="$self_tab"\
     --to=html5\
     --default-image-extension=svg\
     --template=./utils/template.html\
@@ -93,10 +114,12 @@ function generate-html {
     -o $DIR/index.html
 
   # fix the huge title
-  sed -i 's/>PaSh Documentation/ class="title">PaSh Documentation/g' $DIR/index.html
-
-
-  #cleanup $CSSDIR
+  if [[ "$(basename $dir)" = "docs" ]]; then
+      sed -i 's/>PaSh Documentation/ class="title">PaSh Documentation/g' $DIR/index.html
+  elif [[ "$(basename $dir)" = "tutorial" ]]; then
+      sed -i 's/>A Short PaSh Tutorial/ class="title">A Short PaSh Tutorial/g' $DIR/index.html
+  fi
+  cleanup $CSSDIR
 }
 
 function generate-styles {
@@ -117,7 +140,7 @@ if [[ -z "$1" ]]; then
   generate-html doc
   generate-html tutorial
 else
-  # $2 is the absolute path to utils
-  generate-html "$1" 
+  # $1 is the path to the readme file
+  generate-html "$1"
 fi
 
