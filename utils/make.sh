@@ -17,9 +17,8 @@ function error {
 
 VERBOSE=${VERBOSE:-"false"};
 PDF=${PDF:-"false"};
-version=$(grep -s version ../pash/config.yaml || echo '"version": "0.1"')
+version=$(grep __version__ ../pash/compiler/config.py | awk '{print $3}' | sed 's/"//g' || echo '"version": "0.1"')
 VERSION=${VERSION:-$(echo $version | sed "s/^.*\"version\":[ ]*\"\(.*\)\".*$/\1/")};
-
 while getopts hvp opt
 do
     case "$opt" in
@@ -53,8 +52,7 @@ function commit-msg {
 ###
 function generate-html {
   DIR=${1:-"."}
-  echo $DIR
-  CSSDIR="../.."
+  CSSDIR=$(realpath ./)
   W="$DIR"
   TOC_DEPTH="2"
   if [[ "$DIR" == "./" || "$DIR" == "." ]]; then
@@ -67,16 +65,20 @@ function generate-html {
   fi
 
   generate-styles $CSSDIR
+    echo $CSSDIR
+#$DIR/metadata.yaml\
+#    --biblio=./bib/bib.bib\
+#    --csl=./utils/acm-sigchi-proceedings.csl\
 
   # -f markdown+smart -t markdown-smart
-  pandoc -s $DIR/README.md $DIR/metadata.yaml\
-    --variable revision="$(git rev-parse --short HEAD)"\
+  pandoc -s $DIR/README.md\
+    --variable revision="$(cd $DIR/;git rev-parse --short HEAD)"\
     --variable version="$VERSION"\
     --variable more="${2}"\
-    --variable msg="$(commit-msg)"\
+    --variable msg="$(cd $DIR/;commit-msg)"\
     --variable where="$W"\
-    --biblio=./bib/bib.bib\
-    --csl=./utils/acm-sigchi-proceedings.csl\
+    --variable pash_logo="${CSSDIR}/pash_logo2.jpg"\
+    --variable title="PaSh: Light-touch Data-Parallel Shell Scripting"\
     --to=html5\
     --default-image-extension=svg\
     --template=./utils/template.html\
@@ -84,13 +86,17 @@ function generate-html {
     --section-divs\
     --toc\
     --toc-depth="${TOC_DEPTH}"\
-    --css="${CSSDIR}"/utils/css/mine.css\
+    --css="${CSSDIR}"/utils/css/main.css\
     --filter pandoc-citeproc\
     --include-in-header=./utils/css.html\
     --include-after-body=./utils/inc.html\
     -o $DIR/index.html
 
-  cleanup $CSSDIR
+  # fix the huge title
+  sed -i 's/>PaSh Documentation/ class="title">PaSh Documentation/g' $DIR/index.html
+
+
+  #cleanup $CSSDIR
 }
 
 function generate-styles {
@@ -98,7 +104,7 @@ function generate-styles {
   echo '<script type="text/javascript" src="UDIR/utils/fbox/jquery.fancybox.js?v=2.1.5"></script>' | sed "s;UDIR;$1;" >> ./utils/inc.html
   echo '<script type="text/javascript" src="UDIR/utils/fbox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>' | sed "s;UDIR;$1;" >> ./utils/inc.html
   echo '<script type="text/javascript" src="UDIR/utils/fbox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>' | sed "s;UDIR;$1;" >> ./utils/inc.html
-  echo ' <script src="UDIR/utils/js/mine.js"></script>' | sed "s;UDIR;$1;" >> ./utils/inc.html
+  echo ' <script src="UDIR/utils/js/main.js"></script>' | sed "s;UDIR;$1;" >> ./utils/inc.html
 
   echo ' ' > ./utils/css.html
   echo '<link rel="stylesheet" type="text/css" href="UDIR/utils/fbox/jquery.fancybox.css?v=2.1.5" media="screen" />' | sed "s;UDIR;$1;" >> ./utils/css.html
@@ -111,6 +117,7 @@ if [[ -z "$1" ]]; then
   generate-html doc
   generate-html tutorial
 else
-  generate-html "${1}"
+  # $2 is the absolute path to utils
+  generate-html "$1" 
 fi
 
