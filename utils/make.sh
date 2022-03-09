@@ -56,7 +56,7 @@ filename=$(basename $1)
 # get the directory $filename is stored
 dir=$(dirname $1)
 DIR=${dir:-"."}
-CSSDIR=$(realpath ./)
+CSSDIR="./" #$(realpath ./)
 W="$DIR"
 TOC_DEPTH="2"
 if [[ "$DIR" == "./" || "$DIR" == "." ]]; then
@@ -77,6 +77,7 @@ if [[ "$type" = "docs" ]]; then
 <a href="./benchmarks/index.html">benchmarks</a> / 
 END
 )
+CSSDIR="../"
 elif [[ "$type" = "tutorial" ]]; then
     export self_tab=$(cat <<-END
 <a class="self">tutorial</a>  /
@@ -84,18 +85,21 @@ elif [[ "$type" = "tutorial" ]]; then
 <a href="../benchmarks/index.html">benchmarks</a> /
 END
 )
+CSSDIR="../.."
+elif [[ "$type" = "tutorial" ]]; then
+CSSDIR="../.."
 elif [[ "$type" = "benchmarks" ]]; then
     export self_tab=$(cat <<-END
 <a href="../tutorial/index.html">tutorial</a> /     
 <a href="../index.html">docs</a>  /
 <a class="self">benchmarks</a> /
 END
+)
+CSSDIR="../.."
     wget ctrl.pash.ndr.md/client.js -O $DIR/client.js
-    wget ctrl.pash.ndr.md/mystyle.css -O $DIR/mystyle.css
     curl_data=$(curl -s "ctrl.pash.ndr.md/job=fetch_runs&count=50" | base64 | tr -d "\n")
     echo "local_data = Base64.decode(\`$curl_data\`);" >> $DIR/client.js
     echo "running_on_website = true;" >> $DIR/client.js
-)
 template="benchmarks.html"
 else 
     export self_tab=$(cat <<-END
@@ -118,7 +122,6 @@ template="landing.html"
 fi
 
 generate-styles $CSSDIR
-echo $CSSDIR
 #$DIR/metadata.yaml\
 #    --biblio=./bib/bib.bib\
 #    --csl=./utils/acm-sigchi-proceedings.csl\
@@ -129,7 +132,7 @@ pandoc -s $DIR/$filename\
     --variable more="${2}"\
     --variable msg="$(cd $DIR/;commit-msg)"\
     --variable where="$W"\
-    --variable pash_logo="${CSSDIR}/utils/img/pash_logo2.jpg"\
+    --variable pash_logo="$CSSDIR/utils/img/pash_logo2.jpg"\
     --variable title="PaSh: Light-touch Data-Parallel Shell Scripting"\
     --variable self_page="$self_tab"\
     --variable issue1="$issue1"\
@@ -147,7 +150,7 @@ pandoc -s $DIR/$filename\
     --section-divs\
     --toc\
     --toc-depth="${TOC_DEPTH}"\
-    --css="${CSSDIR}"/utils/css/main.css\
+    --css="$CSSDIR"/utils/css/main.css\
     --filter pandoc-citeproc\
     --include-in-header=./utils/css.html\
     --include-after-body=./utils/inc.html\
@@ -170,6 +173,7 @@ echo '<script type="text/javascript" src="UDIR/utils/fbox/helpers/jquery.fancybo
 echo ' <script src="UDIR/utils/js/main.js"></script>' | sed "s;UDIR;$1;" >> ./utils/inc.html
 
 echo ' ' > ./utils/css.html
+echo '<link rel="stylesheet" type="text/css" href="UDIR/utils/css/mystyle.css" media="screen" />' | sed "s;UDIR;$1;" >> ./utils/css.html
 echo '<link rel="stylesheet" type="text/css" href="UDIR/utils/fbox/jquery.fancybox.css?v=2.1.5" media="screen" />' | sed "s;UDIR;$1;" >> ./utils/css.html
 echo '<link rel="stylesheet" type="text/css" href="UDIR/utils/fbox/helpers/jquery.fancybox-buttons.css?v=1.0.5" />' | sed "s;UDIR;$1;" >> ./utils/css.html
 echo '<link rel="stylesheet" type="text/css" href="UDIR/utils/fbox/helpers/jquery.fancybox-thumbs.css?v=1.0.7" />' | sed "s;UDIR;$1;" >> ./utils/css.html
