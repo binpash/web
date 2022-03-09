@@ -91,6 +91,7 @@ elif [[ "$type" = "benchmarks" ]]; then
 <a class="self">benchmarks</a> /
 END
     wget ctrl.pash.ndr.md/client.js -O $DIR/client.js
+    wget ctrl.pash.ndr.md/mystyle.css -O $DIR/mystyle.css
     curl_data=$(curl -s "ctrl.pash.ndr.md/job=fetch_runs&count=50" | base64 | tr -d "\n")
     echo "local_data = Base64.decode(\`$curl_data\`);" >> $DIR/client.js
     echo "running_on_website = true;" >> $DIR/client.js
