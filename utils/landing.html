@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>PaSh: Light-touch Data-Parallel Shell Scripting</title>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+        <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:100,200,300,400">
+        <style type="text/css">code{white-space: pre;}</style>
+        <!--[if lt IE 9]>
+            <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+        <style type="text/css">
+.twoWrapper { display: table;  width: 100%;}
+.twoLeft { display: table-cell; width: 70%; }
+.twoRight { display: table-cell; width: 30%; }
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+    margin: 0; padding: 0; vertical-align: baseline; border: none; }
+  table.sourceCode { width: 100%; line-height: 100%; }
+  td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+  td.sourceCode { padding-left: 5px; }
+  code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+  code > span.dt { color: #902000; } /* DataType */
+  code > span.dv { color: #40a070; } /* DecVal */
+  code > span.bn { color: #40a070; } /* BaseN */
+  code > span.fl { color: #40a070; } /* Float */
+  code > span.ch { color: #4070a0; } /* Char */
+  code > span.st { color: #4070a0; } /* String */
+  code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+  code > span.ot { color: #007020; } /* Other */
+  code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+  code > span.fu { color: #06287e; } /* Function */
+  code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+  code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  code > span.cn { color: #880000; } /* Constant */
+  code > span.sc { color: #4070a0; } /* SpecialChar */
+  code > span.vs { color: #4070a0; } /* VerbatimString */
+  code > span.ss { color: #bb6688; } /* SpecialString */
+  code > span.im { } /* Import */
+  code > span.va { color: #19177c; } /* Variable */
+  code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+  code > span.op { color: #666666; } /* Operator */
+  code > span.bu { } /* BuiltIn */
+  code > span.ex { } /* Extension */
+  code > span.pp { color: #bc7a00; } /* Preprocessor */
+  code > span.at { color: #7d9029; } /* Attribute */
+  code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+  code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+  code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+  code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+        </style>
+        $if(date-meta)$
+        <meta name="dcterms.date" content="$date-meta$">
+        $endif$
+        $if(quotes)$
+        <style type="text/css">q { quotes: "“" "”" "‘" "’"; }</style>
+        $endif$
+        $if(highlighting-css)$
+        <style type="text/css">
+$highlighting-css$
+        </style>
+        $endif$
+        $for(css)$
+        <link rel="stylesheet" href="$css$">
+        $endfor$
+        $if(math)$
+        $math$
+        $endif$
+        $for(header-includes)$ $header-includes$$endfor$              
+
+    </head>
+    <body>
+        <div class="container-fluid">
+            <header>
+                <div class="column">
+                    <div class="navigation">
+                        $self_page$
+                        <a href="http://github.com/binpash">github</a>
+                    </div>
+                    <div class="breadcrumb">
+                        <a href="/">
+                            <img class="logo" src=$if(pash_logo)$$pash_logo$$endif$ width="15%"/>
+                        </a>
+                        <!-- <a style="vertical-align: text-top;" href="/">PaSh</a> -->
+                    </div>
+                </div>
+            </header>
+            $if(abstract)$
+            <section id="introduction" class="abstract-section">
+                <!--<h3 class="abstract-h3">Abstract</h3>-->
+                $abstract$
+            </section>
+            $endif$
+            $body$
+
+            <h1 class="title">PaSh<sup><sup><a href="https://github.com/binpash/pash/releases" class="top-version" style="color:white">$version$</a></sup></sup></h1>
+            <h3 class="extras">Light-touch Data-Parallel Shell Scripting</h3>
+
+            <div style="font-size: xx-large; text-align: center; display: block;">Please join us at our <br>
+                <a href="events/2022feb24_hackathon.html">hackathon at MIT on Thursday, February 24th, 2022</a>!</div>
+
+
+            <h2>Overview</h2>
+            <p>PaSh aims at the correct and automated parallelization of POSIX shell scripts. Broadly, PaSh includes three components: (1) a compiler that, given as input a POSIX shell script, emits a POSIX shell script that includes explicit data-parallel fragments for which PaSh has deemed such parallelization semantics-preserving, (2) a set of PaSh-related runtime primitives for supporting the execution of the parallel script fragments, available as in the <code>PATH</code> as normal commands, and (3) a crowd-sourced library of annotations characterizing several properties of common Unix/Linux commands relevant to parallelization.</p>
+            <p>To parallelize, say, <code>./evaluation/intro/hello-world.sh</code> with a parallelization width of <code>2</code>, from the top-level directory of the repository run:</p>
+            <div class="sourceCode" id="cb1"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">./pa.sh</span> ./evaluation/intro/hello-world.sh</span></code></pre></div>
+                <p>Run <code>./pa.sh --help</code> to get more information about the available commands. See <a href="docs/tutorial">docs/tutorial</a> for a longer tutorial.</p>
+                <section id="quick-setup" class="level2">
+
+                    <h2>Quick Setup</h2>
+                    <p>PaSh has been run on Ubuntu, Fedora, Debian, and Arch. Use one of the following ways to set it up:</p>
+                    <ul>
+                        <li>Run <code>curl up.binpa.sh | sh</code> from your terminal,</li>
+                        <li><a href="https://github.com/binpash/pash"> Clone the repo</a> and run <code>./scripts/distro-deps.sh; ./scripts/setup-pash.sh</code>,</li>
+                        <li>Fetch a Docker container by running <code>docker pull binpash/pash-18.04</code>, or</li>
+                        <li>Build a Docker container <a href="https://github.com/binpash/pash/blob/main/docs/tutorial.md#docker">from scratch</a>.</li>
+                    </ul>
+                    <p>
+                    More installation instructions in <a href="./docs/tutorial#installation">the tutorial</a>. 
+                    Remember to <code>export</code> <code>PASH_TOP</code> in your startup scripts!
+                    </p>
+                </section>
+                <h2>More Info</h2>
+                <div class="twoWrapper">
+
+                    <div class="twoLeft">
+                        <p><strong>Recent News</strong></p>
+                        <ul>
+                            <li> PaSh <a href="https://www.linuxfoundation.org/press-release/linux-foundation-to-host-the-pash-project-accelerating-shell-scripting-with-automated-parallelization-for-industrial-use-cases/">joined the Linux Foundation</a>.</li>
+                            <li>New  <a href="http://binpa.sh/">website</a> and <a href="https://github.com/binpash">GitHub organization</a>.</li>
+                            <li>ICFP21 <a href="https://doi.org/10.1145/3473570">paper</a> on the correctness of PaSh's transformations. </li>
+                            <li><a href="https://sigops.org/s/conferences/hotos/2021/">HotOS21</a> roundtable on the <a href="https://doi.org/10.1145/3458336.3465296">future of the shell</a>.</li>
+                            <li>Call-to-arms future-of-the-shell <a href="https://doi.org/10.1145/3458336.3465294">paper</a> presented at HotOS. </li>
+                        </ul>
+                    </div>
+
+                    <div class="twoRight">
+                        <p><strong>Further Reading</strong></p>
+                        <ul>
+                            <li>Installation <a href="./docs/tutorial#installation">instructions</a></li>
+                            <li>Short <a href="./docs/tutorial">tutorial</a></li>
+                            <li>Academic <a href="https://github.com/binpash/pash/blob/main/docs/contributing/contrib.md">papers</a></li>
+                            <li>Contribution <a href="https://github.com/binpash/pash/blob/main/docs/contributing/contrib.md">guide</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <br />
+                <br />
+                <div class="twoWrapper">
+
+                    <div class="twoLeft">
+                        <p><strong>Issues That Need Help</strong></p>
+                        <ul>
+                            <li><a href="https://github.com/binpash/pash/issues/$issue1$">#$issue1$</a> $issue1_text$..</li>
+                            <li><a href="https://github.com/binpash/pash/issues/$issue2$">#$issue2$</a> $issue2_text$..</li>
+                            <li><a href="https://github.com/binpash/pash/issues/$issue3$">#$issue3$</a> $issue3_text$..</li>
+                            <li><a href="https://github.com/binpash/pash/issues/$issue4$">#$issue4$</a> $issue4_text$..</li>
+                        </ul>
+                    </div>
+
+                    <div class="twoRight">
+                        <p><strong>Community & More</strong></p>
+                        <ul>
+                            <li>GitHub page: <a href="https://github.com/binpash">@binpash</a></li>
+                            <li>Mailing list: <a href="https://groups.google.com/g/pash-users">pash-users</a></li>
+                            <li>Bug reports: <a href="https://github.com/binpash/pash/issues">pash/issues</a></li>
+                            <li>Updates: <span style='color:grey'> blog </span> <!-- href="/">blog</a></li>-->
+                        </ul>
+                    </div>
+                </div>
+
+                <!--
+                    <br />
+                    <br />
+                    <div class="twoWrapper">
+
+                    <div class="twoLeft">
+                    <p><strong>Changelog</strong></p>
+                    <ul>
+                    <li><a href="https://github.com/binpash/pash/commit/2b4db9d">#322</a> Create Code of Conduct </li>
+                    <li><a href="https://github.com/binpash/pash/commit/92cbe08">#308</a> Correct tr in poets </li>
+                    <li><a href="https://github.com/binpash/pash/commit/4dbc0a7">#310</a> Remove old testing infrastructure for aggregators </li>
+                    <li><a href="https://github.com/binpash/pash/commit/348cc78">#310</a> Add new aggregators and custom tests </li>
+                    <li><a href="https://github.com/binpash/pash/releases/tag/v.04">more...</a></li>
+                    </ul>
+                    </div>
+                    </div>
+                -->
+
+
+                </ul>
+        </div>  <!-- /.container -->
+        <footer>
+            <table border="0" class="foot">
+                <tr class="foot">
+                    <td align="left" class="foot">
+                        version <a href="http://github.com/binpash/pash/releases/tag/v$version$">$version$</a> | revision <a href="http://github.com/binpash/pash"> $revision$ </a> | $msg$
+                    </td>
+                    <td align="right" class="foot">
+                        <a href="http://status.binpa.sh"><img src="https://img.shields.io/badge/status-OK-red.svg?style=flat" alt="Status OK"></a>
+                    </td>
+                </tr>
+                <tr class="foot">
+                    <td align="left" class="foot">
+                        <br>
+                        Copyright PaSh Project a Series of LF Projects, LLC. For website
+                        terms of use, privacy policy, trademark <br>guidelines and other policies 
+                        please see <a href="https://www.lfprojects.org/policies/">www.lfprojects.org/policies/</a>.
+                    </td>
+                </tr>
+
+            </table>
+        </footer>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        $for(include-after)$
+        $include-after$
+        $endfor$
+    </body>
+</html>
