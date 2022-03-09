@@ -129,7 +129,7 @@ pandoc -s $DIR/$filename\
     --variable more="${2}"\
     --variable msg="$(cd $DIR/;commit-msg)"\
     --variable where="$W"\
-    --variable pash_logo="${CSSDIR}/pash_logo2.jpg"\
+    --variable pash_logo="${CSSDIR}/utils/img/pash_logo2.jpg"\
     --variable title="PaSh: Light-touch Data-Parallel Shell Scripting"\
     --variable self_page="$self_tab"\
     --variable issue1="$issue1"\
