@@ -17,7 +17,7 @@ function usage {
 
 VERBOSE=${VERBOSE:-"false"};
 PDF=${PDF:-"false"};
-version=$(grep __version__ ../pash/compiler/config.py | awk '{print $3}' | sed 's/"//g' || echo '"version": "0.1"')
+version=$(grep __version__ $PASH_TOP/compiler/config.py | awk '{print $3}' | sed 's/"//g' || echo '"version": "0.1"')
 VERSION=${VERSION:-$(echo $version | sed "s/^.*\"version\":[ ]*\"\(.*\)\".*$/\1/")};
 while getopts hvp opt
 do
@@ -178,6 +178,8 @@ echo '<link rel="stylesheet" type="text/css" href="UDIR/utils/fbox/helpers/jquer
 echo "building all the pages"
 rm -f $PASH_TOP/README.md
 touch $PASH_TOP/README.md
+mkdir -p $PASH_TOP/docs/benchmarks/
+touch $PASH_TOP/docs/benchmarks/README.md
 generate-html $PASH_TOP/README.md
 generate-html $PASH_TOP/docs/README.md
 generate-html $PASH_TOP/docs/benchmarks/README.md
