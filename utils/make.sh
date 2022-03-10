@@ -19,6 +19,7 @@ VERBOSE=${VERBOSE:-"false"};
 PDF=${PDF:-"false"};
 version=$(grep __version__ $PASH_TOP/compiler/config.py | awk '{print $3}' | sed 's/"//g' || echo '"version": "0.1"')
 VERSION=${VERSION:-$(echo $version | sed "s/^.*\"version\":[ ]*\"\(.*\)\".*$/\1/")};
+UPDATED=$(LANG=en_us_88591; date +'%R'; date +'%m/%d/%Y')
 while getopts hvp opt
 do
     case "$opt" in
@@ -143,6 +144,7 @@ pandoc -s $DIR/$filename\
     --variable issue3_text="$issue3_text"\
     --variable issue4="$issue4"\
     --variable issue4_text="$issue4_text"\
+    --variable UPDATED="$UPDATED"\
     --to=html5\
     --default-image-extension=svg\
     --template=./utils/$template\
