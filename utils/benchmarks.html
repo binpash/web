@@ -159,10 +159,6 @@ $highlighting-css$
                     PaSh executes each pipeline as-is, without any modification.
                     <div id ="Unix50"></div>
                     </p>
-
-
-
-
                     <h4>Mass-transit analytics during COVID-19</h4>
                     <p>
                     This benchmark set contains 4 pipelines that were used to analyze <a href="https://insidestory.gr/article/noymera-leoforeia-athinas?token=0MFVISB8N6">real telemetry data from bus schedules during the COVID-19 response in a large European city</a>.
@@ -171,27 +167,33 @@ $highlighting-css$
                     <div id ="COVID-mts"></div>
                     </p>
 
-                    <h4>Dependency Untangling - For loops</h4>
+                    <h4>Dependency Untangling</h4>
                     <p>
+                    While the JIT engine operates as if invoked on every region, Pash is engineered to spawn a long-running stateful compilation server just once, 
+                    feeding it compilation requests until the execution of the script completes.
+                    This design has two benefits: 
+                    (1) it reduces run-time overhead by avoiding reinitializing the compiler for each compilation request; and
+                    (2) it allows maintaining and querying past-compilation results when compiling a new fragment.
+                    The latter allows Pash to untangle dependencies across regions, finding and exploiting opportunities for cross-region parallel execution.
+                    This set contains several benchmarks including log processing/parsing, media conversion, genome computation and compression apps.
                     <div id ="for-loops"></div>
                     </p>
-                    <h4>Average Temp</h4>
+                    <h4>Average Temperature</h4>
                     <p>
+                    Contains a large script downloading and processing multi-year temperature data across the US.
                     <div id ="AvgTemp"></div>
                     </p>
-
                     <h4>NLP</h4>
                     <p>
+                    Contains several scripts from <a href="https://www.cs.upc.edu/~padro/Unixforpoets.pdf">Unix for Poets</a>, 
+                    a tutorial for developing programs for natural-language processing out of Unix and Linux utilities.
                     <div id ="NLP"></div>
                     </p>
                     <h4>WebIndex</h4>
                     <p>
+                    Large multi-stage script for web crawling and indexing, using a variety of third-party and built-in utilities.
                     <div id ="WebIndex"></div>
                     </p>
-
-
-
-
                     <section id="correctness" class="level2">
                         <h2>Correctness</h2>
 
@@ -286,7 +288,7 @@ $highlighting-css$
             <table border="0" class="foot">
                 <tr class="foot">
                     <td align="left" class="foot">
-                        version <a href="http://github.com/binpash/pash/releases/tag/v$version$">$version$</a> | revision <a href="http://github.com/binpash/pash"> $revision$ </a> | $msg$ | Updated at: $UPDATED$
+                        version <a href="http://github.com/binpash/pash/releases/tag/v$version$">$version$</a> | revision <a href="http://github.com/binpash/pash"> $revision$ </a> | $msg$ | Updated: $UPDATED$
                     </td>
                     <td align="right" class="foot">
                         <a href="http://status.binpa.sh"><img src="https://img.shields.io/badge/status-OK-red.svg?style=flat" alt="Status OK"></a>
