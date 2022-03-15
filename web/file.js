@@ -1,3 +1,4 @@
+let user_bench = process.argv[2]
 let found = false;
 for (let i in v) {
     for (let j in v[i]) 
@@ -12,12 +13,11 @@ for (let i in v) {
                     process.exit(0);
                 for (let x=0; x < 8;x++) {
                     if (x === 0) {
-                        if (o3[0] !== process.argv[2]) {
+                        if (o3[0] !== user_bench.toLowerCase()) {
                             break;
                         }
                         found = true;
-                        o3[0] = o3[0].toUpperCase();
-                        console.log(o3[0], "Tests </td>");
+                        console.log(user_bench, "Tests </td>");
                         continue;
                     }
                     if (x === 1) {

@@ -102,12 +102,11 @@ CSSDIR="../.."
     echo "" >> d.js
     cat file.js >> d.js
     node d.js compiler
-    compiler=$(node d.js compiler);
-    interface="$(node d.js interface)";
-    posix="$(node d.js posix)";
-    intro="$(node d.js intro)";
-    agg="$(node d.js agg)"; 
-    echo "COMPILER = |$compiler|"
+    compiler=$(node d.js Compiler);
+    interface="$(node d.js Interface)";
+    posix="$(node d.js Posix)";
+    intro="$(node d.js Intro)";
+    agg="$(node d.js Aggregator)"; 
 template="benchmarks.html"
 else 
     export self_tab=$(cat <<-END
