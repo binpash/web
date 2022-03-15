@@ -39,11 +39,11 @@ function cleanup {
 }
 
 function commit-msg {
-MSG=$(git log -1 --pretty=%B | head -n 1)
-if [[ ${#MSG} -gt 50 ]]; then
-    MSG="$(echo $MSG | cut -c 1-48).."   
-fi
-echo $MSG
+    MSG=$(git log -1 --pretty=%B | head -n 1)
+    if [[ ${#MSG} -gt 50 ]]; then
+        MSG="$(echo $MSG | cut -c 1-48).."   
+    fi
+    echo "$MSG"
 }
 
 ###
@@ -59,14 +59,10 @@ dir=$(dirname $1)
 DIR=${dir:-"."}
 CSSDIR="./" #$(realpath ./)
 W="$DIR"
-TOC_DEPTH="2"
 if [[ "$DIR" == "./" || "$DIR" == "." ]]; then
     # if top-level
     CSSDIR="."
     W=""
-fi
-if [[ "$1" == "bib" ]]; then
-    TOC_DEPTH="3"
 fi
 
 template=template.html
@@ -98,9 +94,20 @@ END
 )
 CSSDIR="../.."
     wget ctrl.pash.ndr.md/client.js -O $DIR/client.js
-    curl_data=$(curl -s "ctrl.pash.ndr.md/job=fetch_runs&count=50" | base64 | tr -d "\n")
+    curl_d=$(curl -s "ctrl.pash.ndr.md/job=fetch_runs&count=50")
+    curl_data=$(echo $curl_d | base64 | tr -d "\n")
     echo "local_data = Base64.decode(\`$curl_data\`);" >> $DIR/client.js
     echo "running_on_website = true;" >> $DIR/client.js
+    echo "let v = $curl_d;" > d.js
+    echo "" >> d.js
+    cat file.js >> d.js
+    node d.js compiler
+    compiler=$(node d.js compiler);
+    interface="$(node d.js interface)";
+    posix="$(node d.js posix)";
+    intro="$(node d.js intro)";
+    agg="$(node d.js agg)"; 
+    echo "COMPILER = |$compiler|"
 template="benchmarks.html"
 else 
     export self_tab=$(cat <<-END
@@ -144,6 +151,11 @@ pandoc -s $DIR/$filename\
     --variable issue3_text="$issue3_text"\
     --variable issue4="$issue4"\
     --variable issue4_text="$issue4_text"\
+    --variable posix="$posix"\
+    --variable interface="$interface"\
+    --variable compiler="$compiler"\
+    --variable intro="$intro"\
+    --variable agg="$agg"\
     --variable UPDATED="$UPDATED"\
     --to=html5\
     --default-image-extension=svg\
@@ -151,7 +163,6 @@ pandoc -s $DIR/$filename\
     --highlight-style=pygments\
     --section-divs\
     --toc\
-    --toc-depth="${TOC_DEPTH}"\
     --css="$CSSDIR"/utils/css/main.css\
     --filter pandoc-citeproc\
     --include-in-header=./utils/css.html\
@@ -190,12 +201,3 @@ generate-html $PASH_TOP/README.md
 generate-html $PASH_TOP/docs/README.md
 generate-html $PASH_TOP/docs/benchmarks/README.md
 generate-html $PASH_TOP/docs/tutorial/tutorial.md
-#if [[ -z "$1" ]]; then
-#    generate-html "." ## top-level
-#    generate-html doc
-#    generate-html tutorial
-#else
-#    # $1 is the path to the readme file
-#    generate-html $PASH_TOP/$1
-#fi
-
