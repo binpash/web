@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="https://d3js.org/d3.v4.min.js"></script>
+        <title>PaSh: Light-touch Data-Parallel Shell Scripting</title>
+        <meta charset="utf-8">
+        <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+        <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:100,200,300,400">
+        <style type="text/css">code{white-space: pre;}</style>
+
+        <!--[if lt IE 9]>
+            <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+        <style type="text/css">
+.twoWrapper { display: table;  width: 100%;}
+.twoLeft { display: table-cell; width: 70%; }
+.twoRight { display: table-cell; width: 30%; }
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+    margin: 0; padding: 0; vertical-align: baseline; border: none; }
+  table.sourceCode { width: 100%; line-height: 100%; }
+  td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+  td.sourceCode { padding-left: 5px; }
+  code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+  code > span.dt { color: #902000; } /* DataType */
+  code > span.dv { color: #40a070; } /* DecVal */
+  code > span.bn { color: #40a070; } /* BaseN */
+  code > span.fl { color: #40a070; } /* Float */
+  code > span.ch { color: #4070a0; } /* Char */
+  code > span.st { color: #4070a0; } /* String */
+  code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+  code > span.ot { color: #007020; } /* Other */
+  code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+  code > span.fu { color: #06287e; } /* Function */
+  code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+  code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  code > span.cn { color: #880000; } /* Constant */
+  code > span.sc { color: #4070a0; } /* SpecialChar */
+  code > span.vs { color: #4070a0; } /* VerbatimString */
+  code > span.ss { color: #bb6688; } /* SpecialString */
+  code > span.im { } /* Import */
+  code > span.va { color: #19177c; } /* Variable */
+  code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+  code > span.op { color: #666666; } /* Operator */
+  code > span.bu { } /* BuiltIn */
+  code > span.ex { } /* Extension */
+  code > span.pp { color: #bc7a00; } /* Preprocessor */
+  code > span.at { color: #7d9029; } /* Attribute */
+  code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+  code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+  code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+  code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+        </style>
+                                        <link rel="stylesheet" href="../../utils/css/main.css">
+                          
+ <link rel="stylesheet" type="text/css" href="../../utils/css/mystyle.css" media="screen" />
+ <link rel="stylesheet" type="text/css" href="../../utils/fbox/jquery.fancybox.css?v=2.1.5" media="screen" />
+ <link rel="stylesheet" type="text/css" href="../../utils/fbox/helpers/jquery.fancybox-buttons.css?v=1.0.5" />
+ <link rel="stylesheet" type="text/css" href="../../utils/fbox/helpers/jquery.fancybox-thumbs.css?v=1.0.7" />              
+    </head>
+    <body>
+        <script src="client.js"></script>
+        <div class="container-fluid">
+            <header>
+                <div class="column">
+                    <div class="navigation">
+                        <a href="../tutorial/index.html">tutorial</a> /     
+                        <a href="../index.html">docs</a>  /
+                        <a class="self">benchmarks</a> /
+                        <a href="http://github.com/binpash">github</a>
+                    </div>
+                    <div class="breadcrumb">
+                        <a href="/">
+                            <img class="logo" src=../../utils/img/pash_logo2.jpg width="15%"/>
+                        </a>
+                        <!-- <a style="vertical-align: text-top;" href="/">PaSh</a> -->
+                    </div>
+                </div>
+            </header>
+            <h1 class="title">Benchmarks</h1>
+
+            <section id="pash-documentation" class="level1">
+                <p>Quick Jump: <a href="#latest-snapshot">latest snapshot</a> | <a href="#performance">performance</a> | <a href="#correctness">correctness</a> </p>
+
+                <p>
+                Among other metrics, the PaSh continuous integration infrastructure tracks performance and correctness metrics on the <code>main</code> branch over time.
+                Some of these results—for the most recent commits—are shown below; longer commit history, other branches, and more configurations are part of <a href="http://ctrl.binpa.sh">the control subsystem</a>.
+                </p>
+
+                <p>
+                One can also view these results in textual form. For example, to get the latest 5 builds run <code>curl -s ci.binpa.sh | head</code>. 
+                To get details about a specific commit, run <code>curl -s ci.binpa.sh/f821b4b</code>.
+                </p>
+
+                <section id="latest-snapshot" class="level2">
+                    <h2>Latest Snapshot</h2>
+                    <p>
+                    The next few plots show results only for the latest commit on <code>main</code> branch.
+                    </p>
+
+
+                    <h4>Classic Unix One-liners</h4>
+                    <p>
+                    This benchmark set contains 9 pipelines written by Unix experts:
+                    a few pipelines are from Unix legends (e.g., <a href='https://dl.acm.org/doi/10.1145/5948.315654'>Top-N</a>, <a href="https://doi.org/10.1145/3532.315102">Spell</a>), 
+                    one from <a href="https://nostarch.com/wcss2">a book on Unix scripting</a>, and a few are from top Stackoverflow answers.
+                    Pipelines contain 2-7 stages (avg.: 5.2), ranging from scalable CPU-intensive (e.g., <code>grep</code> stage in Nfa-regex) to non-parallelizable stages (e.g., <code>diff</code> stage in Diff).
+                    Inputs are script-specific and average 10GB per benchmark.
+
+                    <div id ="Classics-bp"></div>
+
+
+                    <h4>Unix50 from Bell Labs</h4>
+                    <p>
+                    This benchmark includes 36 pipelines solving <a href='https://unixgame.io/unix50'>the Unix 50 game.</a>
+                    The pipelines were designed to highlight Unix's modular philosophy, make extensive use of standard commands under a variety of flags, and appear to be written by non-experts.
+                    PaSh executes each pipeline as-is, without any modification.
+
+
+                    <div id ="Unix50-bp"></div>
+                    <h4>Mass-transit analytics during COVID-19</h4>
+                    <p>
+                    This benchmark set contains 4 pipelines that were used to analyze <a href="https://insidestory.gr/article/noymera-leoforeia-athinas?token=0MFVISB8N6">real telemetry data from bus schedules during the COVID-19 response in a large European city</a>.
+                    The pipelines compute several average statistics on the transit system per day—such as daily serving hours and daily number of vehicles.
+                    Pipelines range between 9 and 10 stages (avg.: 9.2), use typical Unix staples <code>sed</code>, <code>sort</code>, and <code>uniq</code>, and operate on a fixed 34GB dataset that contains mass-transport data collected over a single year.
+
+                    <div id ="COVID-mts-bp"></div>
+                    <h2>Performance</h2>
+                    <p>
+                    The next few plots show the performance of various benchmarks over time, as a timeseries (with the time captured by the commit ID)  on <code>main</code> branch.
+                    </p>
+
+                    <h4>Classic Unix One-liners</h4>
+                    <p>
+                    This benchmark set contains 9 pipelines written by Unix experts:
+                    a few pipelines are from Unix legends (e.g., <a href='https://dl.acm.org/doi/10.1145/5948.315654'>Top-N</a>, <a href="https://doi.org/10.1145/3532.315102">Spell</a>), 
+                    one from <a href="https://nostarch.com/wcss2">a book on Unix scripting</a>, and a few are from top Stackoverflow answers.
+                    Pipelines contain 2-7 stages (avg.: 5.2), ranging from scalable CPU-intensive (e.g., <code>grep</code> stage in Nfa-regex) to non-parallelizable stages (e.g., <code>diff</code> stage in Diff).
+                    Inputs are script-specific and average 10GB per benchmark.
+                    <div id ="Classics"></div>
+                    </p>
+
+
+                    <h4>Unix50 from Bell Labs</h4>
+                    <p>
+                    This benchmark includes 36 pipelines solving <a href='https://unixgame.io/unix50'>the Unix 50 game.</a>
+                    The pipelines were designed to highlight Unix's modular philosophy, make extensive use of standard commands under a variety of flags, and appear to be written by non-experts.
+                    PaSh executes each pipeline as-is, without any modification.
+                    <div id ="Unix50"></div>
+                    </p>
+                    <h4>Mass-transit analytics during COVID-19</h4>
+                    <p>
+                    This benchmark set contains 4 pipelines that were used to analyze <a href="https://insidestory.gr/article/noymera-leoforeia-athinas?token=0MFVISB8N6">real telemetry data from bus schedules during the COVID-19 response in a large European city</a>.
+                    The pipelines compute several average statistics on the transit system per day—such as daily serving hours and daily number of vehicles.
+                    Pipelines range between 9 and 10 stages (avg.: 9.2), use typical Unix staples <code>sed</code>, <code>sort</code>, and <code>uniq</code>, and operate on a fixed 34GB dataset that contains mass-transport data collected over a single year.
+                    <div id ="COVID-mts"></div>
+                    </p>
+
+                    <h4>Dependency Untangling</h4>
+                    <p>
+                    While the JIT engine operates as if invoked on every region, Pash is engineered to spawn a long-running stateful compilation server just once, 
+                    feeding it compilation requests until the execution of the script completes.
+                    This design has two benefits: 
+                    (1) it reduces run-time overhead by avoiding reinitializing the compiler for each compilation request; and
+                    (2) it allows maintaining and querying past-compilation results when compiling a new fragment.
+                    The latter allows Pash to untangle dependencies across regions, finding and exploiting opportunities for cross-region parallel execution.
+                    This set contains several benchmarks including log processing/parsing, media conversion, genome computation and compression apps.
+                    <div id ="for-loops"></div>
+                    </p>
+                    <h4>Average Temperature</h4>
+                    <p>
+                    Contains a large script downloading and processing multi-year temperature data across the US.
+                    <div id ="AvgTemp"></div>
+                    </p>
+                    <h4>NLP</h4>
+                    <p>
+                    Contains several scripts from <a href="https://www.cs.upc.edu/~padro/Unixforpoets.pdf">Unix for Poets</a>, 
+                    a tutorial for developing programs for natural-language processing out of Unix and Linux utilities.
+                    <div id ="NLP"></div>
+                    </p>
+                    <h4>WebIndex</h4>
+                    <p>
+                    Large multi-stage script for web crawling and indexing, using a variety of third-party and built-in utilities.
+                    <div id ="WebIndex"></div>
+                    </p>
+                    <section id="correctness" class="level2">
+                        <h2>Correctness</h2>
+
+                        <p>
+                        This section tracks various statistics across tests checking the correctness of various PaSh components.
+                        </p>
+
+                        <table>
+                            <thead>
+                                <tr class="header">
+                                    <th style="text-align: left;">Benchmark</th>
+                                    <th style="text-align: center;">Passed</th>
+                                    <th style="text-align: center;">Failed</th>
+                                    <th style="text-align: center;">Untested</th>
+                                    <th style="text-align: center;">Unresolved</th>
+                                    <th style="text-align: center;">Unsupported</th>
+                                    <th style="text-align: center;">Other</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="odd">
+                                    <td style="text-align: left;">COMPILER Tests </td>
+<td> 54/54</td>
+<td> 0/54</td>
+<td> 0/54</td>
+<td> 0/54</td>
+<td> 0/54</td>
+<td> 0/54</td>
+                                </tr>
+                                <tr class="even">
+                                    <td style="text-align: left;">INTRO Tests </td>
+<td> 2/2</td>
+<td> 0/2</td>
+<td> 0/2</td>
+<td> 0/2</td>
+<td> 0/2</td>
+<td> 0/2</td>
+                                </tr>
+                                <tr class="even">
+                                    <td style="text-align: left;">INTERFACE Tests </td>
+<td> 34/34</td>
+<td> 0/34</td>
+<td> 0/34</td>
+<td> 0/34</td>
+<td> 0/34</td>
+<td> 0/34</td>
+                                </tr>
+                                <tr class="odd">
+                                    <td style="text-align: left;">Annotation Tests</td>
+                                    <td> 1/1 </td>
+                                    <td> 1/1 </td>
+                                    <td> 1/1 </td>
+                                    <td> 1/1 </td>
+                                    <td> 1/1 </td>
+                                    <td> 1/1 </td>
+                                </tr>
+                                <tr class="even">
+                                    <td style="text-align: left;">AGG Tests </td>
+<td> 109/109</td>
+<td> 0/109</td>
+<td> 0/109</td>
+<td> 0/109</td>
+<td> 0/109</td>
+<td> 0/109</td>
+                                </tr>
+                                <tr class="odd">
+                                    <td style="text-align: left;">Smoosh Tests</td>
+                                    <td>10/10 </td>
+                                    <td>0/10  </td>
+                                    <td>0/10  </td>
+                                    <td>0/10  </td>
+                                    <td>0/10  </td>
+                                    <td>0/10  </td>
+                                </tr>
+                                <tr class="even">
+                                    <td style="text-align: left;">POSIX Tests </td>
+<td> 375/494</td>
+<td> 41/494</td>
+<td> 31/494</td>
+<td> 6/494</td>
+<td> 40/494</td>
+<td> 1/494</td>
+
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <!--
+                            Performance results on the correctness tests:
+                            <div id ="INTERFACE"></div>
+                            <div id ="INTRO"></div>
+                            <div id ="COMPILER"></div>
+
+                            <section id="other" class="level2">
+                            <h2>Other</h2>
+                        -->
+
+
+
+        </div>  <!-- /.container -->
+        <footer>
+            <table border="0" class="foot">
+                <tr class="foot">
+                    <td align="left" class="foot">
+                        version <a href="http://github.com/binpash/pash/releases/tag/v0.7">0.7</a> | revision <a href="http://github.com/binpash/pash"> f9806be </a> | Merge pull request #498 from binpash/future | Updated: 08:52
+03/15/2022
+                    </td>
+                    <td align="right" class="foot">
+                        <a href="http://status.binpa.sh"><img src="https://img.shields.io/badge/status-OK-red.svg?style=flat" alt="Status OK"></a>
+                    </td>
+                </tr>
+                <tr class="foot">
+                    <td align="left" class="foot">
+                        <br>
+                        Copyright PaSh Project a Series of LF Projects, LLC. For website
+                        terms of use, privacy policy, trademark <br>guidelines and other policies 
+                        please see <a href="https://www.lfprojects.org/policies/">www.lfprojects.org/policies/</a>.
+                    </td>
+                </tr>
+
+            </table>
+        </footer>
+
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+                 
+        <script type="text/javascript" src="../../utils/fbox/jquery.fancybox.js?v=2.1.5"></script>
+        <script type="text/javascript" src="../../utils/fbox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+        <script type="text/javascript" src="../../utils/fbox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+         <script src="../../utils/js/main.js"></script>
+            </body>
+</html>

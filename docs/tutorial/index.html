@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html>
+    <head>
+                <title>PaSh: Light-touch Data-Parallel Shell Scripting</title>
+                <meta charset="utf-8">
+        <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+        <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:100,200,300,400">
+        <style type="text/css">code{white-space: pre;}</style>
+        <!--[if lt IE 9]>
+            <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+        <style type="text/css">
+.twoWrapper { display: table;  width: 100%;}
+.twoLeft { display: table-cell; width: 70%; }
+.twoRight { display: table-cell; width: 30%; }
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+    margin: 0; padding: 0; vertical-align: baseline; border: none; }
+  table.sourceCode { width: 100%; line-height: 100%; }
+  td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+  td.sourceCode { padding-left: 5px; }
+  code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+  code > span.dt { color: #902000; } /* DataType */
+  code > span.dv { color: #40a070; } /* DecVal */
+  code > span.bn { color: #40a070; } /* BaseN */
+  code > span.fl { color: #40a070; } /* Float */
+  code > span.ch { color: #4070a0; } /* Char */
+  code > span.st { color: #4070a0; } /* String */
+  code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+  code > span.ot { color: #007020; } /* Other */
+  code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+  code > span.fu { color: #06287e; } /* Function */
+  code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+  code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  code > span.cn { color: #880000; } /* Constant */
+  code > span.sc { color: #4070a0; } /* SpecialChar */
+  code > span.vs { color: #4070a0; } /* VerbatimString */
+  code > span.ss { color: #bb6688; } /* SpecialString */
+  code > span.im { } /* Import */
+  code > span.va { color: #19177c; } /* Variable */
+  code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+  code > span.op { color: #666666; } /* Operator */
+  code > span.bu { } /* BuiltIn */
+  code > span.ex { } /* Extension */
+  code > span.pp { color: #bc7a00; } /* Preprocessor */
+  code > span.at { color: #7d9029; } /* Attribute */
+  code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+  code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+  code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+  code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+        </style>
+                                <style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+        </style>
+                        <link rel="stylesheet" href="../../utils/css/main.css">
+                          
+ <link rel="stylesheet" type="text/css" href="../../utils/css/mystyle.css" media="screen" />
+ <link rel="stylesheet" type="text/css" href="../../utils/fbox/jquery.fancybox.css?v=2.1.5" media="screen" />
+ <link rel="stylesheet" type="text/css" href="../../utils/fbox/helpers/jquery.fancybox-buttons.css?v=1.0.5" />
+ <link rel="stylesheet" type="text/css" href="../../utils/fbox/helpers/jquery.fancybox-thumbs.css?v=1.0.7" />              
+    </head>
+    <body>
+        <div class="container-fluid">
+            <header>
+                <div class="column">
+                    <div class="navigation">
+                        <a class="self">tutorial</a>  /
+                        <a href="../index.html">docs</a>  /
+                        <a href="../benchmarks/index.html">benchmarks</a> /
+                        <a href="http://github.com/binpash">github</a>
+                    </div>
+                    <div class="breadcrumb">
+                        <a href="/">
+                            <img class="logo" src=../../utils/img/pash_logo2.jpg width="15%"/>
+                        </a>
+                        <!-- <a style="vertical-align: text-top;" href="/">PaSh</a> -->
+                    </div>
+                </div>
+            </header>
+                        <section id="a-short-pash-tutorial" class="level1">
+<h1 class="title">A Short PaSh Tutorial</h1>
+<p>Quick jump: <a href="#introduction">Introduction</a> | <a href="#running-scripts">Running Scripts</a> | <a href="#what-next">What Next?</a></p>
+<p>This short tutorial covers the <code>pash</code>’s main functionality. Before proceeding, make sure <a href="../install/">you have installed PaSh</a></p>
+<section id="introduction" class="level2">
+<h2>Introduction</h2>
+<p>PaSh is a system for parallelizing POSIX shell scripts. It has been shown to achieve order-of-magnitude performance improvements on shell scripts.</p>
+<blockquote>
+<p><em>N.b.: PaSh is still under heavy development.</em></p>
+</blockquote>
+<section id="example-script" class="level4">
+<h4>Example Script</h4>
+<p>Consider the following spell-checking script, applied to two large markdown files <code>f1.md</code> and <code>f2.md</code> (line 1):</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode sh"><code class="sourceCode bash"><a class="sourceLine" id="cb1-1" title="1"><span class="co"># spell-checking.sh</span></a>
+<a class="sourceLine" id="cb1-2" title="2"><span class="fu">cat</span> f1.md f2.md <span class="kw">|</span> </a>
+<a class="sourceLine" id="cb1-3" title="3">  <span class="fu">tr</span> A-Z a-z <span class="kw">|</span></a>
+<a class="sourceLine" id="cb1-4" title="4">  <span class="fu">tr</span> -cs A-Za-z <span class="st">&#39;\n&#39;</span> <span class="kw">|</span></a>
+<a class="sourceLine" id="cb1-5" title="5">  <span class="fu">sort</span> <span class="kw">|</span></a>
+<a class="sourceLine" id="cb1-6" title="6">  <span class="fu">uniq</span> <span class="kw">|</span> </a>
+<a class="sourceLine" id="cb1-7" title="7">  <span class="fu">comm</span> -13 dict.txt - <span class="op">&gt;</span> out</a>
+<a class="sourceLine" id="cb1-8" title="8"><span class="fu">cat</span> out <span class="kw">|</span> <span class="fu">wc</span> -l <span class="kw">|</span> <span class="fu">sed</span> <span class="st">&#39;s/$/ mispelled words!/&#39;</span></a></code></pre></div>
+<p>The first <code>cat</code> streams two markdown files into a pipeline that converts characters in the stream into lower case, removes punctuation, sorts the stream in alphabetical order, removes duplicate words, and filters out words from a dictionary file (lines 1–7). A second pipeline (line 7) counts the resulting lines to report the number of misspelled words to the user.</p>
+<blockquote>
+<p>If you’re new to shell scripting, try to run each part of the pipeline separately and observe the output. For example, run <code>cat f1.md f2.md | tr A-Z a-z</code> in your terminal to witness the lower-case conversion.</p>
+</blockquote>
+<p>Visually, the script can be thought as executing sequentially as follows:</p>
+<p><img src="https://docs.google.com/drawings/d/e/2PACX-1vQv-Krzb9hxWCbbQC9Zg5knm6SySJrayh3mdZXG3Z4Y6hC4kgQj4PWqYmxNAR-LyKN5Fu9lWHJV0J0F/pub?w=517&amp;h=55"></p>
+<p>The first pipeline (left; parts omitted) processes <code>f1.md</code> and <code>f2.md</code> <em>sequentially</em> through all pipeline stages and writes to <code>out</code>. After it executes to completion, the second pipeline starts its <em>sequential</em> execution.</p>
+</section>
+<section id="parallelizing-scripts-with-pash" class="level4">
+<h4>Parallelizing Scripts with PaSh</h4>
+<p>PaSh transforms and executes each pipeline in a data-parallel fashion. Visually, the parallel script would look like this for 2x-parallelism (i.e., assuming that the computer on which we execute the script has at least two CPUs and that PaSh is invoked with <code>-w</code> value of <code>2</code>).</p>
+<p><img src="https://docs.google.com/drawings/d/e/2PACX-1vR8AL-gkL7CvqRJYiyX8z20_WcJ68l9JUEinJgI-_jKussb6q33Qlc1saaXx7Cf2pYp8-qjKhYXGu5e/pub?w=517&amp;h=55"></p>
+<p>Given a script, PaSh converts it to a dataflow graph, performs a series of semantics-preserving program transformations that expose parallelism, and then converts the dataflow graph back into a POSIX script. The new parallel script has POSIX constructs added to explicitly guide parallelism, coupled with PaSh-provided Unix-aware runtime primitives for addressing performance- and correctness-related issues.</p>
+</section>
+</section>
+<section id="running-scripts" class="level2">
+<h2>Running Scripts</h2>
+<p>All scripts in this guide assume that <code>$PASH_TOP</code> is set to the top directory of the PaSh codebase (e.g., <code>/opt/pash</code> on docker)</p>
+<p><strong>To run scripts in this section of the tutorial, make sure you are in the <code>intro</code> directory of the <code>evaluation</code>:</strong></p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode sh"><code class="sourceCode bash"><a class="sourceLine" id="cb2-1" title="1"><span class="bu">cd</span> <span class="va">$PASH_TOP</span>/evaluation/intro</a></code></pre></div>
+<blockquote>
+<p>In the following examples, you can avoid including <code>$PASH_TOP</code> before <code>pa.sh</code> by adding <code>PASH_TOP</code> in your <code>PATH</code>, which amounts to adding an <code>export PATH=$PATH:$PASH_TOP</code> in your shell configuration file.</p>
+</blockquote>
+<section id="intro-hello-parallel-world" class="level4">
+<h4>Intro: Hello, Parallel World!</h4>
+<p>The simplest script to try out <code>pash</code> is <code>hello-world.sh</code>, which applies an expensive regular expression over the system’s dictionary file.</p>
+<p>To run <code>hello-world.sh</code> sequentially, you would call it using <code>bash</code>:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode sh"><code class="sourceCode bash"><a class="sourceLine" id="cb3-1" title="1"><span class="bu">time</span> bash ./hello-world.sh</a></code></pre></div>
+<p>To run it in parallel with PaSh:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode sh"><code class="sourceCode bash"><a class="sourceLine" id="cb4-1" title="1"><span class="bu">time</span> <span class="va">$PASH_TOP</span>/pa.sh <span class="va">$PASH_TOP</span>/evaluation/intro/hello-world.sh</a></code></pre></div>
+<p>At this point, you might be interested in running <code>pa.sh --help</code> to get a first sense of the available options. Of particular interest is <code>--with</code> or <code>-w</code>, which specifies the degree of parallelism sought by PaSh (<em>e.g.,</em> <code>-w 2</code>).</p>
+</section>
+<section id="a-more-interesting-script-demo-spell" class="level4">
+<h4>A More Interesting Script: Demo Spell</h4>
+<p>We will use <code>demo-spell.sh</code> – a pipeline based <a href="https://dl.acm.org/doi/10.1145/3532.315102">on the original Unix spell program</a> by Johnson – to confirm that the infrastructure works as expected. We need to setup the appropriate input files for this script to execute:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode sh"><code class="sourceCode bash"><a class="sourceLine" id="cb5-1" title="1"><span class="ex">./input/setup.sh</span></a></code></pre></div>
+<p>After inputs are configured, let’s take a quick look at <code>demo-spell.sh</code>:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode sh"><code class="sourceCode bash"><a class="sourceLine" id="cb6-1" title="1"><span class="fu">cat</span> demo-spell.sh</a></code></pre></div>
+<p>The script streams the input file into a pipeline that converts characters to lower case, removes punctuation, sorts in alphabetical order, removes duplicate words, and filters out words from a dictionary file.</p>
+<p>Next, let’s run it on sequential inputs:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode sh"><code class="sourceCode bash"><a class="sourceLine" id="cb7-1" title="1"><span class="bu">time</span> ./demo-spell.sh <span class="op">&gt;</span> spell.out</a></code></pre></div>
+<p>We prefix the script with the <code>time</code> command, which should also output how long it took for the script to execute. On our evaluation infrastructure, the script takes about 41s.</p>
+<p>To execute it using <code>pash</code> with 2x-parallelism:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode sh"><code class="sourceCode bash"><a class="sourceLine" id="cb8-1" title="1"><span class="bu">time</span> <span class="va">$PASH_TOP</span>/pa.sh -w 2 -d 1 --log_file pash.log demo-spell.sh <span class="op">&gt;</span> pash-spell.out</a></code></pre></div>
+<p>On our evaluation infrastructure, the 2x-parallel script takes about 28s.</p>
+<p>You can check that the results are correct by:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode sh"><code class="sourceCode bash"><a class="sourceLine" id="cb9-1" title="1"><span class="fu">diff</span> spell.out pash-spell.out</a></code></pre></div>
+<p>Assuming you have more than 8 CPUs, you could also execute it with 8x-parallelism using:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode sh"><code class="sourceCode bash"><a class="sourceLine" id="cb10-1" title="1"><span class="bu">time</span> <span class="va">$PASH_TOP</span>/pa.sh -w 8 -d 1 --log_file pash.log demo-spell.sh <span class="op">&gt;</span> pash-spell.out</a></code></pre></div>
+<p>On our evaluation infrastructure, the 8x-parallel script takes about 14s.</p>
+<p>To view the parallel code emitted by the compiler, you can inspect the log:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode sh"><code class="sourceCode bash"><a class="sourceLine" id="cb11-1" title="1"><span class="fu">cat</span> pash.log</a></code></pre></div>
+<p>The contents of the parallel script are shown after the line <code>(4) Executing script in ...</code> and for 2x parallelism (<code>--width 2</code>) they should look like this:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode sh"><code class="sourceCode bash"><a class="sourceLine" id="cb12-1" title="1"><span class="fu">rm</span> -f <span class="st">&quot;#file2&quot;</span></a>
+<a class="sourceLine" id="cb12-2" title="2"><span class="ex">...</span></a>
+<a class="sourceLine" id="cb12-3" title="3"><span class="fu">mkfifo</span> <span class="st">&quot;#file2&quot;</span></a>
+<a class="sourceLine" id="cb12-4" title="4"><span class="ex">...</span></a>
+<a class="sourceLine" id="cb12-5" title="5"><span class="kw">{</span> <span class="fu">cat</span> scripts/input/100M.txt <span class="op">&gt;</span><span class="st">&quot;#file2&quot;</span> <span class="kw">&amp;</span> <span class="kw">}</span></a>
+<a class="sourceLine" id="cb12-6" title="6"><span class="kw">{</span> <span class="fu">tr</span> -cs A-Za-z <span class="st">&quot;</span><span class="dt">\\</span><span class="st">n&quot;</span> <span class="op">&lt;</span><span class="st">&quot;#file4&quot;</span> <span class="op">&gt;</span><span class="st">&quot;#file6&quot;</span> <span class="kw">&amp;</span> <span class="kw">}</span></a>
+<a class="sourceLine" id="cb12-7" title="7"><span class="kw">{</span> <span class="ex">/home/eurosys21/pash/runtime/auto-split.sh</span> <span class="st">&quot;#file2&quot;</span> <span class="st">&quot;#file14&quot;</span> <span class="st">&quot;#file15&quot;</span> <span class="kw">&amp;</span> <span class="kw">}</span></a>
+<a class="sourceLine" id="cb12-8" title="8"><span class="kw">{</span> <span class="fu">tr</span> A-Z a-z <span class="op">&lt;</span><span class="st">&quot;#file32&quot;</span> <span class="op">&gt;</span><span class="st">&quot;#file17&quot;</span> <span class="kw">&amp;</span> <span class="kw">}</span></a>
+<a class="sourceLine" id="cb12-9" title="9"><span class="kw">{</span> <span class="fu">tr</span> A-Z a-z <span class="op">&lt;</span><span class="st">&quot;#file15&quot;</span> <span class="op">&gt;</span><span class="st">&quot;#file18&quot;</span> <span class="kw">&amp;</span> <span class="kw">}</span></a>
+<a class="sourceLine" id="cb12-10" title="10"><span class="kw">{</span> <span class="fu">cat</span> <span class="st">&quot;#file33&quot;</span> <span class="st">&quot;#file34&quot;</span> <span class="op">&gt;</span><span class="st">&quot;#file4&quot;</span> <span class="kw">&amp;</span> <span class="kw">}</span></a>
+<a class="sourceLine" id="cb12-11" title="11"><span class="kw">{</span> <span class="ex">/home/eurosys21/pash/runtime/auto-split.sh</span> <span class="st">&quot;#file6&quot;</span> <span class="st">&quot;#file19&quot;</span> <span class="st">&quot;#file20&quot;</span> <span class="kw">&amp;</span> <span class="kw">}</span></a>
+<a class="sourceLine" id="cb12-12" title="12"><span class="kw">{</span> <span class="fu">sort</span> <span class="op">&lt;</span><span class="st">&quot;#file35&quot;</span> <span class="op">&gt;</span><span class="st">&quot;#file22&quot;</span> <span class="kw">&amp;</span> <span class="kw">}</span></a>
+<a class="sourceLine" id="cb12-13" title="13"><span class="kw">{</span> <span class="fu">sort</span> <span class="op">&lt;</span><span class="st">&quot;#file20&quot;</span> <span class="op">&gt;</span><span class="st">&quot;#file23&quot;</span> <span class="kw">&amp;</span> <span class="kw">}</span></a>
+<a class="sourceLine" id="cb12-14" title="14"><span class="kw">{</span> <span class="fu">sort</span> -m <span class="st">&quot;#file36&quot;</span> <span class="st">&quot;#file37&quot;</span> <span class="op">&gt;</span><span class="st">&quot;#file8&quot;</span> <span class="kw">&amp;</span> <span class="kw">}</span></a>
+<a class="sourceLine" id="cb12-15" title="15"><span class="kw">{</span> <span class="ex">/home/eurosys21/pash/runtime/auto-split.sh</span> <span class="st">&quot;#file8&quot;</span> <span class="st">&quot;#file25&quot;</span> <span class="st">&quot;#file26&quot;</span> <span class="kw">&amp;</span> <span class="kw">}</span></a>
+<a class="sourceLine" id="cb12-16" title="16"><span class="kw">{</span> <span class="fu">uniq</span> <span class="op">&lt;</span><span class="st">&quot;#file38&quot;</span> <span class="op">&gt;</span><span class="st">&quot;#file28&quot;</span> <span class="kw">&amp;</span> <span class="kw">}</span></a>
+<a class="sourceLine" id="cb12-17" title="17"><span class="kw">{</span> <span class="fu">uniq</span> <span class="op">&lt;</span><span class="st">&quot;#file26&quot;</span> <span class="op">&gt;</span><span class="st">&quot;#file29&quot;</span> <span class="kw">&amp;</span> <span class="kw">}</span></a>
+<a class="sourceLine" id="cb12-18" title="18"><span class="kw">{</span> <span class="fu">cat</span> <span class="st">&quot;#file39&quot;</span> <span class="st">&quot;#file40&quot;</span> <span class="op">&gt;</span><span class="st">&quot;#file30&quot;</span> <span class="kw">&amp;</span> <span class="kw">}</span></a>
+<a class="sourceLine" id="cb12-19" title="19"><span class="kw">{</span> <span class="fu">uniq</span> <span class="op">&lt;</span><span class="st">&quot;#file30&quot;</span> <span class="op">&gt;</span><span class="st">&quot;#file10&quot;</span> <span class="kw">&amp;</span> <span class="kw">}</span></a>
+<a class="sourceLine" id="cb12-20" title="20"><span class="kw">{</span> <span class="ex">/home/eurosys21/pash/runtime/eager.sh</span> <span class="st">&quot;#file14&quot;</span> <span class="st">&quot;#file32&quot;</span> <span class="st">&quot;/tmp/pash_eager_intermediate_#file1&quot;</span> <span class="kw">&amp;</span> <span class="kw">}</span></a>
+<a class="sourceLine" id="cb12-21" title="21"><span class="kw">{</span> <span class="ex">/home/eurosys21/pash/runtime/eager.sh</span> <span class="st">&quot;#file17&quot;</span> <span class="st">&quot;#file33&quot;</span> <span class="st">&quot;/tmp/pash_eager_intermediate_#file2&quot;</span> <span class="kw">&amp;</span> <span class="kw">}</span></a>
+<a class="sourceLine" id="cb12-22" title="22"><span class="kw">{</span> <span class="ex">/home/eurosys21/pash/runtime/eager.sh</span> <span class="st">&quot;#file18&quot;</span> <span class="st">&quot;#file34&quot;</span> <span class="st">&quot;/tmp/pash_eager_intermediate_#file3&quot;</span> <span class="kw">&amp;</span> <span class="kw">}</span></a>
+<a class="sourceLine" id="cb12-23" title="23"><span class="kw">{</span> <span class="ex">/home/eurosys21/pash/runtime/eager.sh</span> <span class="st">&quot;#file19&quot;</span> <span class="st">&quot;#file35&quot;</span> <span class="st">&quot;/tmp/pash_eager_intermediate_#file4&quot;</span> <span class="kw">&amp;</span> <span class="kw">}</span></a>
+<a class="sourceLine" id="cb12-24" title="24"><span class="kw">{</span> <span class="ex">/home/eurosys21/pash/runtime/eager.sh</span> <span class="st">&quot;#file22&quot;</span> <span class="st">&quot;#file36&quot;</span> <span class="st">&quot;/tmp/pash_eager_intermediate_#file5&quot;</span> <span class="kw">&amp;</span> <span class="kw">}</span></a>
+<a class="sourceLine" id="cb12-25" title="25"><span class="kw">{</span> <span class="ex">/home/eurosys21/pash/runtime/eager.sh</span> <span class="st">&quot;#file23&quot;</span> <span class="st">&quot;#file37&quot;</span> <span class="st">&quot;/tmp/pash_eager_intermediate_#file6&quot;</span> <span class="kw">&amp;</span> <span class="kw">}</span></a>
+<a class="sourceLine" id="cb12-26" title="26"><span class="kw">{</span> <span class="ex">/home/eurosys21/pash/runtime/eager.sh</span> <span class="st">&quot;#file25&quot;</span> <span class="st">&quot;#file38&quot;</span> <span class="st">&quot;/tmp/pash_eager_intermediate_#file7&quot;</span> <span class="kw">&amp;</span> <span class="kw">}</span></a>
+<a class="sourceLine" id="cb12-27" title="27"><span class="kw">{</span> <span class="ex">/home/eurosys21/pash/runtime/eager.sh</span> <span class="st">&quot;#file28&quot;</span> <span class="st">&quot;#file39&quot;</span> <span class="st">&quot;/tmp/pash_eager_intermediate_#file8&quot;</span> <span class="kw">&amp;</span> <span class="kw">}</span></a>
+<a class="sourceLine" id="cb12-28" title="28"><span class="kw">{</span> <span class="ex">/home/eurosys21/pash/runtime/eager.sh</span> <span class="st">&quot;#file29&quot;</span> <span class="st">&quot;#file40&quot;</span> <span class="st">&quot;/tmp/pash_eager_intermediate_#file9&quot;</span> <span class="kw">&amp;</span> <span class="kw">}</span></a>
+<a class="sourceLine" id="cb12-29" title="29"><span class="kw">{</span> <span class="ex">/home/eurosys21/pash/runtime/eager.sh</span> <span class="st">&quot;#file10&quot;</span> <span class="st">&quot;#file41&quot;</span> <span class="st">&quot;/tmp/pash_eager_intermediate_#file10&quot;</span> <span class="kw">&amp;</span> <span class="kw">}</span></a>
+<a class="sourceLine" id="cb12-30" title="30"><span class="kw">{</span> <span class="fu">comm</span> -13 scripts/input/dict.txt <span class="st">&quot;#file41&quot;</span> <span class="kw">&amp;</span> <span class="kw">}</span></a>
+<a class="sourceLine" id="cb12-31" title="31"><span class="bu">source</span> /home/eurosys21/pash/runtime/wait_for_output_and_sigpipe_rest.sh <span class="va">${!}</span></a>
+<a class="sourceLine" id="cb12-32" title="32"><span class="fu">rm</span> -f <span class="st">&quot;#file2&quot;</span></a>
+<a class="sourceLine" id="cb12-33" title="33"><span class="ex">...</span></a></code></pre></div>
+<p>Note that most stages in the pipeline are repeated twice and proceed in parallel (i.e., using <code>&amp;</code>). This completes the “quick-check”.</p>
+</section>
+</section>
+<section id="what-next" class="level2">
+<h2>What Next?</h2>
+<p>This concludes the first PaSh tutorial. This section includes pointers for further exploration, depending on your needs.</p>
+<section id="the-pash-repo" class="level4">
+<h4>The PaSh Repo</h4>
+<p>PaSh consist of three main components and a few additional “auxiliary” files and directories. The three main components are:</p>
+<ul>
+<li><p><a href="../../annotations/">annotations</a>: DSL characterizing commands, parallelizability study, and associated annotations. More specifically, (i) a lightweight annotation language allows command developers to express key parallelizability properties about their commands; (ii) an accompanying parallelizability study of POSIX and GNU commands. guides the annotation language and optimized aggregator library</p></li>
+<li><p><a href="../../compiler">compiler</a>: Shell-dataflow translations and associated parallelization transformations. Given a script, the PaSh compiler converts it to a dataflow graph, performs a series of semantics-preserving program transformations that expose parallelism, and then converts the dataflow graph back into a POSIX script.</p></li>
+<li><p><a href="../../runtime">runtime</a>: Runtime components such as <code>eager</code>, <code>split</code>, and associated combiners. Apart from POSIX constructs added to guide parallelism explicitly, PaSh provides Unix-aware runtime primitives for addressing performance- and correctness-related issues.</p></li>
+</ul>
+<p>These three components implement the contributions presented <a href="https://arxiv.org/pdf/2007.09436.pdf">in the EuroSys paper</a>. They are expected to be usable with minimal effort, through a few different installation means presented below.</p>
+<p>The auxiliary directories are: * <a href="../../docs">docs</a>: Design documents, tutorials, installation instructions, etc. * <a href="../../evaluation">evaluation</a>: Shell pipelines and script used for the evaluation of <code>pash</code>.</p>
+</section>
+<section id="pash-concepts-in-depth" class="level4">
+<h4>PaSh Concepts in Depth</h4>
+<p>Academic <a href="../README.md#academic-papers--events">papers</a> associated with PaSh offer substantially deeper overviews of the concepts underpinning several PaSh components.</p>
+</section>
+<section id="useful-links" class="level4">
+<h4>Useful Links</h4>
+<p>Chat: * <a href="ttps://discord.com/channels/947328962739187753/">Discord Server</a> (<a href="http://join.binpa.sh/">Invite</a>)</p>
+<p>Mailing Lists: * <a href="https://groups.google.com/g/pash-dev">Discussion</a>: Join this mailing list for discussing all things <code>pash</code> * <a href="https://groups.google.com/g/pash-commits">Commits</a>: Join this mailing list for commit notifications</p>
+<p>Development/contributions: * Contribution guide: <a href="../../docs/contributing/contrib.md">docs/contrib</a> * Continuous Integration Server: <a href="http://ci.binpa.sh/">http://ci.binpa.sh/</a></p>
+</section>
+</section>
+</section>
+        </div>  <!-- /.container -->
+        <footer>
+            <table border="0" class="foot">
+                <tr class="foot">
+                    <td align="left" class="foot">
+                        version <a href="http://github.com/binpash/pash/releases/tag/v0.7">0.7</a> | revision <a href="http://github.com/binpash/pash"> f9806be </a> | Merge pull request #498 from binpash/future | Updated: 08:52
+03/15/2022
+                    </td>
+                    <td align="right" class="foot">
+                        <a href="http://status.binpa.sh"><img src="https://img.shields.io/badge/status-OK-red.svg?style=flat" alt="Status OK"></a>
+                    </td>
+                </tr>
+                <tr class="foot">
+                    <td align="left" class="foot">
+                        <br>
+                        Copyright PaSh Project a Series of LF Projects, LLC. For website
+                        terms of use, privacy policy, trademark <br>guidelines and other policies 
+                        please see <a href="https://www.lfprojects.org/policies/">www.lfprojects.org/policies/</a>.
+                    </td>
+                </tr>
+
+            </table>
+        </footer>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+                 
+        <script type="text/javascript" src="../../utils/fbox/jquery.fancybox.js?v=2.1.5"></script>
+        <script type="text/javascript" src="../../utils/fbox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+        <script type="text/javascript" src="../../utils/fbox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+         <script src="../../utils/js/main.js"></script>
+            </body>
+</html>
