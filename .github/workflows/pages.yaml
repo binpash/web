@@ -1,0 +1,39 @@
+# script to automatically generate the website for PaSh
+# the generated website data files are pushed in gh-pages branch
+name: DeployPublish
+
+on:
+  push:
+    branches:
+      - main
+  schedule:
+    # At the end of every day
+    - cron: "0 0 * * *"
+jobs:
+  # This workflow contains a single job called "deploy"
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2 
+      - name: Building Github Pages
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install nodejs pandoc pandoc-citeproc git -y
+          git clone https://github.com/binpash/pash --depth 1
+          cp -r web pash/
+          cd pash/
+          export PASH_TOP=$PWD
+          mkdir ~/public
+          cd web/
+          bash utils/make.sh
+          cd ../
+          cp -r index.html ~/public/
+          cp -r docs ~/public/
+          cp -r web/utils ~/public
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@4.1.5
+        with:
+          branch: gh-pages
+          folder: ~/public
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
