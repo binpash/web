@@ -30,6 +30,7 @@ jobs:
           cp -r index.html ~/public/
           cp -r docs ~/public/
           cp -r web/utils ~/public
+          cp -r web/favicon.ico ~/public
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@4.1.5
         with:
