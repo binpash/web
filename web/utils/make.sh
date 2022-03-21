@@ -67,7 +67,7 @@ if [[ "$type" = "docs" ]]; then
 END
 )
 CSSDIR="../"
-elif [[ "$type" = "tutorial" ]] || [[ "$type" = "install" ]] || [[ "$type" = "contributing" ]]; then
+elif [[ "$type" = "tutorial" ]] || [[ "$type" = "install" ]] || [[ "$type" = "contributing" ]] || [[ "$type" = "p_stats" ]]; then
     export self_tab=$(cat <<-END
 <a class="self" href="./index.html">tutorial</a> /
 <a href="../index.html">docs</a>  /
@@ -97,7 +97,7 @@ END
     intro="$(node d.js Intro)";
     agg="$(node d.js Aggregator)"; 
     template="benchmarks.html"
-elif [[ "$type" = "annotations" ]]; then
+elif [[ "$type" = "annotations" ]] || [[ "$type" = "compiler" ]] || [[ "$type" = "runtime" ]]; then
     CSSDIR="../"
 export self_tab=$(cat <<-END
 <a href="../docs/tutorial/index.html">tutorial</a> /     
@@ -171,9 +171,14 @@ pandoc -s $DIR/$filename\
       # Fix shortcuts redirections
       sed -i 's/videos-video-presentations/videos--video-presentations/g' $DIR/index.html
       sed -i 's/academic-papers-events/academic-papers--events/g' $DIR/index.html
-      # fix broken links on tutorial
+      # fix tutorial links
       sed -i 's/tutorial#/tutorial\/index.html#/g' $DIR/index.html
-
+      # fix annotations links
+      sed -i 's/annotations#/annotations\/index.html#/g' $DIR/index.html
+      # fix compiler links
+      sed -i 's/compiler#/compiler\/index.html#/g' $DIR/index.html
+      # fix runtime links
+      sed -i 's/runtime#/runtime\/index.html#/g' $DIR/index.html
   elif [[ "$type" = "tutorial" ]]; then
       sed -i 's/>A Short PaSh Tutorial/ class="title">A Short PaSh Tutorial/g' $DIR/index.html
       # open the correct installation file
@@ -181,8 +186,6 @@ pandoc -s $DIR/$filename\
   elif [[ "$type" = "pash" ]]; then
       # this is the base case for the landing page
       sed -i 's/href="docs\/tutorial"/href="docs\/tutorial\/index.html"/g' $DIR/index.html
-      # fix annotations link
-      sed -i 's/href="..\/annotations\/"/href="..\/annotations\/index.html"/g' $DIR/index.html
   elif [[ "$type" = "install" ]]; then
       # correct the title
       sed -i 's/>Installation/ class="title">Installation/g' $DIR/index.html
@@ -190,7 +193,11 @@ pandoc -s $DIR/$filename\
       sed -i 's/>Parallelizability/ class="title">Parallelizability Classes/g' $DIR/index.html
       # fix redirection links
       sed -i 's/#parallelizability-study-of-commands-in-gnu--posix/#parallelizability-study-of-commands-in-gnu-posix/g' $DIR/index.html
+      sed -i 's/href=".\/p_stats"/href=".\/p_stats\/index.html"/g' $DIR/index.html
       sed -i 's/#Issues/#issues/g' $DIR/index.html
+  elif [[ "$type" = "compiler" ]]; then
+      sed -i 's/>The PaSh Compiler/ class="title">The PaSh Compiler/g' $DIR/index.html
+
   fi
   cleanup $CSSDIR
 }
@@ -214,10 +221,14 @@ rm -f $PASH_TOP/README.md
 touch $PASH_TOP/README.md
 mkdir -p $PASH_TOP/docs/benchmarks/
 touch $PASH_TOP/docs/benchmarks/README.md
-generate-html $PASH_TOP/docs/install/README.md
-generate-html $PASH_TOP/README.md
-generate-html $PASH_TOP/docs/README.md
-generate-html $PASH_TOP/docs/benchmarks/README.md
-generate-html $PASH_TOP/docs/tutorial/tutorial.md
-generate-html $PASH_TOP/docs/contributing/contrib.md
+#generate-html $PASH_TOP/docs/install/README.md
+#generate-html $PASH_TOP/README.md
+#generate-html $PASH_TOP/docs/README.md
+#generate-html $PASH_TOP/docs/benchmarks/README.md
+#generate-html $PASH_TOP/docs/tutorial/tutorial.md
+#generate-html $PASH_TOP/docs/contributing/contrib.md
 generate-html $PASH_TOP/annotations/README.md
+generate-html $PASH_TOP/annotations/p_stats/README.md
+#generate-html $PASH_TOP/compiler/README.md
+#generate-html $PASH_TOP/runtime/README.md
+#generate-html $PASH_TOP/evaluation/benchmarks/README.md
