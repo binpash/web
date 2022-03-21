@@ -33,8 +33,8 @@ jobs:
           cp -r compiler ~/public/
           cp -r evaluation/ ~/public/
           cp -r runtime/ ~/public/
-          cp -r web/utils ~/public
-          cp -r web/favicon.ico ~/public
+          cp -r web/utils ~/public/
+          cp -r web/favicon.ico ~/public/
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@4.1.5
         with:
