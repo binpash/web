@@ -37,11 +37,11 @@ function cleanup {
 }
 
 function commit-msg {
-    MSG=$(git log -1 --pretty=%B | head -n 1)
-    if [[ ${#MSG} -gt 50 ]]; then
-        MSG="$(echo $MSG | cut -c 1-48).."   
-    fi
-    echo "$MSG"
+MSG=$(git log -1 --pretty=%B | head -n 1)
+if [[ ${#MSG} -gt 50 ]]; then
+    MSG="$(echo $MSG | cut -c 1-48).."   
+fi
+echo "$MSG"
 }
 
 ###
@@ -55,13 +55,7 @@ filename=$(basename $1)
 # get the directory $filename is stored
 dir=$(dirname $1)
 DIR=${dir:-"."}
-CSSDIR="./" #$(realpath ./)
-W="$DIR"
-if [[ "$DIR" == "./" || "$DIR" == "." ]]; then
-    # if top-level
-    CSSDIR="."
-    W=""
-fi
+CSSDIR="./" 
 
 template=template.html
 type=$(basename $dir)
@@ -73,15 +67,13 @@ if [[ "$type" = "docs" ]]; then
 END
 )
 CSSDIR="../"
-elif [[ "$type" = "tutorial" ]]; then
+elif [[ "$type" = "tutorial" ]] || [[ "$type" = "install" ]] || [[ "$type" = "contributing" ]]; then
     export self_tab=$(cat <<-END
-<a class="self">tutorial</a>  /
+<a class="self" href="./index.html">tutorial</a> /
 <a href="../index.html">docs</a>  /
 <a href="../benchmarks/index.html">benchmarks</a> /
 END
 )
-CSSDIR="../.."
-elif [[ "$type" = "tutorial" ]]; then
 CSSDIR="../.."
 elif [[ "$type" = "benchmarks" ]]; then
     export self_tab=$(cat <<-END
@@ -91,20 +83,19 @@ elif [[ "$type" = "benchmarks" ]]; then
 END
 )
 CSSDIR="../.."
-    wget ctrl.pash.ndr.md/client.js -O $DIR/client.js
-    curl_d=$(curl -s "ctrl.pash.ndr.md/job=fetch_runs&count=50")
-    curl_data=$(echo $curl_d | base64 | tr -d "\n")
-    echo "local_data = Base64.decode(\`$curl_data\`);" >> $DIR/client.js
-    echo "running_on_website = true;" >> $DIR/client.js
-    echo "let v = $curl_d;" > d.js
-    echo "" >> d.js
-    cat file.js >> d.js
-    node d.js compiler
-    compiler=$(node d.js Compiler);
-    interface="$(node d.js Interface)";
-    posix="$(node d.js Posix)";
-    intro="$(node d.js Intro)";
-    agg="$(node d.js Aggregator)"; 
+wget ctrl.pash.ndr.md/client.js -O $DIR/client.js
+curl_d=$(curl -s "ctrl.pash.ndr.md/job=fetch_runs&count=50")
+curl_data=$(echo $curl_d | base64 | tr -d "\n")
+echo "local_data = Base64.decode(\`$curl_data\`);" >> $DIR/client.js
+echo "running_on_website = true;" >> $DIR/client.js
+echo "let v = $curl_d;" > d.js
+echo "" >> d.js
+cat file.js >> d.js
+compiler=$(node d.js Compiler);
+interface="$(node d.js Interface)";
+posix="$(node d.js Posix)";
+intro="$(node d.js Intro)";
+agg="$(node d.js Aggregator)"; 
 template="benchmarks.html"
 else 
     export self_tab=$(cat <<-END
@@ -113,16 +104,16 @@ else
 <a href="./docs/benchmarks/index.html">benchmarks</a> /
 END
 )
-    bash fetch_issues.sh
-    export issue1=$(cat final.txt | head -n1 | awk ' {print $1}')
-    export issue1_text=$(cat final.txt | head -n1 | awk ' {print $2,$3,$4,$5,$6,$7,$8}')
-    export issue2=$(cat final.txt | head -n2 | tail -n 1 | awk ' {print $1}')
-    export issue2_text=$(cat final.txt | head -n2 | tail -n 1 | awk ' {print $2,$3,$4,$5,$6,$7,$8}')
-    export issue3=$(cat final.txt | head -n3 | tail -n 1 | awk ' {print $1}')
-    export issue3_text=$(cat final.txt | head -n3 | tail -n 1 | awk ' {print $2,$3,$4,$5,$6,$7,$8}')
-    export issue4=$(cat final.txt | head -n4 | tail -n 1 | awk ' {print $1}')
-    export issue4_text=$(cat final.txt | head -n4 | tail -n 1 | awk ' {print $2,$3,$4,$5,$6,$7,$8}')
-    rm -f final.txt
+bash fetch_issues.sh
+export issue1=$(cat final.txt | head -n1 | awk ' {print $1}')
+export issue1_text=$(cat final.txt | head -n1 | awk ' {print $2,$3,$4,$5,$6,$7,$8}')
+export issue2=$(cat final.txt | head -n2 | tail -n 1 | awk ' {print $1}')
+export issue2_text=$(cat final.txt | head -n2 | tail -n 1 | awk ' {print $2,$3,$4,$5,$6,$7,$8}')
+export issue3=$(cat final.txt | head -n3 | tail -n 1 | awk ' {print $1}')
+export issue3_text=$(cat final.txt | head -n3 | tail -n 1 | awk ' {print $2,$3,$4,$5,$6,$7,$8}')
+export issue4=$(cat final.txt | head -n4 | tail -n 1 | awk ' {print $1}')
+export issue4_text=$(cat final.txt | head -n4 | tail -n 1 | awk ' {print $2,$3,$4,$5,$6,$7,$8}')
+rm -f final.txt
 template="landing.html"
 fi
 
@@ -136,7 +127,7 @@ pandoc -s $DIR/$filename\
     --variable version="$VERSION"\
     --variable more="${2}"\
     --variable msg="$(cd $DIR/;commit-msg)"\
-    --variable where="$W"\
+    --variable where="$DIR"\
     --variable pash_logo="$CSSDIR/utils/img/pash_logo2.jpg"\
     --variable title="PaSh: Light-touch Data-Parallel Shell Scripting"\
     --variable self_page="$self_tab"\
@@ -167,10 +158,18 @@ pandoc -s $DIR/$filename\
     -o $DIR/index.html
 
   # fix the huge title
-  if [[ "$(basename $dir)" = "docs" ]]; then
+  if [[ "$type" = "docs" ]]; then
       sed -i 's/>PaSh Documentation/ class="title">PaSh Documentation/g' $DIR/index.html
-  elif [[ "$(basename $dir)" = "tutorial" ]]; then
+  elif [[ "$type" = "tutorial" ]]; then
       sed -i 's/>A Short PaSh Tutorial/ class="title">A Short PaSh Tutorial/g' $DIR/index.html
+      # open the correct installation file
+      sed -i 's/href="..\/install\/"/href="..\/install\/index.html"/g' $DIR/index.html
+  elif [[ "$type" = "pash" ]]; then
+      # this is the base case for the landing page
+      sed -i 's/href="docs\/tutorial"/href="docs\/tutorial\/index.html"/g' $DIR/index.html
+  elif [[ "$type" = "install" ]]; then
+      # correct the title
+      sed -i 's/>Installation/ class="title">Installation/g' $DIR/index.html
   fi
   cleanup $CSSDIR
 }
@@ -194,7 +193,9 @@ rm -f $PASH_TOP/README.md
 touch $PASH_TOP/README.md
 mkdir -p $PASH_TOP/docs/benchmarks/
 touch $PASH_TOP/docs/benchmarks/README.md
+generate-html $PASH_TOP/docs/install/README.md
 generate-html $PASH_TOP/README.md
 generate-html $PASH_TOP/docs/README.md
 generate-html $PASH_TOP/docs/benchmarks/README.md
 generate-html $PASH_TOP/docs/tutorial/tutorial.md
+generate-html $PASH_TOP/docs/contributing/contrib.md
