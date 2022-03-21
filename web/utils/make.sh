@@ -67,7 +67,8 @@ if [[ "$type" = "docs" ]]; then
 END
 )
 CSSDIR="../"
-elif [[ "$type" = "tutorial" ]] || [[ "$type" = "install" ]] || [[ "$type" = "contributing" ]] || [[ "$type" = "p_stats" ]]; then
+elif [[ "$type" = "tutorial" ]] || [[ "$type" = "install" ]] || [[ "$type" = "contributing" ]] || [[ "$type" = "p_stats" ]] || 
+[[ "$type" = "parser" ]]; then
     export self_tab=$(cat <<-END
 <a class="self" href="./index.html">tutorial</a> /
 <a href="../index.html">docs</a>  /
@@ -197,8 +198,19 @@ pandoc -s $DIR/$filename\
       sed -i 's/#Issues/#issues/g' $DIR/index.html
   elif [[ "$type" = "compiler" ]]; then
       sed -i 's/>The PaSh Compiler/ class="title">The PaSh Compiler/g' $DIR/index.html
-
+      # fix annotations links
+      sed -i 's/annotations#/annotations\/index.html#/g' $DIR/index.html
+      # fix broken parser link
+      sed -i 's/href=".\/parser"/href=".\/parser\/index.html"/g' $DIR/index.html
+      # fix runtime link
+      sed -i 's/..\/runtime/..\/runtime\/index.html#/g' $DIR/index.html
+  elif [[ "$type" = "runtime" ]]; then
+      sed -i 's/>Runtime Support/ class="title">Runtime Support/g' $DIR/index.html
+  elif [[ "$type" = "parser" ]]; then
+      echo "XDDDDDDDDDDDDDDDDDDDDDDDDDDDD"
+      sed -i 's/<h2>Instructions<\/h2>/<h1 class="title">Instructions<\/h1>/g' $DIR/index.html
   fi
+
   cleanup $CSSDIR
 }
 
@@ -229,6 +241,7 @@ touch $PASH_TOP/docs/benchmarks/README.md
 #generate-html $PASH_TOP/docs/contributing/contrib.md
 generate-html $PASH_TOP/annotations/README.md
 generate-html $PASH_TOP/annotations/p_stats/README.md
-#generate-html $PASH_TOP/compiler/README.md
-#generate-html $PASH_TOP/runtime/README.md
+generate-html $PASH_TOP/compiler/README.md
+generate-html $PASH_TOP/compiler/parser/README.md
+generate-html $PASH_TOP/runtime/README.md
 #generate-html $PASH_TOP/evaluation/benchmarks/README.md
