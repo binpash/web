@@ -163,6 +163,8 @@ pandoc -s $DIR/$filename\
       # Fix shortcuts redirections
       sed -i 's/videos-video-presentations/videos--video-presentations/g' $DIR/index.html
       sed -i 's/academic-papers-events/academic-papers--events/g' $DIR/index.html
+      # fix broken links on tutorial
+      sed -i 's/tutorial#/tutorial\/index.html#/g' $DIR/index.html
 
   elif [[ "$type" = "tutorial" ]]; then
       sed -i 's/>A Short PaSh Tutorial/ class="title">A Short PaSh Tutorial/g' $DIR/index.html
