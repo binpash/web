@@ -254,7 +254,7 @@ touch $PASH_TOP/docs/benchmarks/README.md
 generate-html $PASH_TOP/docs/install/README.md
 generate-html $PASH_TOP/README.md
 generate-html $PASH_TOP/docs/README.md
-#generate-html $PASH_TOP/docs/benchmarks/README.md
+generate-html $PASH_TOP/docs/benchmarks/README.md
 generate-html $PASH_TOP/docs/tutorial/tutorial.md
 generate-html $PASH_TOP/docs/contributing/contrib.md
 generate-html $PASH_TOP/annotations/README.md
