@@ -30,6 +30,9 @@ jobs:
           cp -r index.html ~/public/
           cp -r docs ~/public/
           cp -r annotations ~/public/
+          cp -r compiler ~/public/
+          cp -r evaluation/ ~/public/
+          cp -r runtime/ ~/public/
           cp -r web/utils ~/public
           cp -r web/favicon.ico ~/public
       - name: Deploy 🚀
