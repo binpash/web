@@ -160,6 +160,10 @@ pandoc -s $DIR/$filename\
   # fix the huge title
   if [[ "$type" = "docs" ]]; then
       sed -i 's/>PaSh Documentation/ class="title">PaSh Documentation/g' $DIR/index.html
+      # Fix shortcuts redirections
+      sed -i 's/videos-video-presentations/videos--video-presentations/g' $DIR/index.html
+      sed -i 's/academic-papers-events/academic-papers--events/g' $DIR/index.html
+
   elif [[ "$type" = "tutorial" ]]; then
       sed -i 's/>A Short PaSh Tutorial/ class="title">A Short PaSh Tutorial/g' $DIR/index.html
       # open the correct installation file
