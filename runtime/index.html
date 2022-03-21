@@ -113,72 +113,74 @@ code span.va { color: #19177c; } /* Variable */
 code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
         </style>
-                        <link rel="stylesheet" href="../../utils/css/main.css">
+                        <link rel="stylesheet" href="..//utils/css/main.css">
                           
- <link rel="stylesheet" type="text/css" href="../../utils/css/mystyle.css" media="screen" />
- <link rel="stylesheet" type="text/css" href="../../utils/fbox/jquery.fancybox.css?v=2.1.5" media="screen" />
- <link rel="stylesheet" type="text/css" href="../../utils/fbox/helpers/jquery.fancybox-buttons.css?v=1.0.5" />
- <link rel="stylesheet" type="text/css" href="../../utils/fbox/helpers/jquery.fancybox-thumbs.css?v=1.0.7" />              
+ <link rel="stylesheet" type="text/css" href="..//utils/css/mystyle.css" media="screen" />
+ <link rel="stylesheet" type="text/css" href="..//utils/fbox/jquery.fancybox.css?v=2.1.5" media="screen" />
+ <link rel="stylesheet" type="text/css" href="..//utils/fbox/helpers/jquery.fancybox-buttons.css?v=1.0.5" />
+ <link rel="stylesheet" type="text/css" href="..//utils/fbox/helpers/jquery.fancybox-thumbs.css?v=1.0.7" />              
     </head>
     <body>
         <div class="container-fluid">
             <header>
                 <div class="column">
                     <div class="navigation">
-                        <a class="self" href="./index.html">tutorial</a> /
-                        <a href="../index.html">docs</a>  /
-                        <a href="../benchmarks/index.html">benchmarks</a> /
+                        <a href="../docs/tutorial/index.html">tutorial</a> /     
+                        <a href="../docs/index.html">docs</a>  /
+                        <a href="../docs/benchmarks/index.html">benchmarks</a> /
                         <a href="http://github.com/binpash">github</a>
                     </div>
                     <div class="breadcrumb">
                         <a href="/web">
-                            <img class="logo" src=../../utils/img/pash_logo2.jpg width="15%"/>
+                            <img class="logo" src=..//utils/img/pash_logo2.jpg width="15%"/>
                         </a>
                         <!-- <a style="vertical-align: text-top;" href="/">PaSh</a> -->
                     </div>
                 </div>
             </header>
-                        <section id="installation" class="level1">
-<h1 class="title">Installation</h1>
-<p>On Ubuntu, Fedora, Debian, or Arch, run <code>curl up.pash.ndr.md | sh</code> to get PaSh up and running.</p>
-<p>If on other environments or prefer manual setup, there are essentially three steps required to set PaSh up: 1. Clone repo: <code>git clone git@github.com:binpash/pash.git</code> 2. Run <code>distro-deps.sh</code> (with <code>sudo</code>) and <code>setup-pash.sh</code> 3. Export <code>PASH_TOP</code> and, optionally, add it to your <code>PATH</code></p>
-<p>Most scripts support a <code>--help</code> flag that documents their options. These three steps are described in detail below, depending on the environment.</p>
-<p>Quick Jump: <a href="#">Clone &amp; Setup</a> | <a href="#">Manual Setup</a> | <a href="#">Docker Setup</a> | <a href="#repo-structure">Windows using WSL</a></p>
-<section id="clone-setup" class="level3">
-<h3>Clone &amp; Setup</h3>
-<p>The following steps clone the repo, set up dependencies (e.g., compilers), and then build PaSh:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode sh"><code class="sourceCode bash"><a class="sourceLine" id="cb1-1" title="1"><span class="fu">git</span> clone git@github.com:binpash/pash.git</a>
-<a class="sourceLine" id="cb1-2" title="2"><span class="fu">sudo</span> pash/scripts/distro-deps.sh</a>
-<a class="sourceLine" id="cb1-3" title="3"><span class="ex">./pash/scripts/setup-pash.sh</span></a></code></pre></div>
-<p>These scripts have been tested on Ubuntu, Fedora, Debian, and Arch.</p>
+                        <section id="runtime-support" class="level1">
+<h1 class="title">Runtime Support</h1>
+<p>Quick Jump: <a href="#stream-splitting">Stream Splitting</a> | <a href="#eager-stream-polling">Eager Stream Polling</a> | <a href="#cleanup-logic">Cleanup Logic</a> | <a href="#aggregators">Aggregators</a></p>
+<p>PaSh includes a small library of runtime primitives supporting the runtime execution of parallel scripts emitted by the compiler.</p>
+<section id="stream-splitting" class="level2">
+<h2>Stream Splitting</h2>
+<p>The PaSh compiler inserts <code>split</code> nodes to expose parallelism when parallelizable nodes only have one input.</p>
 </section>
-<section id="manual-setup" class="level3">
-<h3>Manual Setup</h3>
-<p>Use the system’s package manager to install the following packages (some of which might already be installed in your system):</p>
-<pre><code>automake bc bsdmainutils curl gcc git libffi-dev libtool locales locales-all m4 netcat-openbsd pkg-config python python3 python3-pip python3-setuptools python3-testresources sudo wamerican-insane wget</code></pre>
-<p>Then clone the PaSh repository and run <code>setup-pash.sh</code> as follows:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode sh"><code class="sourceCode bash"><a class="sourceLine" id="cb3-1" title="1"><span class="fu">git</span> clone git@github.com:binpash/pash.git</a>
-<a class="sourceLine" id="cb3-2" title="2"><span class="ex">./pash/scripts/setup-pash.sh</span></a></code></pre></div>
-<p>As noted at the end of <code>setup-pash.sh</code>, make sure you set <code>PASH_TOP</code> pointing to the absolute path of the directory <code>pa.sh</code> resides (you can optionally place that in your <code>PATH</code>).</p>
+<section id="eager-stream-polling" class="level2">
+<h2>Eager Stream Polling</h2>
+<p>To overcome the laziness challenges outlined in Sec. 5, PaSh inserts and instantiates <code>eager</code> nodes on streams.</p>
 </section>
-<section id="docker-setup" class="level3">
-<h3>Docker Setup</h3>
-<p>If Docker <a href="https://docs.docker.com/get-docker/">is available</a>, PaSh can be used as part of a Docker container. Depending on the setup, PaSh running on Docker may or may not be able to exploit all available hardware resources. There are two main options for setting up PaSh on Docker:</p>
-<p><em>Pull from DockerHub (Major Releases):</em> To <code>pull</code> the docker image <a href="https://hub.docker.com/r/binpash/pash">from Docker Hub</a>, run:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode sh"><code class="sourceCode bash"><a class="sourceLine" id="cb4-1" title="1"><span class="ex">docker</span> pull binpash/pash</a></code></pre></div>
-<p>We refresh this image (as well as other images) on every major release.</p>
-<p><em>Build Image (Latest Commit):</em> To build the latest Docker container, run <code>docker build</code> in <a href="https://github.com/binpash/pash/tree/main/scripts/docker">scripts/docker</a>:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode sh"><code class="sourceCode bash"><a class="sourceLine" id="cb5-1" title="1"><span class="fu">git</span> clone git@github.com:binpash/pash.git</a>
-<a class="sourceLine" id="cb5-2" title="2"><span class="bu">cd</span> pash/scripts/docker/</a>
-<a class="sourceLine" id="cb5-3" title="3"><span class="ex">docker</span> build -f ./ubuntu/Dockerfile -t <span class="st">&quot;pash:latest&quot;</span> .</a></code></pre></div>
-<p>In the last line, replace <code>ubuntu</code> with <code>fedora</code> or <code>debian</code> to get the corresponding base.</p>
-<p>To run the container:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode sh"><code class="sourceCode bash"><a class="sourceLine" id="cb6-1" title="1"><span class="ex">docker</span> run --name pash-play -it pash:latest</a></code></pre></div>
-<p>PaSh can be found in the container’s <code>/opt/pash</code> directory, so run <code>cd pash; git pull</code> to fetch the latest updates. More information in the <a href="../contributing/contrib.md#pash-on-docker-a-pocket-guide">pash-on-docker guide</a>.</p>
+<section id="cleanup-logic" class="level2">
+<h2>Cleanup Logic</h2>
+<p>PaSh contains cleanup logic for dealing with dangling FIFOs. This is implemented in <code>wait_for_output_and_sigpipe_rest.sh</code>.</p>
 </section>
-<section id="windows-using-wsl" class="level3">
-<h3>Windows using WSL</h3>
-<p>To run PaSh on windows without Docker, install <a href="https://docs.microsoft.com/en-us/windows/wsl/install-win10">WSL</a>. A short tutorial is included in the <a href="../contributing/contrib.md">contributing</a> guide.</p>
+<section id="aggregators" class="level2">
+<h2>Aggregators</h2>
+<p>There is a small custom aggregator library provided in <a href="agg/py/">agg/py/</a>. These aggregators are used to merge partial results from the parallel scripts.</p>
+<p>For example, the aggregator <code>wc.py</code> can merge results from partial <code>wc</code> running in parallel. To confirm what the aggregator does, call it as follows.</p>
+<pre class="shell"><code>$PASH_TOP/runtime/agg/py/wc.py &lt;(echo -e &#39;1\n2\n3&#39; | wc -l) &lt;(echo -e &#39;1\n2\n3&#39; | wc -l)</code></pre>
+<p>Internally, the aggregator looks roughly like this:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb2-1" title="1"><span class="co">#!/usr/bin/python</span></a>
+<a class="sourceLine" id="cb2-2" title="2"><span class="im">import</span> sys, os, functools, utils</a>
+<a class="sourceLine" id="cb2-3" title="3"></a>
+<a class="sourceLine" id="cb2-4" title="4"><span class="kw">def</span> parseLine(s):</a>
+<a class="sourceLine" id="cb2-5" title="5">  <span class="cf">return</span> <span class="bu">map</span>(<span class="bu">int</span>, s.split())</a>
+<a class="sourceLine" id="cb2-6" title="6"></a>
+<a class="sourceLine" id="cb2-7" title="7"><span class="kw">def</span> emitLine(t):</a>
+<a class="sourceLine" id="cb2-8" title="8">  <span class="cf">return</span> [<span class="st">&quot; &quot;</span>.join(<span class="bu">map</span>(<span class="kw">lambda</span> e: <span class="bu">str</span>(e).rjust(utils.PAD_LEN, <span class="st">&#39; &#39;</span>), t))]</a>
+<a class="sourceLine" id="cb2-9" title="9"></a>
+<a class="sourceLine" id="cb2-10" title="10"><span class="kw">def</span> combiner(a, b):</a>
+<a class="sourceLine" id="cb2-11" title="11">  <span class="cf">if</span> <span class="kw">not</span> a:</a>
+<a class="sourceLine" id="cb2-12" title="12">    <span class="cf">return</span> b</a>
+<a class="sourceLine" id="cb2-13" title="13">  az <span class="op">=</span> parseLine(a[<span class="dv">0</span>])</a>
+<a class="sourceLine" id="cb2-14" title="14">  bz <span class="op">=</span> parseLine(b[<span class="dv">0</span>])</a>
+<a class="sourceLine" id="cb2-15" title="15">  <span class="cf">return</span> emitLine([ (i<span class="op">+</span>j) <span class="cf">for</span> (i,j) <span class="kw">in</span> <span class="bu">zip</span>(az, bz) ])</a>
+<a class="sourceLine" id="cb2-16" title="16"></a>
+<a class="sourceLine" id="cb2-17" title="17">utils.<span class="bu">help</span>()</a>
+<a class="sourceLine" id="cb2-18" title="18">res <span class="op">=</span> functools.<span class="bu">reduce</span>(agg, utils.read_all(), [])</a>
+<a class="sourceLine" id="cb2-19" title="19">utils.out(<span class="st">&quot;&quot;</span>.join(res))</a></code></pre></div>
+<p>The core of the aggregator, function <code>combiner</code>, is binary (i.e., takes two input streams). The <code>reduce</code> function lifts the aggregator to arity <em>n</em>, i.e., the number of the incoming edges—each of which feeds the aggregator with the results of running a parallel <code>wc</code> instance. This allows developers to think of aggregators in terms of two inputs, but generalize their aggregators to many inputs. Utility functions such as <code>read</code> and <code>help</code>, common across our aggregator library, deal with error handling when reading multiple file descriptors, and offer a invocation flag <code>-h</code> that demonstrates the use of each aggregator.</p>
+<p>PaSh’s library currently several aggregators, many of which are usable by more than one command or flag. For example, the aggregator shown above is shared among <code>wc</code>, <code>wc -lw</code>, <code>wc -lm</code> etc.</p>
 </section>
 </section>
         </div>  <!-- /.container -->
@@ -206,9 +208,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
         </footer>
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
                  
-        <script type="text/javascript" src="../../utils/fbox/jquery.fancybox.js?v=2.1.5"></script>
-        <script type="text/javascript" src="../../utils/fbox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
-        <script type="text/javascript" src="../../utils/fbox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
-         <script src="../../utils/js/main.js"></script>
+        <script type="text/javascript" src="..//utils/fbox/jquery.fancybox.js?v=2.1.5"></script>
+        <script type="text/javascript" src="..//utils/fbox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+        <script type="text/javascript" src="..//utils/fbox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+         <script src="..//utils/js/main.js"></script>
             </body>
 </html>

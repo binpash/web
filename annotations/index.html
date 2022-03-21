@@ -158,7 +158,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="parallelizability-study-of-commands-in-gnu-posix" class="level2">
 <h2 class="title">Parallelizability Classes Study of Commands in GNU &amp; POSIX</h2>
 <p>The parallelizability study of commands in GNU and POSIX is comprised of two parts: a coarse-grained parallelizability study, and a set of annotations for commands.</p>
-<p>The main results of the parallelizability study are summarized in the <a href="https://arxiv.org/pdf/2007.09436.pdf">PaSh EuroSys’21 paper (Sec. 3.1 and Tab. 1)</a>. To see the results of the parallelizability study, run <a href="./p_stats">./p_stats</a>.</p>
+<p>The main results of the parallelizability study are summarized in the <a href="https://arxiv.org/pdf/2007.09436.pdf">PaSh EuroSys’21 paper (Sec. 3.1 and Tab. 1)</a>. To see the results of the parallelizability study, run <a href="./p_stats/index.html">./p_stats</a>.</p>
 <p>Annotations for about 60 popular commands are stored in this directory encoded as JSON files (about 14 lines per annotation on average, for a total of 846 lines of annotations). Annotations can be thought of as defining a bidirectional correspondence between a command and a node in the dataflow graph—the abstraction used by the PaSh compiler. Since command behaviors (and correspondence) can change based on their arguments, annotations contain a sequence of predicates. Each predicate is accompanied by information that instantiates the correspondence between a command and a dataflow node.</p>
 </section>
 <section id="a-simple-example-chmod" class="level2">
@@ -295,7 +295,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <table border="0" class="foot">
                 <tr class="foot">
                     <td align="left" class="foot">
-                        version <a href="http://github.com/binpash/pash/releases/tag/v0.7">0.7</a> | revision <a href="http://github.com/binpash/pash"> 6d8f7ef </a> | Merge pull request #505 from binpash/posix-ci-fix | Updated: 14:06
+                        version <a href="http://github.com/binpash/pash/releases/tag/v0.7">0.7</a> | revision <a href="http://github.com/binpash/pash"> 6d8f7ef </a> | Merge pull request #505 from binpash/posix-ci-fix | Updated: 15:12
 03/21/2022
                     </td>
                     <td align="right" class="foot">

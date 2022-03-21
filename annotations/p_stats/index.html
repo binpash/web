@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+    <head>
+                <title>PaSh: Light-touch Data-Parallel Shell Scripting</title>
+                <meta charset="utf-8">
+        <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+        <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:100,200,300,400">
+        <style type="text/css">code{white-space: pre;}</style>
+        <!--[if lt IE 9]>
+            <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+        <style type="text/css">
+.twoWrapper { display: table;  width: 100%;}
+.twoLeft { display: table-cell; width: 70%; }
+.twoRight { display: table-cell; width: 30%; }
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+    margin: 0; padding: 0; vertical-align: baseline; border: none; }
+  table.sourceCode { width: 100%; line-height: 100%; }
+  td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+  td.sourceCode { padding-left: 5px; }
+  code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+  code > span.dt { color: #902000; } /* DataType */
+  code > span.dv { color: #40a070; } /* DecVal */
+  code > span.bn { color: #40a070; } /* BaseN */
+  code > span.fl { color: #40a070; } /* Float */
+  code > span.ch { color: #4070a0; } /* Char */
+  code > span.st { color: #4070a0; } /* String */
+  code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+  code > span.ot { color: #007020; } /* Other */
+  code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+  code > span.fu { color: #06287e; } /* Function */
+  code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+  code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  code > span.cn { color: #880000; } /* Constant */
+  code > span.sc { color: #4070a0; } /* SpecialChar */
+  code > span.vs { color: #4070a0; } /* VerbatimString */
+  code > span.ss { color: #bb6688; } /* SpecialString */
+  code > span.im { } /* Import */
+  code > span.va { color: #19177c; } /* Variable */
+  code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+  code > span.op { color: #666666; } /* Operator */
+  code > span.bu { } /* BuiltIn */
+  code > span.ex { } /* Extension */
+  code > span.pp { color: #bc7a00; } /* Preprocessor */
+  code > span.at { color: #7d9029; } /* Attribute */
+  code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+  code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+  code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+  code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+        </style>
+                                        <link rel="stylesheet" href="../../utils/css/main.css">
+                          
+ <link rel="stylesheet" type="text/css" href="../../utils/css/mystyle.css" media="screen" />
+ <link rel="stylesheet" type="text/css" href="../../utils/fbox/jquery.fancybox.css?v=2.1.5" media="screen" />
+ <link rel="stylesheet" type="text/css" href="../../utils/fbox/helpers/jquery.fancybox-buttons.css?v=1.0.5" />
+ <link rel="stylesheet" type="text/css" href="../../utils/fbox/helpers/jquery.fancybox-thumbs.css?v=1.0.7" />              
+    </head>
+    <body>
+        <div class="container-fluid">
+            <header>
+                <div class="column">
+                    <div class="navigation">
+                        <a class="self" href="./index.html">tutorial</a> /
+                        <a href="../index.html">docs</a>  /
+                        <a href="../benchmarks/index.html">benchmarks</a> /
+                        <a href="http://github.com/binpash">github</a>
+                    </div>
+                    <div class="breadcrumb">
+                        <a href="/web">
+                            <img class="logo" src=../../utils/img/pash_logo2.jpg width="15%"/>
+                        </a>
+                        <!-- <a style="vertical-align: text-top;" href="/">PaSh</a> -->
+                    </div>
+                </div>
+            </header>
+                        <p>The study has evolved over time</p>
+<p>Originally, there are five main groups:</p>
+<ul>
+<li><p><em>stateless</em>: these are the simplest to parallelize. They fall into four classes depending on the input chunk—some are parallelizable at the level of individual characters (e.g., <code>tr</code>), some at the level of lines (e.g., <code>grep</code>), some at the level of paragraphs (e.g., fmt), and some at the level of files</p></li>
+<li><p><em>pure</em>: these are somewhat more difficult to parallelize, as they might require to see the end of the input (or include some line metadata); they are still pure (a la reducers).</p></li>
+<li><p><em>DFS</em>: these interact with the (distributed version of the) file-system. As the file-system is a central part of the Unix design and philosophy, many of these commands have Unix-specific semantics that are not helpful in pipelines or distributed workloads—e.g., operations related to file ownership. However, they are not difficult to emulate atop a conventional distributed storage.</p></li>
+<li><p><em>EVs</em>: these commands affect environment variables; interestingly, the vast majority of these commands only <em>read</em> environment variables—the common case in scripts. So even if we had something like distributed transactions, we would still be able to get away with mostly read-accesses that do not need to block (note that there are multiple transactional protocols, because these are reversible).</p></li>
+<li><p><em>Side-effectful</em>: These have non-reversible side-effects that affect the outside system. They are non-distributable, and would most certainly require a pesimistic transaction management control.</p></li>
+</ul>
+<p>There are still a few commands whose semantics are not entirely understood, marked as <code>?</code> (but for which <code>pash</code> assumes the most conservative class possible).</p>
+<p>Currently, the four major classes:</p>
+<ul>
+<li><p><em>Stateless Commands</em>: This class contains commands that operate on individual line elements of their input, without maintaining state across invocations. These are commands that can be expressed as a purely functional <code>map</code> or <code>filter</code>—e.g., <code>grep</code> filters out individual lines and <code>basename</code> removes a path prefix from a string. They may produce multiple elements—e.g., <code>tr</code> may insert NL tokens—but always return empty output for empty input. Workloads that use only stateless commands are trivial to parallelize: they do not require any synchronization to maintain correctness, nor caution about where to split inputs.</p></li>
+<li><p><em>Parallelizable Pure Commands</em>: This class contains commands that respect functional purity—i.e., same outputs for same inputs—but maintain internal state across their entire pass. The details of this state and its propagation during element processing affect their parallelizability characteristics. Some commands are easy to parallelize, because they maintain trivial state and are commutative—e.g., <code>wc</code> simply maintains a counter. Other commands, such as <code>sort</code>, maintain more complex invariants that have to be taken into account when merging partial results.</p></li>
+<li><p><em>Non-parallelizable Pure Commands</em>: This class contains commands that, while purely functional, cannot be parallelized. This is because their internal state depends on prior state in the same pass in non-trivial ways. For example, hashing commands such as <code>sha1sum</code> maintain complex state that has to be updated sequentially. If parallelized on a single input, each stage would need to wait on the results of all previous stages, foregoing any parallelism benefits.</p></li>
+<li><p><em>Side-effectful Commands</em>: This class contains commands that have side-effects across the system—for example, updating environment variables, interacting with the filesystem, and accessing the network. Such commands are not parallelizable without finer-grained concurrency control mechanisms that can detect side-effects across the system. This is the largest class.</p></li>
+</ul>
+        </div>  <!-- /.container -->
+        <footer>
+            <table border="0" class="foot">
+                <tr class="foot">
+                    <td align="left" class="foot">
+                        version <a href="http://github.com/binpash/pash/releases/tag/v0.7">0.7</a> | revision <a href="http://github.com/binpash/pash"> 6d8f7ef </a> | Merge pull request #505 from binpash/posix-ci-fix | Updated: 15:12
+03/21/2022
+                    </td>
+                    <td align="right" class="foot">
+                        <a href="http://status.binpa.sh"><img src="https://img.shields.io/badge/status-OK-red.svg?style=flat" alt="Status OK"></a>
+                    </td>
+                </tr>
+                <tr class="foot">
+                    <td align="left" class="foot">
+                        <br>
+                        Copyright PaSh Project a Series of LF Projects, LLC. For website
+                        terms of use, privacy policy, trademark <br>guidelines and other policies 
+                        please see <a href="https://www.lfprojects.org/policies/">www.lfprojects.org/policies/</a>.
+                    </td>
+                </tr>
+
+            </table>
+        </footer>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+                 
+        <script type="text/javascript" src="../../utils/fbox/jquery.fancybox.js?v=2.1.5"></script>
+        <script type="text/javascript" src="../../utils/fbox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+        <script type="text/javascript" src="../../utils/fbox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+         <script src="../../utils/js/main.js"></script>
+            </body>
+</html>
