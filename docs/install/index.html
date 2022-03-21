@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+    <head>
+                <title>PaSh: Light-touch Data-Parallel Shell Scripting</title>
+                <meta charset="utf-8">
+        <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+        <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:100,200,300,400">
+        <style type="text/css">code{white-space: pre;}</style>
+        <!--[if lt IE 9]>
+            <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+        <style type="text/css">
+.twoWrapper { display: table;  width: 100%;}
+.twoLeft { display: table-cell; width: 70%; }
+.twoRight { display: table-cell; width: 30%; }
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+    margin: 0; padding: 0; vertical-align: baseline; border: none; }
+  table.sourceCode { width: 100%; line-height: 100%; }
+  td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+  td.sourceCode { padding-left: 5px; }
+  code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+  code > span.dt { color: #902000; } /* DataType */
+  code > span.dv { color: #40a070; } /* DecVal */
+  code > span.bn { color: #40a070; } /* BaseN */
+  code > span.fl { color: #40a070; } /* Float */
+  code > span.ch { color: #4070a0; } /* Char */
+  code > span.st { color: #4070a0; } /* String */
+  code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+  code > span.ot { color: #007020; } /* Other */
+  code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+  code > span.fu { color: #06287e; } /* Function */
+  code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+  code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  code > span.cn { color: #880000; } /* Constant */
+  code > span.sc { color: #4070a0; } /* SpecialChar */
+  code > span.vs { color: #4070a0; } /* VerbatimString */
+  code > span.ss { color: #bb6688; } /* SpecialString */
+  code > span.im { } /* Import */
+  code > span.va { color: #19177c; } /* Variable */
+  code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+  code > span.op { color: #666666; } /* Operator */
+  code > span.bu { } /* BuiltIn */
+  code > span.ex { } /* Extension */
+  code > span.pp { color: #bc7a00; } /* Preprocessor */
+  code > span.at { color: #7d9029; } /* Attribute */
+  code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+  code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+  code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+  code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+        </style>
+                                <style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+        </style>
+                        <link rel="stylesheet" href="../../utils/css/main.css">
+                          
+ <link rel="stylesheet" type="text/css" href="../../utils/css/mystyle.css" media="screen" />
+ <link rel="stylesheet" type="text/css" href="../../utils/fbox/jquery.fancybox.css?v=2.1.5" media="screen" />
+ <link rel="stylesheet" type="text/css" href="../../utils/fbox/helpers/jquery.fancybox-buttons.css?v=1.0.5" />
+ <link rel="stylesheet" type="text/css" href="../../utils/fbox/helpers/jquery.fancybox-thumbs.css?v=1.0.7" />              
+    </head>
+    <body>
+        <div class="container-fluid">
+            <header>
+                <div class="column">
+                    <div class="navigation">
+                        <a class="self" href="./index.html">tutorial</a> /
+                        <a href="../index.html">docs</a>  /
+                        <a href="../benchmarks/index.html">benchmarks</a> /
+                        <a href="http://github.com/binpash">github</a>
+                    </div>
+                    <div class="breadcrumb">
+                        <a href="/web">
+                            <img class="logo" src=../../utils/img/pash_logo2.jpg width="15%"/>
+                        </a>
+                        <!-- <a style="vertical-align: text-top;" href="/">PaSh</a> -->
+                    </div>
+                </div>
+            </header>
+                        <section id="installation" class="level1">
+<h1 class="title">Installation</h1>
+<p>On Ubuntu, Fedora, Debian, or Arch, run <code>curl up.pash.ndr.md | sh</code> to get PaSh up and running.</p>
+<p>If on other environments or prefer manual setup, there are essentially three steps required to set PaSh up: 1. Clone repo: <code>git clone git@github.com:binpash/pash.git</code> 2. Run <code>distro-deps.sh</code> (with <code>sudo</code>) and <code>setup-pash.sh</code> 3. Export <code>PASH_TOP</code> and, optionally, add it to your <code>PATH</code></p>
+<p>Most scripts support a <code>--help</code> flag that documents their options. These three steps are described in detail below, depending on the environment.</p>
+<p>Quick Jump: <a href="#">Clone &amp; Setup</a> | <a href="#">Manual Setup</a> | <a href="#">Docker Setup</a> | <a href="#repo-structure">Windows using WSL</a></p>
+<section id="clone-setup" class="level3">
+<h3>Clone &amp; Setup</h3>
+<p>The following steps clone the repo, set up dependencies (e.g., compilers), and then build PaSh:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode sh"><code class="sourceCode bash"><a class="sourceLine" id="cb1-1" title="1"><span class="fu">git</span> clone git@github.com:binpash/pash.git</a>
+<a class="sourceLine" id="cb1-2" title="2"><span class="fu">sudo</span> pash/scripts/distro-deps.sh</a>
+<a class="sourceLine" id="cb1-3" title="3"><span class="ex">./pash/scripts/setup-pash.sh</span></a></code></pre></div>
+<p>These scripts have been tested on Ubuntu, Fedora, Debian, and Arch.</p>
+</section>
+<section id="manual-setup" class="level3">
+<h3>Manual Setup</h3>
+<p>Use the system’s package manager to install the following packages (some of which might already be installed in your system):</p>
+<pre><code>automake bc bsdmainutils curl gcc git libffi-dev libtool locales locales-all m4 netcat-openbsd pkg-config python python3 python3-pip python3-setuptools python3-testresources sudo wamerican-insane wget</code></pre>
+<p>Then clone the PaSh repository and run <code>setup-pash.sh</code> as follows:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode sh"><code class="sourceCode bash"><a class="sourceLine" id="cb3-1" title="1"><span class="fu">git</span> clone git@github.com:binpash/pash.git</a>
+<a class="sourceLine" id="cb3-2" title="2"><span class="ex">./pash/scripts/setup-pash.sh</span></a></code></pre></div>
+<p>As noted at the end of <code>setup-pash.sh</code>, make sure you set <code>PASH_TOP</code> pointing to the absolute path of the directory <code>pa.sh</code> resides (you can optionally place that in your <code>PATH</code>).</p>
+</section>
+<section id="docker-setup" class="level3">
+<h3>Docker Setup</h3>
+<p>If Docker <a href="https://docs.docker.com/get-docker/">is available</a>, PaSh can be used as part of a Docker container. Depending on the setup, PaSh running on Docker may or may not be able to exploit all available hardware resources. There are two main options for setting up PaSh on Docker:</p>
+<p><em>Pull from DockerHub (Major Releases):</em> To <code>pull</code> the docker image <a href="https://hub.docker.com/r/binpash/pash">from Docker Hub</a>, run:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode sh"><code class="sourceCode bash"><a class="sourceLine" id="cb4-1" title="1"><span class="ex">docker</span> pull binpash/pash</a></code></pre></div>
+<p>We refresh this image (as well as other images) on every major release.</p>
+<p><em>Build Image (Latest Commit):</em> To build the latest Docker container, run <code>docker build</code> in <a href="https://github.com/binpash/pash/tree/main/scripts/docker">scripts/docker</a>:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode sh"><code class="sourceCode bash"><a class="sourceLine" id="cb5-1" title="1"><span class="fu">git</span> clone git@github.com:binpash/pash.git</a>
+<a class="sourceLine" id="cb5-2" title="2"><span class="bu">cd</span> pash/scripts/docker/</a>
+<a class="sourceLine" id="cb5-3" title="3"><span class="ex">docker</span> build -f ./ubuntu/Dockerfile -t <span class="st">&quot;pash:latest&quot;</span> .</a></code></pre></div>
+<p>In the last line, replace <code>ubuntu</code> with <code>fedora</code> or <code>debian</code> to get the corresponding base.</p>
+<p>To run the container:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode sh"><code class="sourceCode bash"><a class="sourceLine" id="cb6-1" title="1"><span class="ex">docker</span> run --name pash-play -it pash:latest</a></code></pre></div>
+<p>PaSh can be found in the container’s <code>/opt/pash</code> directory, so run <code>cd pash; git pull</code> to fetch the latest updates. More information in the <a href="../contributing/contrib.md#pash-on-docker-a-pocket-guide">pash-on-docker guide</a>.</p>
+</section>
+<section id="windows-using-wsl" class="level3">
+<h3>Windows using WSL</h3>
+<p>To run PaSh on windows without Docker, install <a href="https://docs.microsoft.com/en-us/windows/wsl/install-win10">WSL</a>. A short tutorial is included in the <a href="../contributing/contrib.md">contributing</a> guide.</p>
+</section>
+</section>
+        </div>  <!-- /.container -->
+        <footer>
+            <table border="0" class="foot">
+                <tr class="foot">
+                    <td align="left" class="foot">
+                        version <a href="http://github.com/binpash/pash/releases/tag/v0.7">0.7</a> | revision <a href="http://github.com/binpash/pash"> 6d8f7ef </a> | Merge pull request #505 from binpash/posix-ci-fix | Updated: 12:33
+03/21/2022
+                    </td>
+                    <td align="right" class="foot">
+                        <a href="http://status.binpa.sh"><img src="https://img.shields.io/badge/status-OK-red.svg?style=flat" alt="Status OK"></a>
+                    </td>
+                </tr>
+                <tr class="foot">
+                    <td align="left" class="foot">
+                        <br>
+                        Copyright PaSh Project a Series of LF Projects, LLC. For website
+                        terms of use, privacy policy, trademark <br>guidelines and other policies 
+                        please see <a href="https://www.lfprojects.org/policies/">www.lfprojects.org/policies/</a>.
+                    </td>
+                </tr>
+
+            </table>
+        </footer>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+                 
+        <script type="text/javascript" src="../../utils/fbox/jquery.fancybox.js?v=2.1.5"></script>
+        <script type="text/javascript" src="../../utils/fbox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+        <script type="text/javascript" src="../../utils/fbox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+         <script src="../../utils/js/main.js"></script>
+            </body>
+</html>
