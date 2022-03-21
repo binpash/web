@@ -62,13 +62,12 @@ type=$(basename $dir)
 if [[ "$type" = "docs" ]]; then
     export self_tab=$(cat <<-END
 <a href="./tutorial/index.html">tutorial</a> /     
-<a class="self" href="./docs">docs</a> /
+<a class="self" href="./index.html">docs</a> /
 <a href="./benchmarks/index.html">benchmarks</a> / 
 END
 )
 CSSDIR="../"
-elif [[ "$type" = "tutorial" ]] || [[ "$type" = "install" ]] || [[ "$type" = "contributing" ]] || [[ "$type" = "p_stats" ]] || 
-[[ "$type" = "parser" ]]; then
+elif [[ "$type" = "tutorial" ]];  then
     export self_tab=$(cat <<-END
 <a class="self" href="./index.html">tutorial</a> /
 <a href="../index.html">docs</a>  /
@@ -76,6 +75,22 @@ elif [[ "$type" = "tutorial" ]] || [[ "$type" = "install" ]] || [[ "$type" = "co
 END
 )
 CSSDIR="../.."
+elif [[ "$type" = "install" ]] || [[ "$type" = "contributing" ]]; then
+CSSDIR="../.."
+    export self_tab=$(cat <<-END
+<a class="self" href="../tutorial/index.html">tutorial</a> /
+<a href="../index.html">docs</a>  /
+<a href="../benchmarks/index.html">benchmarks</a> /
+END
+)
+elif [[ "$type" = "p_stats" ]] || [[ "$type" = "parser" ]]; then
+CSSDIR="../.."
+    export self_tab=$(cat <<-END
+<a class="self" href="../../docs">tutorial</a> /
+<a href="../index.html">docs</a>  /
+<a href="../benchmarks/index.html">benchmarks</a> /
+END
+)
 elif [[ "$type" = "benchmarks" ]]; then
     export self_tab=$(cat <<-END
 <a href="../tutorial/index.html">tutorial</a> /     
@@ -184,12 +199,16 @@ pandoc -s $DIR/$filename\
       sed -i 's/>A Short PaSh Tutorial/ class="title">A Short PaSh Tutorial/g' $DIR/index.html
       # open the correct installation file
       sed -i 's/href="..\/install\/"/href="..\/install\/index.html"/g' $DIR/index.html
+      # fix contrib
+      sed -i 's/..\/..\/contributing\/contrib.md/..\/..\/contributing\/index.html/g' $DIR/index.html
+
   elif [[ "$type" = "pash" ]]; then
       # this is the base case for the landing page
       sed -i 's/href="docs\/tutorial"/href="docs\/tutorial\/index.html"/g' $DIR/index.html
   elif [[ "$type" = "install" ]]; then
       # correct the title
       sed -i 's/>Installation/ class="title">Installation/g' $DIR/index.html
+      sed -i 's/..\/contributing\/contrib.md/..\/contributing\/index.html/g' $DIR/index.html
   elif [[ "$type" = "annotations" ]]; then
       sed -i 's/>Parallelizability/ class="title">Parallelizability Classes/g' $DIR/index.html
       # fix redirection links
@@ -207,7 +226,6 @@ pandoc -s $DIR/$filename\
   elif [[ "$type" = "runtime" ]]; then
       sed -i 's/>Runtime Support/ class="title">Runtime Support/g' $DIR/index.html
   elif [[ "$type" = "parser" ]]; then
-      echo "XDDDDDDDDDDDDDDDDDDDDDDDDDDDD"
       sed -i 's/<h2>Instructions<\/h2>/<h1 class="title">Instructions<\/h1>/g' $DIR/index.html
   fi
 
@@ -236,7 +254,7 @@ touch $PASH_TOP/docs/benchmarks/README.md
 generate-html $PASH_TOP/docs/install/README.md
 generate-html $PASH_TOP/README.md
 generate-html $PASH_TOP/docs/README.md
-generate-html $PASH_TOP/docs/benchmarks/README.md
+#generate-html $PASH_TOP/docs/benchmarks/README.md
 generate-html $PASH_TOP/docs/tutorial/tutorial.md
 generate-html $PASH_TOP/docs/contributing/contrib.md
 generate-html $PASH_TOP/annotations/README.md
