@@ -233,15 +233,15 @@ rm -f $PASH_TOP/README.md
 touch $PASH_TOP/README.md
 mkdir -p $PASH_TOP/docs/benchmarks/
 touch $PASH_TOP/docs/benchmarks/README.md
-#generate-html $PASH_TOP/docs/install/README.md
-#generate-html $PASH_TOP/README.md
-#generate-html $PASH_TOP/docs/README.md
-#generate-html $PASH_TOP/docs/benchmarks/README.md
-#generate-html $PASH_TOP/docs/tutorial/tutorial.md
-#generate-html $PASH_TOP/docs/contributing/contrib.md
+generate-html $PASH_TOP/docs/install/README.md
+generate-html $PASH_TOP/README.md
+generate-html $PASH_TOP/docs/README.md
+generate-html $PASH_TOP/docs/benchmarks/README.md
+generate-html $PASH_TOP/docs/tutorial/tutorial.md
+generate-html $PASH_TOP/docs/contributing/contrib.md
 generate-html $PASH_TOP/annotations/README.md
 generate-html $PASH_TOP/annotations/p_stats/README.md
 generate-html $PASH_TOP/compiler/README.md
 generate-html $PASH_TOP/compiler/parser/README.md
 generate-html $PASH_TOP/runtime/README.md
-#generate-html $PASH_TOP/evaluation/benchmarks/README.md
+generate-html $PASH_TOP/evaluation/benchmarks/README.md
