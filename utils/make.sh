@@ -82,22 +82,30 @@ elif [[ "$type" = "benchmarks" ]]; then
 <a class="self">benchmarks</a> /
 END
 )
-CSSDIR="../.."
-wget ctrl.pash.ndr.md/client.js -O $DIR/client.js
-curl_d=$(curl -s "ctrl.pash.ndr.md/job=fetch_runs&count=50")
-curl_data=$(echo $curl_d | base64 | tr -d "\n")
-echo "local_data = Base64.decode(\`$curl_data\`);" >> $DIR/client.js
-echo "running_on_website = true;" >> $DIR/client.js
-echo "let v = $curl_d;" > d.js
-echo "" >> d.js
-cat file.js >> d.js
-compiler=$(node d.js Compiler);
-interface="$(node d.js Interface)";
-posix="$(node d.js Posix)";
-intro="$(node d.js Intro)";
-agg="$(node d.js Aggregator)"; 
-template="benchmarks.html"
-else 
+    CSSDIR="../.."
+    wget ctrl.pash.ndr.md/client.js -O $DIR/client.js
+    curl_d=$(curl -s "ctrl.pash.ndr.md/job=fetch_runs&count=50")
+    curl_data=$(echo $curl_d | base64 | tr -d "\n")
+    echo "local_data = Base64.decode(\`$curl_data\`);" >> $DIR/client.js
+    echo "running_on_website = true;" >> $DIR/client.js
+    echo "let v = $curl_d;" > d.js
+    echo "" >> d.js
+    cat file.js >> d.js
+    compiler=$(node d.js Compiler);
+    interface="$(node d.js Interface)";
+    posix="$(node d.js Posix)";
+    intro="$(node d.js Intro)";
+    agg="$(node d.js Aggregator)"; 
+    template="benchmarks.html"
+elif [[ "$type" = "annotations" ]]; then
+    CSSDIR="../"
+export self_tab=$(cat <<-END
+<a href="../docs/tutorial/index.html">tutorial</a> /     
+<a href="../docs/index.html">docs</a>  /
+<a href="../docs/benchmarks/index.html">benchmarks</a> /
+END
+)
+else
     export self_tab=$(cat <<-END
 <a href="./docs/tutorial/index.html">tutorial</a> /     
 <a href="./docs/index.html">docs</a>  /
@@ -173,9 +181,16 @@ pandoc -s $DIR/$filename\
   elif [[ "$type" = "pash" ]]; then
       # this is the base case for the landing page
       sed -i 's/href="docs\/tutorial"/href="docs\/tutorial\/index.html"/g' $DIR/index.html
+      # fix annotations link
+      sed -i 's/href="..\/annotations\/"/href="..\/annotations\/index.html"/g' $DIR/index.html
   elif [[ "$type" = "install" ]]; then
       # correct the title
       sed -i 's/>Installation/ class="title">Installation/g' $DIR/index.html
+  elif [[ "$type" = "annotations" ]]; then
+      sed -i 's/>Parallelizability/ class="title">Parallelizability Classes/g' $DIR/index.html
+      # fix redirection links
+      sed -i 's/#parallelizability-study-of-commands-in-gnu--posix/#parallelizability-study-of-commands-in-gnu-posix/g' $DIR/index.html
+      sed -i 's/#Issues/#issues/g' $DIR/index.html
   fi
   cleanup $CSSDIR
 }
@@ -205,3 +220,4 @@ generate-html $PASH_TOP/docs/README.md
 generate-html $PASH_TOP/docs/benchmarks/README.md
 generate-html $PASH_TOP/docs/tutorial/tutorial.md
 generate-html $PASH_TOP/docs/contributing/contrib.md
+generate-html $PASH_TOP/annotations/README.md
