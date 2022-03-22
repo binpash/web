@@ -86,19 +86,28 @@ END
 elif [[ "$type" = "p_stats" ]] || [[ "$type" = "parser" ]]; then
 CSSDIR="../.."
     export self_tab=$(cat <<-END
-<a class="self" href="../../docs">tutorial</a> /
+<a class="self" href="../../docs/tutorial/index.html">tutorial</a> /
 <a href="../index.html">docs</a>  /
 <a href="../benchmarks/index.html">benchmarks</a> /
 END
 )
 elif [[ "$type" = "benchmarks" ]]; then
+    CSSDIR="../.."
+    # when building the evaluation/benchmarks/
+    if grep -q 'evaluation' <<< "$DIR"; then
+    export self_tab=$(cat <<-END
+<a href="../../docs/tutorial/index.html">tutorial</a> /     
+<a href="../../docs/index.html">docs</a>  /
+<a class="self" href="../../docs/benchmarks/index.html">benchmarks</a> /
+END
+)
+    else 
     export self_tab=$(cat <<-END
 <a href="../tutorial/index.html">tutorial</a> /     
 <a href="../index.html">docs</a>  /
-<a class="self">benchmarks</a> /
+<a class="self" href="../benchmarks/index.html">benchmarks</a> /
 END
 )
-    CSSDIR="../.."
     wget ctrl.pash.ndr.md/client.js -O $DIR/client.js
     curl_d=$(curl -s "ctrl.pash.ndr.md/job=fetch_runs&count=50")
     curl_data=$(echo $curl_d | base64 | tr -d "\n")
@@ -113,6 +122,7 @@ END
     intro="$(node d.js Intro)";
     agg="$(node d.js Aggregator)"; 
     template="benchmarks.html"
+fi
 elif [[ "$type" = "annotations" ]] || [[ "$type" = "compiler" ]] || [[ "$type" = "runtime" ]]; then
     CSSDIR="../"
 export self_tab=$(cat <<-END
@@ -195,12 +205,24 @@ pandoc -s $DIR/$filename\
       sed -i 's/compiler#/compiler\/index.html#/g' $DIR/index.html
       # fix runtime links
       sed -i 's/runtime#/runtime\/index.html#/g' $DIR/index.html
+      # fix evaluation links
+      sed -i 's/evaluation\/benchmarks\//evaluation\/benchmarks\/index.html/g' $DIR/index.html
   elif [[ "$type" = "tutorial" ]]; then
       sed -i 's/>A Short PaSh Tutorial/ class="title">A Short PaSh Tutorial/g' $DIR/index.html
       # open the correct installation file
       sed -i 's/href="..\/install\/"/href="..\/install\/index.html"/g' $DIR/index.html
       # fix contrib
       sed -i 's/..\/..\/contributing\/contrib.md/..\/..\/contributing\/index.html/g' $DIR/index.html
+      # fix annotations link
+      sed -i 's/..\/..\/annotations\//..\/..\/annotations\/index.html/g' $DIR/index.html
+      # fix compiler link
+      sed -i 's/..\/..\/compiler/..\/..\/compiler\/index.html/g' $DIR/index.html
+      # fix runtime link
+      sed -i 's/..\/..\/runtime/..\/..\/runtime\/index.html/g' $DIR/index.html
+      # fix docs link
+      sed -i 's/..\/..\/docs/..\/..\/docs\/index.html/g' $DIR/index.html
+      # fix evaluation link
+      sed -i 's/..\/..\/evaluation/..\/..\/evaluation\/index.html/g' $DIR/index.html
 
   elif [[ "$type" = "pash" ]]; then
       # this is the base case for the landing page
@@ -226,7 +248,13 @@ pandoc -s $DIR/$filename\
   elif [[ "$type" = "runtime" ]]; then
       sed -i 's/>Runtime Support/ class="title">Runtime Support/g' $DIR/index.html
   elif [[ "$type" = "parser" ]]; then
+      # fix title
       sed -i 's/<h2>Instructions<\/h2>/<h1 class="title">Instructions<\/h1>/g' $DIR/index.html
+      # fix redirection
+  elif [[ "$type" = "benchmarks" ]]; then
+    # this is used for the evaluation/benchmarks/index.html
+    sed -i 's/#unix-50-from-bell-labs/#unix50-from-bell-labs/g' $DIR/index.html;
+    sed -i 's/>Experimental Evaluation/ class="title">Experimental Evaluation/g' $DIR/index.html
   fi
 
   cleanup $CSSDIR
@@ -263,3 +291,4 @@ generate-html $PASH_TOP/compiler/README.md
 generate-html $PASH_TOP/compiler/parser/README.md
 generate-html $PASH_TOP/runtime/README.md
 generate-html $PASH_TOP/evaluation/benchmarks/README.md
+generate-html $PASH_TOP/evaluation/micro/README.md

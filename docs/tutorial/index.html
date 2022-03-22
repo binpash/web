@@ -255,12 +255,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h4>The PaSh Repo</h4>
 <p>PaSh consist of three main components and a few additional “auxiliary” files and directories. The three main components are:</p>
 <ul>
-<li><p><a href="../../annotations/">annotations</a>: DSL characterizing commands, parallelizability study, and associated annotations. More specifically, (i) a lightweight annotation language allows command developers to express key parallelizability properties about their commands; (ii) an accompanying parallelizability study of POSIX and GNU commands. guides the annotation language and optimized aggregator library</p></li>
-<li><p><a href="../../compiler">compiler</a>: Shell-dataflow translations and associated parallelization transformations. Given a script, the PaSh compiler converts it to a dataflow graph, performs a series of semantics-preserving program transformations that expose parallelism, and then converts the dataflow graph back into a POSIX script.</p></li>
-<li><p><a href="../../runtime">runtime</a>: Runtime components such as <code>eager</code>, <code>split</code>, and associated combiners. Apart from POSIX constructs added to guide parallelism explicitly, PaSh provides Unix-aware runtime primitives for addressing performance- and correctness-related issues.</p></li>
+<li><p><a href="../../annotations/index.html">annotations</a>: DSL characterizing commands, parallelizability study, and associated annotations. More specifically, (i) a lightweight annotation language allows command developers to express key parallelizability properties about their commands; (ii) an accompanying parallelizability study of POSIX and GNU commands. guides the annotation language and optimized aggregator library</p></li>
+<li><p><a href="../../compiler/index.html">compiler</a>: Shell-dataflow translations and associated parallelization transformations. Given a script, the PaSh compiler converts it to a dataflow graph, performs a series of semantics-preserving program transformations that expose parallelism, and then converts the dataflow graph back into a POSIX script.</p></li>
+<li><p><a href="../../runtime/index.html">runtime</a>: Runtime components such as <code>eager</code>, <code>split</code>, and associated combiners. Apart from POSIX constructs added to guide parallelism explicitly, PaSh provides Unix-aware runtime primitives for addressing performance- and correctness-related issues.</p></li>
 </ul>
 <p>These three components implement the contributions presented <a href="https://arxiv.org/pdf/2007.09436.pdf">in the EuroSys paper</a>. They are expected to be usable with minimal effort, through a few different installation means presented below.</p>
-<p>The auxiliary directories are: * <a href="../../docs">docs</a>: Design documents, tutorials, installation instructions, etc. * <a href="../../evaluation">evaluation</a>: Shell pipelines and script used for the evaluation of <code>pash</code>.</p>
+<p>The auxiliary directories are: * <a href="../../docs/index.html">docs</a>: Design documents, tutorials, installation instructions, etc. * <a href="../../evaluation/index.html">evaluation</a>: Shell pipelines and script used for the evaluation of <code>pash</code>.</p>
 </section>
 <section id="pash-concepts-in-depth" class="level4">
 <h4>PaSh Concepts in Depth</h4>
@@ -270,7 +270,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h4>Useful Links</h4>
 <p>Chat: * <a href="ttps://discord.com/channels/947328962739187753/">Discord Server</a> (<a href="http://join.binpa.sh/">Invite</a>)</p>
 <p>Mailing Lists: * <a href="https://groups.google.com/g/pash-dev">Discussion</a>: Join this mailing list for discussing all things <code>pash</code> * <a href="https://groups.google.com/g/pash-commits">Commits</a>: Join this mailing list for commit notifications</p>
-<p>Development/contributions: * Contribution guide: <a href="../../docs/contributing/contrib.md">docs/contrib</a> * Continuous Integration Server: <a href="http://ci.binpa.sh/">http://ci.binpa.sh/</a></p>
+<p>Development/contributions: * Contribution guide: <a href="../../docs/index.html/contributing/contrib.md">docs/contrib</a> * Continuous Integration Server: <a href="http://ci.binpa.sh/">http://ci.binpa.sh/</a></p>
 </section>
 </section>
 </section>
@@ -279,7 +279,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <table border="0" class="foot">
                 <tr class="foot">
                     <td align="left" class="foot">
-                        version <a href="http://github.com/binpash/pash/releases/tag/v0.7">0.7</a> | revision <a href="http://github.com/binpash/pash"> 6d8f7ef </a> | Merge pull request #505 from binpash/posix-ci-fix | Updated: 00:28
+                        version <a href="http://github.com/binpash/pash/releases/tag/v0.7">0.7</a> | revision <a href="http://github.com/binpash/pash"> 6d8f7ef </a> | Merge pull request #505 from binpash/posix-ci-fix | Updated: 11:45
 03/22/2022
                     </td>
                     <td align="right" class="foot">

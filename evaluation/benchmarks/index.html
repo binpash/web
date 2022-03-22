@@ -1,14 +1,12 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <script src="https://d3js.org/d3.v4.min.js"></script>
-        <title>PaSh: Light-touch Data-Parallel Shell Scripting</title>
-        <meta charset="utf-8">
+                <title>PaSh: Light-touch Data-Parallel Shell Scripting</title>
+                <meta charset="utf-8">
         <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
         <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:100,200,300,400">
         <style type="text/css">code{white-space: pre;}</style>
-
         <!--[if lt IE 9]>
             <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
         <![endif]-->
@@ -123,14 +121,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
  <link rel="stylesheet" type="text/css" href="../../utils/fbox/helpers/jquery.fancybox-thumbs.css?v=1.0.7" />              
     </head>
     <body>
-        <script src="client.js"></script>
         <div class="container-fluid">
             <header>
                 <div class="column">
                     <div class="navigation">
-                        <a href="../tutorial/index.html">tutorial</a> /     
-                        <a href="../index.html">docs</a>  /
-                        <a class="self">benchmarks</a> /
+                        <a href="../../docs/tutorial/index.html">tutorial</a> /     
+                        <a href="../../docs/index.html">docs</a>  /
+                        <a class="self" href="../../docs/benchmarks/index.html">benchmarks</a> /
                         <a href="http://github.com/binpash">github</a>
                     </div>
                     <div class="breadcrumb">
@@ -141,219 +138,87 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
                     </div>
                 </div>
             </header>
-            <h1 class="title">Benchmarks</h1>
-
-            <section id="pash-documentation" class="level1">
-                <p>Quick Jump: <a href="#latest-snapshot">latest snapshot</a> | <a href="#performance">performance</a> | <a href="#correctness">correctness</a> </p>
-
-                <p>
-                Among other metrics, the PaSh continuous integration infrastructure tracks performance and correctness metrics on the <code>main</code> branch over time.
-                Some of these results—for the most recent commits—are shown below; longer commit history, other branches, and more configurations are part of <a href="http://ctrl.binpa.sh">the control subsystem</a>.
-                </p>
-
-                <p>
-                One can also view these results in textual form. For example, to get the latest 5 builds run <code>curl -s ci.binpa.sh | head</code>. 
-                To get details about a specific commit, run <code>curl -s ci.binpa.sh/f821b4b</code>.
-                </p>
-
-                <section id="latest-snapshot" class="level2">
-                    <h2>Latest Snapshot</h2>
-                    <p>
-                    The next few plots show results only for the latest commit on <code>main</code> branch.
-                    </p>
-
-
-                    <h4>Classic Unix One-liners</h4>
-                    <p>
-                    This benchmark set contains 9 pipelines written by Unix experts:
-                    a few pipelines are from Unix legends (e.g., <a href='https://dl.acm.org/doi/10.1145/5948.315654'>Top-N</a>, <a href="https://doi.org/10.1145/3532.315102">Spell</a>), 
-                    one from <a href="https://nostarch.com/wcss2">a book on Unix scripting</a>, and a few are from top Stackoverflow answers.
-                    Pipelines contain 2-7 stages (avg.: 5.2), ranging from scalable CPU-intensive (e.g., <code>grep</code> stage in Nfa-regex) to non-parallelizable stages (e.g., <code>diff</code> stage in Diff).
-                    Inputs are script-specific and average 10GB per benchmark.
-
-                    <div id ="Classics-bp"></div>
-
-
-                    <h4>Unix50 from Bell Labs</h4>
-                    <p>
-                    This benchmark includes 36 pipelines solving <a href='https://unixgame.io/unix50'>the Unix 50 game.</a>
-                    The pipelines were designed to highlight Unix's modular philosophy, make extensive use of standard commands under a variety of flags, and appear to be written by non-experts.
-                    PaSh executes each pipeline as-is, without any modification.
-
-
-                    <div id ="Unix50-bp"></div>
-                    <h4>Mass-transit analytics during COVID-19</h4>
-                    <p>
-                    This benchmark set contains 4 pipelines that were used to analyze <a href="https://insidestory.gr/article/noymera-leoforeia-athinas?token=0MFVISB8N6">real telemetry data from bus schedules during the COVID-19 response in a large European city</a>.
-                    The pipelines compute several average statistics on the transit system per day—such as daily serving hours and daily number of vehicles.
-                    Pipelines range between 9 and 10 stages (avg.: 9.2), use typical Unix staples <code>sed</code>, <code>sort</code>, and <code>uniq</code>, and operate on a fixed 34GB dataset that contains mass-transport data collected over a single year.
-
-                    <div id ="COVID-mts-bp"></div>
-
-                    <section id="performance" class="level2">
-                    <h2>Performance</h2>
-                    <p>
-                    The next few plots show the performance of various benchmarks over time, as a timeseries (with the time captured by the commit ID)  on <code>main</code> branch.
-                    </p>
-
-                    <h4>Classic Unix One-liners</h4>
-                    <p>
-                    This benchmark set contains 9 pipelines written by Unix experts:
-                    a few pipelines are from Unix legends (e.g., <a href='https://dl.acm.org/doi/10.1145/5948.315654'>Top-N</a>, <a href="https://doi.org/10.1145/3532.315102">Spell</a>), 
-                    one from <a href="https://nostarch.com/wcss2">a book on Unix scripting</a>, and a few are from top Stackoverflow answers.
-                    Pipelines contain 2-7 stages (avg.: 5.2), ranging from scalable CPU-intensive (e.g., <code>grep</code> stage in Nfa-regex) to non-parallelizable stages (e.g., <code>diff</code> stage in Diff).
-                    Inputs are script-specific and average 10GB per benchmark.
-                    <div id ="Classics"></div>
-                    </p>
-
-
-                    <h4>Unix50 from Bell Labs</h4>
-                    <p>
-                    This benchmark includes 36 pipelines solving <a href='https://unixgame.io/unix50'>the Unix 50 game.</a>
-                    The pipelines were designed to highlight Unix's modular philosophy, make extensive use of standard commands under a variety of flags, and appear to be written by non-experts.
-                    PaSh executes each pipeline as-is, without any modification.
-                    <div id ="Unix50"></div>
-                    </p>
-                    <h4>Mass-transit analytics during COVID-19</h4>
-                    <p>
-                    This benchmark set contains 4 pipelines that were used to analyze <a href="https://insidestory.gr/article/noymera-leoforeia-athinas?token=0MFVISB8N6">real telemetry data from bus schedules during the COVID-19 response in a large European city</a>.
-                    The pipelines compute several average statistics on the transit system per day—such as daily serving hours and daily number of vehicles.
-                    Pipelines range between 9 and 10 stages (avg.: 9.2), use typical Unix staples <code>sed</code>, <code>sort</code>, and <code>uniq</code>, and operate on a fixed 34GB dataset that contains mass-transport data collected over a single year.
-                    <div id ="COVID-mts"></div>
-                    </p>
-
-                    <h4>Dependency Untangling</h4>
-                    <p>
-                    While the JIT engine operates as if invoked on every region, Pash is engineered to spawn a long-running stateful compilation server just once, 
-                    feeding it compilation requests until the execution of the script completes.
-                    This design has two benefits: 
-                    (1) it reduces run-time overhead by avoiding reinitializing the compiler for each compilation request; and
-                    (2) it allows maintaining and querying past-compilation results when compiling a new fragment.
-                    The latter allows Pash to untangle dependencies across regions, finding and exploiting opportunities for cross-region parallel execution.
-                    This set contains several benchmarks including log processing/parsing, media conversion, genome computation and compression apps.
-                    <div id ="for-loops"></div>
-                    </p>
-                    <h4>Average Temperature</h4>
-                    <p>
-                    Contains a large script downloading and processing multi-year temperature data across the US.
-                    <div id ="AvgTemp"></div>
-                    </p>
-                    <h4>NLP</h4>
-                    <p>
-                    Contains several scripts from <a href="https://www.cs.upc.edu/~padro/Unixforpoets.pdf">Unix for Poets</a>, 
-                    a tutorial for developing programs for natural-language processing out of Unix and Linux utilities.
-                    <div id ="NLP"></div>
-                    </p>
-                    <h4>WebIndex</h4>
-                    <p>
-                    Large multi-stage script for web crawling and indexing, using a variety of third-party and built-in utilities.
-                    <div id ="WebIndex"></div>
-                    </p>
-                    <section id="correctness" class="level2">
-                        <h2>Correctness</h2>
-
-                        <p>
-                        This section tracks various statistics across tests checking the correctness of various PaSh components.
-                        </p>
-
-                        <table>
-                            <thead>
-                                <tr class="header">
-                                    <th style="text-align: left;">Benchmark</th>
-                                    <th style="text-align: center;">Passed</th>
-                                    <th style="text-align: center;">Failed</th>
-                                    <th style="text-align: center;">Untested</th>
-                                    <th style="text-align: center;">Unresolved</th>
-                                    <th style="text-align: center;">Unsupported</th>
-                                    <th style="text-align: center;">Other</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr class="odd">
-                                    <td style="text-align: left;">Compiler Tests </td>
-<td> 54/54</td>
-<td> 0/54</td>
-<td> 0/54</td>
-<td> 0/54</td>
-<td> 0/54</td>
-<td> 0/54</td>
-                                </tr>
-                                <tr class="even">
-                                    <td style="text-align: left;">Intro Tests </td>
-<td> 2/2</td>
-<td> 0/2</td>
-<td> 0/2</td>
-<td> 0/2</td>
-<td> 0/2</td>
-<td> 0/2</td>
-                                </tr>
-                                <tr class="even">
-                                    <td style="text-align: left;">Interface Tests </td>
-<td> 34/34</td>
-<td> 0/34</td>
-<td> 0/34</td>
-<td> 0/34</td>
-<td> 0/34</td>
-<td> 0/34</td>
-                                </tr>
-                                <tr class="odd">
-                                    <td style="text-align: left;">Annotation Tests</td>
-                                    <td> 1/1 </td>
-                                    <td> 1/1 </td>
-                                    <td> 1/1 </td>
-                                    <td> 1/1 </td>
-                                    <td> 1/1 </td>
-                                    <td> 1/1 </td>
-                                </tr>
-                                <tr class="even">
-                                    <td style="text-align: left;">Aggregator Tests </td>
-<td> 109/109</td>
-<td> 0/109</td>
-<td> 0/109</td>
-<td> 0/109</td>
-<td> 0/109</td>
-<td> 0/109</td>
-                                </tr>
-                                <tr class="odd">
-                                    <td style="text-align: left;">Smoosh Tests</td>
-                                    <td>10/10 </td>
-                                    <td>0/10  </td>
-                                    <td>0/10  </td>
-                                    <td>0/10  </td>
-                                    <td>0/10  </td>
-                                    <td>0/10  </td>
-                                </tr>
-                                <tr class="even">
-                                    <td style="text-align: left;">Posix Tests </td>
-<td> 375/494</td>
-<td> 41/494</td>
-<td> 31/494</td>
-<td> 6/494</td>
-<td> 40/494</td>
-<td> 1/494</td>
-
-                                </tr>
-                            </tbody>
-                        </table>
-
-                        <!--
-                            Performance results on the correctness tests:
-                            <div id ="INTERFACE"></div>
-                            <div id ="INTRO"></div>
-                            <div id ="COMPILER"></div>
-
-                            <section id="other" class="level2">
-                            <h2>Other</h2>
-                        -->
-
-
-
+                        <section id="experimental-evaluation" class="level1">
+<h1 class="title">Experimental Evaluation</h1>
+<p>Quick Jump: <a href="#common-unix-one-liners">one-liners</a> | <a href="#unix50-from-bell-labs">unix50</a> | <a href="#noaa-weather-analysis">weather analysis</a> | <a href="#wikipedia-web-indexing">web indexing</a></p>
+<p><em>Most benchmark sets in the evaluation infrastructure include a <code>input/setup.sh</code> script for fetching inputs and setting up the experiment appropriately.</em> See <a href="">Running other script</a> later.</p>
+<section id="common-unix-one-liners" class="level4">
+<h4>Common Unix one-liners</h4>
+<p>The one-liner scripts are included in <a href="../evaluation/microbenchmarks">evaluation/microbenchmarks</a>. The list of scripts (and their correspondence to the names in the paper) are seen below: - minimal_grep.sh # EuroSys: nfa-regex - minimal_sort.sh # EuroSys: sort - topn.sh # EuroSys: top-n - wf.sh # EuroSys: wf - spell.sh # EuroSys: spell - diff.sh # EuroSys: difference - bigrams.sh # EuroSys: bi-grams - set-diff.sh # EuroSys: set-difference - double_sort.sh # EuroSys: sort-sort - shortest_scripts.sh # EuroSys: shortest-scripts</p>
+<p>The inputs that we are going to run them on are defined in - <code>*_env_small.sh</code> (for the small input) - <code>*_env.sh</code> (for the large EuroSys eval input, usually 10x larger than the small)</p>
+<p>Before running the script we first need to <code>cd</code> to the correct directory <code>cd $PASH_TOP/evaluation/eurosys</code></p>
+<p>The script that runs PaSh on these programs is: <a href="../evaluation/eurosys/execute_eurosys_one_liners.sh">evaluation/eurosys/execute_eurosys_one_liners.sh</a> There are three modes of execution (can be seen by calling the script with the -h flag):</p>
+<ol type="1">
+<li>Small inputs | –width 2, 16 | Only full PaSh config</li>
+<li>Small inputs | –width 2, 16 | All PaSh configs</li>
+<li>Big inputs | – width 2, 4, 8, 16, 32, 64 | All PaSh configs</li>
+</ol>
+<p>The script <a href="../evaluation/eurosys/execute_eurosys_one_liners.sh">evaluation/eurosys/execute_eurosys_one_liners.sh</a> is based on <a href="../evaluation/execute_compile_evaluation_script.sh">evaluation/execute_compile_evaluation_script.sh</a> that correctly sets up PaSh for the different configurations.</p>
+<p>If you just want to check that PaSh achieves speedups as presented in the paper you can just run 1 with option <code>-s</code>.</p>
+<p>If you are interested in seeing the improvements by PaSh’s runtime primitives (all lines in Figure 9), you can run 2 with option <code>-m</code>. This should take a couple hours and should validate the trends between different PaSh configurations as shown in Figure 9.</p>
+<p>If you want to reproduce the complete results from Figure 9, you need to run 3 with option <code>-l</code>. Note that this should take more than a day to execute. Also this requires several hundred GBs of free space (due to intermediate inputs, outputs, and buffering).</p>
+<p>To plot the results from any of the above experiments, do the following:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode sh"><code class="sourceCode bash"><a class="sourceLine" id="cb1-1" title="1"><span class="bu">cd</span> <span class="va">$PASH_TOP</span>/compiler</a>
+<a class="sourceLine" id="cb1-2" title="2"><span class="ex">python3</span> gather_results.py --eurosys2021</a></code></pre></div>
+<p>This will create plots for all invocations of <code>evaluation/eurosys/execute_eurosys_one_liners.sh</code>, one for each flag. The plots are: * for <code>-s</code>: <a href="evaluation/plots/small_tiling_throughput_scaleup.pdf">evaluation/plots/small_tiling_throughput_scaleup.pdf</a> * for <code>-m</code>: <a href="../evaluation/plots/medium_tiling_throughput_scaleup.pdf">evaluation/plots/medium_tiling_throughput_scaleup.pdf</a> * for <code>-l</code>: <a href="../evaluation/plots/tiling_throughput_scaleup.pdf">evaluation/plots/tiling_throughput_scaleup.pdf</a></p>
+<p>Note that <code>-m</code> supersedes <code>-s</code> but <code>-l</code> does not supersede any of the two.</p>
+<p>Also note that if you run a script partially, it might end up saving partial results, therefore having 0 speedups in some points of the plots.</p>
+</section>
+<section id="unix50-from-bell-labs" class="level4">
+<h4>Unix50 from Bell Labs</h4>
+<p>All of the Unix50 pipelines are in <a href="../evaluation/unix50/unix50.sh">evaluation/unix50/unix50.sh</a>. The inputs of the pipelines are in <a href="../evaluation/unix50/">evaluation/unix50/</a>.</p>
+<p>Before running the script we first need to move to the correct directory <code>cd $PASH_TOP/evaluation/eurosys</code></p>
+<p>The script that runs PaSh on these programs is: <a href="../evaluation/eurosys/execute_unix_benchmarks.sh">evaluation/eurosys/execute_unix_benchmarks.sh</a> There are two modes of execution (can be seen by calling the script with the -h flag):</p>
+<ol type="1">
+<li>Small inputs (1GB) | –width 4</li>
+<li>Big inputs (10GB) | –width 16 (EuroSys evaluation)</li>
+</ol>
+<p>The first one, called with <code>-s</code>, uses pash on the unix50 scripts with 1GB input and width 4 and should be done in less than an hour. The trend shown in the paper (Fig 10) should be visible in the results from this script.</p>
+<p>If you are interested in running the complete evaluation to reproduce Figure 10, you need to run the script with <code>-l</code>. This should take several hours.</p>
+<p>To plot the results from any of the above experiments, do the following:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode sh"><code class="sourceCode bash"><a class="sourceLine" id="cb2-1" title="1"><span class="bu">cd</span> <span class="va">$PASH_TOP</span>/compiler</a>
+<a class="sourceLine" id="cb2-2" title="2"><span class="ex">python3</span> gather_results.py --eurosys2021</a></code></pre></div>
+<p>This will create plots for both “1GB –width 4” and for “10GB –width 16”.</p>
+<p>The plots are in: - for <code>-s</code>: <a href="../evaluation/plots/unix50_1GB_individual_speedups_4.pdf">evaluation/plots/unix50_1GB_individual_speedups_4.pdf</a> - for <code>-l</code>: <a href="../evaluation/plots/unix50_10GB_individual_speedups_16.pdf">evaluation/plots/unix50_10GB_individual_speedups_16.pdf</a></p>
+<p>Note that the pipelines in the plot are sorted with respect to speedup, and not by their ID. So the first pipeline does not necessarily correspond to the first pipeline in <a href="../evaluation/unix50">evaluation/unix50</a>.</p>
+<p>There are two small differences of these plots compared to Figure 10. These differences are due to the evolution of PaSh and the refinement of its annotations. - First, the first pipeline has higher speedup that 4 and 16 in both cases. This is because this pipeline is not very CPU intensive and contains an initial <code>cat</code>. PaSh has evolved to perform an optimization that removes <code>cat</code> occurences that only contain a single file, and therefore removes it, improving performance significantly. - Second, the slowdown in the last 3 scripts is more significant than the one reported in the paper. This is because these scripts contain <code>tr -d '\n'</code>, the annotation for which was refined recently due to additional testing. The initial annotation for <code>tr</code> considered this invocation of <code>tr</code> to be stateless while it isn’t, since it removes all lines and therefore cannot be parallelized based on lines. The refinement in the annotation leads to additional splits to be added after <code>tr -d '\n'</code> (since it is non parallelizable pure). The issue with these splits is that they do not manage to split the file (since there is only one line) leaving the rest of the script to run sequentially.</p>
+</section>
+<section id="noaa-weather-analysis" class="level4">
+<h4>NOAA Weather Analysis</h4>
+<p>Note that input files that are needed by this script are <code>curl</code>ed from a server in the local network and therefore cannot be accessed from elsewhere.</p>
+<p>Before running the script we first need to move to the correct directory <code>cd $PASH_TOP/evaluation/eurosys</code></p>
+<p>The program that we run, described in Section 6.3, can be seen in <a href="../evaluation/scripts/max-temp-complete.sh">evaluation/scripts/max-temp-complete.sh</a>. It takes as input a sequence of lines each containing a year (e.g. using <code>seq 2000 2004</code>).</p>
+<p>To run the script with a single year of input use: <code>./execute_max_temp_dish_evaluation.sh -s</code></p>
+<p>These should take less than 10 minutes.</p>
+<p>It runs the script on: - bash - pa.sh –width 16</p>
+<p>The results are saved in: - <a href="../evaluation/results/max-temp-complete-2000-2000-seq.time">evaluation/results/max-temp-complete-2000-2000-seq.time</a> - <a href="../evaluation/results/max-temp-complete-2000-2000-16-pash.time">evaluation/results/max-temp-complete-2000-2000-16-pash.time</a></p>
+<p>If you want to run the program with 5 years of input (as is done in Section 6.3) you need to use the following: <code>./execute_max_temp_dish_evaluation.sh -l</code></p>
+<p>It should take less than an hour. It also runs the script with bash and pash –width 16.</p>
+<p>The results are saved in: - <a href="../evaluation/results/max-temp-complete-2000-2004-seq.time">evaluation/results/max-temp-complete-2000-2004-seq.time</a> - <a href="../evaluation/results/max-temp-complete-2000-2004-16-pash.time">evaluation/results/max-temp-complete-2000-2004-16-pash.time</a></p>
+<p>If you want to separate the preprocessing and processing (as done in Section 6.3) you need to add the <code>-e</code> flag to either 1 or 5 year execution, e.g.: <code>./execute_max_temp_dish_evaluation.sh -l -e</code></p>
+<p>This runs: - <code>evaluation/scripts/max-temp-preprocess.sh</code> - <code>evaluation/scripts/max-temp-process.sh</code></p>
+<p>with bash, and pash –width 16. It saves results in: - <a href="../evaluation/results/max-temp-preprocess-2000-2000-seq.time">evaluation/results/max-temp-preprocess-2000-2000-seq.time</a> - <a href="../evaluation/results/max-temp-preprocess-2000-2000-16-pash.time">evaluation/results/max-temp-preprocess-2000-2000-16-pash.time</a> - <a href="../evaluation/results/max-temp-process-2000-2000-seq.time">evaluation/results/max-temp-process-2000-2000-seq.time</a> - <a href="../evaluation/results/max-temp-process-2000-2000-16-pash.time">evaluation/results/max-temp-process-2000-2000-16-pash.time</a></p>
+<p>and similarly for the large inputs (2000-2004).</p>
+<p>Note that PaSh’s speedup for the complete script 2000-2004 with width 16 is actually higher than what is reported in the paper since it doesn’t have to write the intermediate files (between preprocessing and processing) to disk.</p>
+</section>
+<section id="wikipedia-web-indexing" class="level4">
+<h4>Wikipedia Web Indexing</h4>
+<p>Note that input files that are needed by this script (complete Wikipedia) are saved locally on the server and therefore this program cannot be run from elsewhere.</p>
+<p>Before running the script we first need to move to the correct directory <code>cd $PASH_TOP/evaluation/eurosys</code></p>
+<p>The program that we run, described in Section 6.4, can be seen in <a href="../evaluation/scripts/web-index.sh">evaluation/scripts/web-index.sh</a>. It requires having set the <code>$IN</code>, <code>$WIKI</code>, and <code>$WEB_INDEX_DIR</code> variables.</p>
+<p>To run the script for a 1000 wikipedia links use: <code>./execute_web_index_dish_evaluation.sh -s</code></p>
+<p>This sets up the required variables and should take less than 5 minutes. It runs the script with bash, pash –width 2, pash –width 16.</p>
+<p>The results are saved in: - <a href="../evaluation/results/web-index-1000-seq.time">evaluation/results/web-index-1000-seq.time</a> - <a href="../evaluation/results/web-index-1000-2-pash.time">evaluation/results/web-index-1000-2-pash.time</a> - <a href="../evaluation/results/web-index-1000-16-pash.time">evaluation/results/web-index-1000-16-pash.time</a></p>
+<p>If you want to run with the EuroSys evaluation inputs (100k links), use: <code>./execute_web_index_dish_evaluation.sh -l</code></p>
+<p>This should take a couple hours and the results are saved in: - <a href="../evaluation/results/web-index-100000-seq.time">evaluation/results/web-index-100000-seq.time</a> - <a href="../evaluation/results/web-index-100000-2-pash.time">evaluation/results/web-index-100000-2-pash.time</a> - <a href="../evaluation/results/web-index-100000-16-pash.time">evaluation/results/web-index-100000-16-pash.time</a></p>
+</section>
+</section>
         </div>  <!-- /.container -->
         <footer>
             <table border="0" class="foot">
                 <tr class="foot">
                     <td align="left" class="foot">
-                        version <a href="http://github.com/binpash/pash/releases/tag/v0.7">0.7</a> | revision <a href="http://github.com/binpash/pash"> 6d8f7ef </a> | Merge pull request #505 from binpash/posix-ci-fix | Updated: 00:28
+                        version <a href="http://github.com/binpash/pash/releases/tag/v0.7">0.7</a> | revision <a href="http://github.com/binpash/pash"> 6d8f7ef </a> | Merge pull request #505 from binpash/posix-ci-fix | Updated: 11:45
 03/22/2022
                     </td>
                     <td align="right" class="foot">
@@ -371,7 +236,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
             </table>
         </footer>
-
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
                  
         <script type="text/javascript" src="../../utils/fbox/jquery.fancybox.js?v=2.1.5"></script>

@@ -76,7 +76,14 @@ table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
                     </div>
                 </div>
             </header>
-                        
+                        <section id="section-6.5-further-micro-benchmarks" class="level4">
+<h4>Section 6.5: Further Micro-benchmarks</h4>
+<p>To run the comparison with sort –parallel, just use <a href="../evaluation/eurosys/execute_baseline_sort.sh">evaluation/eurosys/execute_baseline_sort.sh</a></p>
+<p>Before running the script we first need to move to the correct directory <code>cd $PASH_TOP/evaluation/eurosys</code></p>
+<p>There are two modes of execution: 1. option: -s Small input | –width 2, 16 2. option: -l Big input | – width 2, 4, 8, 16, 32, 64</p>
+<p>Note that this script executes sort –parallel with double the value of –width since we noticed that it grows slightly slower (as shown in the Figure in Section 6.5).</p>
+<p><em>This script throws a warning that is expected: <code>Env file: .../evaluation/microbenchmarks/sort_env_small.sh could not be read.</code> The warning is expected and can be safely ignored.</em></p>
+</section>
 
             <h1 class="title">PaSh<sup><sup><a href="https://github.com/binpash/pash/releases" class="top-version" style="color:white">0.7</a></sup></sup></h1>
             <h3 class="extras">Light-touch Data-Parallel Shell Scripting</h3>
@@ -89,7 +96,7 @@ table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
             <p>PaSh aims at the correct and automated parallelization of POSIX shell scripts. Broadly, PaSh includes three components: (1) a compiler that, given as input a POSIX shell script, emits a POSIX shell script that includes explicit data-parallel fragments for which PaSh has deemed such parallelization semantics-preserving, (2) a set of PaSh-related runtime primitives for supporting the execution of the parallel script fragments, available as in the <code>PATH</code> as normal commands, and (3) a crowd-sourced library of annotations characterizing several properties of common Unix/Linux commands relevant to parallelization.</p>
             <p>To parallelize, say, <code>./evaluation/intro/hello-world.sh</code> with a parallelization width of <code>2</code>, from the top-level directory of the repository run:</p>
             <div class="sourceCode" id="cb1"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">./pa.sh</span> ./evaluation/intro/hello-world.sh</span></code></pre></div>
-                <p>Run <code>./pa.sh --help</code> to get more information about the available commands. See <a href="docs/tutorial/index.html">docs/tutorial</a> for a longer tutorial.</p>
+                <p>Run <code>./pa.sh --help</code> to get more information about the available commands. See <a href="docs/tutorial">docs/tutorial</a> for a longer tutorial.</p>
                 <section id="quick-setup" class="level2">
 
                     <h2>Quick Setup</h2>
