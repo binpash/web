@@ -115,7 +115,7 @@ END
     echo "running_on_website = true;" >> $DIR/client.js
     echo "let v = $curl_d;" > d.js
     echo "" >> d.js
-    cat file.js >> d.js
+    cat fetch_table.js >> d.js
     commit_hash=$(cd $DIR/;git rev-parse --short HEAD);
     compiler=$(node d.js Compiler $commit_hash);
     interface="$(node d.js Interface $commit_hash)";

@@ -1,8 +1,9 @@
-let user_bench = process.argv[2]
+let user_bench = process.argv[2];
+let commit_hash = process.argv[3];
 let found = false;
 for (let i in v) {
-    for (let j in v[i]) 
-        if (v[i][j].bench === "POSIX") {
+    for (let j in v[i]) {
+        if (v[i][j].bench === "CORRECTNESS" && v[i][j].commit === commit_hash) {
             let o = v[i][j].tests;
             let o2 = JSON.parse(o)[0].csv.toString();
             let obj = o2.split('\n');
@@ -28,4 +29,5 @@ for (let i in v) {
                 }
             }
         }
+    }
 }
