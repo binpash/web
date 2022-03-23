@@ -115,12 +115,13 @@ END
     echo "running_on_website = true;" >> $DIR/client.js
     echo "let v = $curl_d;" > d.js
     echo "" >> d.js
-    cat file.js >> d.js
-    compiler=$(node d.js Compiler);
-    interface="$(node d.js Interface)";
-    posix="$(node d.js Posix)";
-    intro="$(node d.js Intro)";
-    agg="$(node d.js Aggregator)"; 
+    cat fetch_table.js >> d.js
+    commit_hash=$(cd $DIR/;git rev-parse --short HEAD);
+    compiler=$(node d.js Compiler $commit_hash);
+    interface="$(node d.js Interface $commit_hash)";
+    posix="$(node d.js Posix $commit_hash)";
+    intro="$(node d.js Intro $commit_hash)";
+    agg="$(node d.js Aggregator $commit_hash)"; 
     template="benchmarks.html"
 fi
 elif [[ "$type" = "annotations" ]] || [[ "$type" = "compiler" ]] || [[ "$type" = "runtime" ]]; then
