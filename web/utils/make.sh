@@ -52,8 +52,6 @@ function run_correctness_current_hash {
     curl -s "$request"
     # poll until we get the results
     while true; do
-        echo "Sleeping"
-        sleep 100;
         # fetch some of the latest results in case some other actions happened
         data=$(curl -s "ctrl.pash.ndr.md/job=fetch_runs&count=50");
         results=$(echo $data | jq '.rows | .[] | select(.commit=='\"$commit\"')')
@@ -61,8 +59,10 @@ function run_correctness_current_hash {
             # results are found
             break;
         fi
+        sleep 100;
+        echo "Sleeping"
     done
-    echo $results
+    echo $data
 }
 
 
@@ -132,9 +132,6 @@ END
 )
     wget ctrl.pash.ndr.md/client.js -O $DIR/client.js
     curl_d=$(run_correctness_current_hash $commit_hash)
-    echo $curl_d > hahaxd
-    exit 0
-    #curl_d=$(curl -s "ctrl.pash.ndr.md/job=fetch_runs&count=50")
     curl_data=$(echo $curl_d | base64 | tr -d "\n")
     echo "local_data = Base64.decode(\`$curl_data\`);" >> $DIR/client.js
     echo "running_on_website = true;" >> $DIR/client.js
