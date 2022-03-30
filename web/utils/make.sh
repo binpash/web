@@ -15,20 +15,9 @@ function usage {
     exit 1
 }
 
-VERBOSE=${VERBOSE:-"false"};
 version=$(grep __version__ $PASH_TOP/compiler/config.py | awk '{print $3}' | sed 's/"//g' || echo '"version": "0.1"')
 VERSION=${VERSION:-$(echo $version | sed "s/^.*\"version\":[ ]*\"\(.*\)\".*$/\1/")};
 UPDATED=$(LANG=en_us_88591; date +'%R'; date +'%m/%d/%Y')
-while getopts hvp opt
-do
-    case "$opt" in
-        (h) usage;;
-        (v) VERBOSE="true";;
-        (*) usage;;
-    esac
-done
-
-shift $(($OPTIND - 1))
 
 # cleanup
 function cleanup {
@@ -64,7 +53,6 @@ function run_correctness_current_hash {
     done
     echo $data
 }
-
 
 ###
 # Function to generate html
