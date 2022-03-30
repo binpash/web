@@ -119,6 +119,7 @@ END
 END
 )
     wget ctrl.pash.ndr.md/client.js -O $DIR/client.js
+    commit_hash=$(cd $DIR/;git rev-parse --short HEAD);
     curl_d=$(run_correctness_current_hash $commit_hash)
     curl_data=$(echo $curl_d | base64 | tr -d "\n")
     echo "local_data = Base64.decode(\`$curl_data\`);" >> $DIR/client.js
@@ -126,7 +127,6 @@ END
     echo "let v = $curl_d;" > d.js
     echo "" >> d.js
     cat fetch_table.js >> d.js
-    commit_hash=$(cd $DIR/;git rev-parse --short HEAD);
     compiler=$(node d.js Compiler "$commit_hash");
     interface="$(node d.js Interface "$commit_hash")";
     posix="$(node d.js Posix "$commit_hash")";
