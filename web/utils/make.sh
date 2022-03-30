@@ -49,7 +49,6 @@ function run_correctness_current_hash {
             break;
         fi
         sleep 100;
-        echo "Sleeping"
     done
     echo $data
 }
