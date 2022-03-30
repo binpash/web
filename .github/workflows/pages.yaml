@@ -1,6 +1,6 @@
 # script to automatically generate the website for PaSh
 # the generated website data files are pushed in gh-pages branch
-name: DeployPublish
+name: Pages
 
 on:
   push:
