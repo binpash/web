@@ -1,5 +1,5 @@
 #!/bin/bash
-
+set -e
 # nice getopts template:
 # http://stackoverflow.com/a/10789394
 
@@ -15,20 +15,9 @@ function usage {
     exit 1
 }
 
-VERBOSE=${VERBOSE:-"false"};
 version=$(grep __version__ $PASH_TOP/compiler/config.py | awk '{print $3}' | sed 's/"//g' || echo '"version": "0.1"')
 VERSION=${VERSION:-$(echo $version | sed "s/^.*\"version\":[ ]*\"\(.*\)\".*$/\1/")};
 UPDATED=$(LANG=en_us_88591; date +'%R'; date +'%m/%d/%Y')
-while getopts hvp opt
-do
-    case "$opt" in
-        (h) usage;;
-        (v) VERBOSE="true";;
-        (*) usage;;
-    esac
-done
-
-shift $(($OPTIND - 1))
 
 # cleanup
 function cleanup {
@@ -42,6 +31,26 @@ if [[ ${#MSG} -gt 50 ]]; then
     MSG="$(echo $MSG | cut -c 1-48).."   
 fi
 echo "$MSG"
+}
+
+function run_correctness_current_hash {
+    commit=$1
+    branch=main
+    request="http://ctrl.pash.ndr.md/job=issue&branch=$branch&commit=$commit&benchmark=CORRECTNESS"
+    # issue the request, silence output
+    $(curl -s "$request")
+    # poll until we get the results
+    while true; do
+        # fetch some of the latest results in case some other actions happened
+        data=$(curl -s "ctrl.pash.ndr.md/job=fetch_runs&count=50");
+        results=$(echo $data | jq '.rows | .[] | select(.commit=='\"$commit\"')')
+        if [ ! -z "$results" ]; then
+            # results are found
+            break;
+        fi
+        sleep 60;
+    done
+    echo $data
 }
 
 ###
@@ -109,14 +118,14 @@ END
 END
 )
     wget ctrl.pash.ndr.md/client.js -O $DIR/client.js
-    curl_d=$(curl -s "ctrl.pash.ndr.md/job=fetch_runs&count=50")
+    commit_hash=$(cd $DIR/;git rev-parse --short HEAD);
+    curl_d=$(run_correctness_current_hash $commit_hash)
     curl_data=$(echo $curl_d | base64 | tr -d "\n")
     echo "local_data = Base64.decode(\`$curl_data\`);" >> $DIR/client.js
     echo "running_on_website = true;" >> $DIR/client.js
     echo "let v = $curl_d;" > d.js
     echo "" >> d.js
     cat fetch_table.js >> d.js
-    commit_hash=$(cd $DIR/;git rev-parse --short HEAD);
     compiler=$(node d.js Compiler "$commit_hash");
     interface="$(node d.js Interface "$commit_hash")";
     posix="$(node d.js Posix "$commit_hash")";
@@ -280,10 +289,10 @@ rm -f $PASH_TOP/README.md
 touch $PASH_TOP/README.md
 mkdir -p $PASH_TOP/docs/benchmarks/
 touch $PASH_TOP/docs/benchmarks/README.md
+generate-html $PASH_TOP/docs/benchmarks/README.md
 generate-html $PASH_TOP/docs/install/README.md
 generate-html $PASH_TOP/README.md
 generate-html $PASH_TOP/docs/README.md
-generate-html $PASH_TOP/docs/benchmarks/README.md
 generate-html $PASH_TOP/docs/tutorial/tutorial.md
 generate-html $PASH_TOP/docs/contributing/contrib.md
 generate-html $PASH_TOP/annotations/README.md
@@ -293,5 +302,3 @@ generate-html $PASH_TOP/compiler/parser/README.md
 generate-html $PASH_TOP/runtime/README.md
 generate-html $PASH_TOP/evaluation/benchmarks/README.md
 generate-html $PASH_TOP/evaluation/micro/README.md
-
-

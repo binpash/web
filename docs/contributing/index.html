@@ -179,7 +179,12 @@ docker start -i NN               # starts container (add `-i` to drop straight i
 docker attach NN                 # non-interactive -&gt; interactive
 &lt;CTL+p&gt;, then &lt;CTL+q&gt;            # interactive -&gt; non-interactive
 docker cp A B                    # copy host&lt;-&gt;container; A B can be `NN:/x/y/z` or `lo/c/al`</code></pre>
-<p>Useful options for <code>docker run</code>: * <a href="https://docs.docker.com/storage/bind-mounts/">Mount host storage</a>: <code>-v /HST:/IN/NN</code> * <a href="https://docs.docker.com/config/containers/resource_constraints/">Limit CPU/Mem</a>: <code>--cpus='.5' --mem=1g</code> * <a href="https://docs.docker.com/engine/reference/commandline/run/#set-storage-driver-options-per-container">Limit disk size</a>: <code>--storage-opt size=10G</code></p>
+<p>Useful options for <code>docker run</code>:</p>
+<ul>
+<li><a href="https://docs.docker.com/storage/bind-mounts/">Mount host storage</a>: <code>-v /HST:/IN/NN</code></li>
+<li><a href="https://docs.docker.com/config/containers/resource_constraints/">Limit CPU/Mem</a>: <code>--cpus='.5' --mem=1g</code></li>
+<li><a href="https://docs.docker.com/engine/reference/commandline/run/#set-storage-driver-options-per-container">Limit disk size</a>: <code>--storage-opt size=10G</code></li>
+</ul>
 </section>
 </section>
 <section id="installing-wsl-on-windows" class="level2">
@@ -209,7 +214,13 @@ docker cp A B                    # copy host&lt;-&gt;container; A B can be `NN:/
 <a class="sourceLine" id="cb10-3" title="3"><span class="fu">Remove-Item</span> <span class="st">&quot;C:/Windows/Temp/wsl2.msi&quot;</span></a></code></pre></div>
 <p>Set WSL2 as default WSL version</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode powershell"><code class="sourceCode powershell"><a class="sourceLine" id="cb11-1" title="1">wsl --set-default-version 2</a></code></pre></div>
-<p>Install one of the Linux distributions on which PaSh has been tested from the Microsoft Store: * <a href="https://www.microsoft.com/store/apps/9N9TNGVNDL3Q">Ubuntu 18.04 LTS</a> * <a href="https://www.microsoft.com/store/apps/9n6svws3rx71">Ubuntu 20.04 LTS</a> * <a href="https://www.microsoft.com/store/apps/9MSVKQC78PK6">Debian GNU/Linux</a> * <a href="https://www.microsoft.com/store/apps/9n6gdm4k2hnc">Fedora Remix for WSL</a></p>
+<p>Install one of the Linux distributions on which PaSh has been tested from the Microsoft Store:</p>
+<ul>
+<li><a href="https://www.microsoft.com/store/apps/9N9TNGVNDL3Q">Ubuntu 18.04 LTS</a></li>
+<li><a href="https://www.microsoft.com/store/apps/9n6svws3rx71">Ubuntu 20.04 LTS</a></li>
+<li><a href="https://www.microsoft.com/store/apps/9MSVKQC78PK6">Debian GNU/Linux</a></li>
+<li><a href="https://www.microsoft.com/store/apps/9n6gdm4k2hnc">Fedora Remix for WSL</a></li>
+</ul>
 <p>Restart your machine</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode powershell"><code class="sourceCode powershell"><a class="sourceLine" id="cb12-1" title="1"><span class="fu">Restart-Computer</span></a></code></pre></div>
 </section>
@@ -256,8 +267,8 @@ docker cp A B                    # copy host&lt;-&gt;container; A B can be `NN:/
             <table border="0" class="foot">
                 <tr class="foot">
                     <td align="left" class="foot">
-                        version <a href="http://github.com/binpash/pash/releases/tag/v0.7">0.7</a> | revision <a href="http://github.com/binpash/pash"> 4392903 </a> | Merge pull request #509 from binpash/fix-correct.. | Updated: 00:28
-03/28/2022
+                        version <a href="http://github.com/binpash/pash/releases/tag/v0.7">0.7</a> | revision <a href="http://github.com/binpash/pash"> 6394c02 </a> | Merge pull request #502 from binpash/doc-fixes | Updated: 19:23
+03/30/2022
                     </td>
                     <td align="right" class="foot">
                         <a href="http://status.binpa.sh"><img src="https://img.shields.io/badge/status-OK-red.svg?style=flat" alt="Status OK"></a>
