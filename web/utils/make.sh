@@ -65,7 +65,6 @@ filename=$(basename $1)
 dir=$(dirname $1)
 DIR=${dir:-"."}
 CSSDIR="./" 
-
 template=template.html
 type=$(basename $dir)
 if [[ "$type" = "docs" ]]; then
