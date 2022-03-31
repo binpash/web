@@ -1,4 +1,4 @@
-# script to automatically generate the website for PaSh
+# script to automatically generate the website for Pash
 # the generated website data files are pushed in gh-pages branch
 name: Pages
 
