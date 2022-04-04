@@ -43,12 +43,12 @@ function run_correctness_current_hash {
     while true; do
         # fetch some of the latest results in case some other actions happened
         data=$(curl -s "ctrl.pash.ndr.md/job=fetch_runs&count=50");
-        results=$(echo $data | jq '.rows | .[] | select(.commit=='\"$commit\"')')
+        results=$(echo $data | jq '.rows | .[] | select((.commit=='\"$commit\"') and .bench=="CORRECTNESS")')
         if [ ! -z "$results" ]; then
             # results are found
             break;
         fi
-        sleep 60;
+        sleep 240;
     done
     echo $data
 }
