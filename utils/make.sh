@@ -36,9 +36,14 @@ echo "$MSG"
 function run_correctness_current_hash {
     commit=$1
     branch=main
-    request="http://ctrl.pash.ndr.md/job=issue&branch=$branch&commit=$commit&benchmark=CORRECTNESS"
-    # issue the request, silence output
-    issue=$(curl -s "$request")
+    # fetch some of the latest results in case some other actions happened
+    data=$(curl -s "ctrl.pash.ndr.md/job=fetch_runs&count=50");
+    results=$(echo $data | jq '.rows | .[] | select((.commit=='\"$commit\"') and .bench=="CORRECTNESS")')
+    if [ ! -z "$results" ]; then
+        request="http://ctrl.pash.ndr.md/job=issue&branch=$branch&commit=$commit&benchmark=CORRECTNESS"
+        # issue the request, silence output
+        issue=$(curl -s "$request")
+    fi
     # poll until we get the results
     while true; do
         # fetch some of the latest results in case some other actions happened
