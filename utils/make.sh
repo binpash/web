@@ -39,7 +39,7 @@ function run_correctness_current_hash {
     # fetch some of the latest results in case some other actions happened
     data=$(curl -s "ctrl.pash.ndr.md/job=fetch_runs&count=50");
     results=$(echo $data | jq '.rows | .[] | select((.commit=='\"$commit\"') and .bench=="CORRECTNESS")')
-    if [ ! -z "$results" ]; then
+    if [ -z "$results" ]; then
         request="http://ctrl.pash.ndr.md/job=issue&branch=$branch&commit=$commit&benchmark=CORRECTNESS"
         # issue the request, silence output
         issue=$(curl -s "$request")
