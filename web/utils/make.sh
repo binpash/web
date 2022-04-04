@@ -38,7 +38,7 @@ function run_correctness_current_hash {
     branch=main
     request="http://ctrl.pash.ndr.md/job=issue&branch=$branch&commit=$commit&benchmark=CORRECTNESS"
     # issue the request, silence output
-    $(curl -s "$request")
+    issue=$(curl -s "$request")
     # poll until we get the results
     while true; do
         # fetch some of the latest results in case some other actions happened
