@@ -283,7 +283,7 @@ function generate-styles {
     echo '<link rel="stylesheet" type="text/css" href="UDIR/utils/fbox/helpers/jquery.fancybox-thumbs.css?v=1.0.7" />' | sed "s;UDIR;$1;" >> ./utils/css.html
 }
 
-echo "building all the pages"
+echo "Building all the pages"
 rm -f $PASH_TOP/README.md
 touch $PASH_TOP/README.md
 mkdir -p $PASH_TOP/docs/benchmarks/
