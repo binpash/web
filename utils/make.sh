@@ -123,10 +123,8 @@ END
 )
     wget ctrl.pash.ndr.md/client.js -O $DIR/client.js
     commit_hash=$(cd $DIR/;git rev-parse --short HEAD);
+    # fetch the correctness tests
     curl_d=$(run_correctness_current_hash $commit_hash)
-    curl_data=$(echo $curl_d | base64 | tr -d "\n")
-    echo "local_data = Base64.decode(\`$curl_data\`);" >> $DIR/client.js
-    echo "running_on_website = true;" >> $DIR/client.js
     echo "let v = $curl_d;" > d.js
     echo "" >> d.js
     cat fetch_table.js >> d.js
@@ -135,6 +133,12 @@ END
     posix="$(node d.js Posix "$commit_hash")";
     intro="$(node d.js Intro "$commit_hash")";
     agg="$(node d.js Aggregator "$commit_hash")"; 
+    curl_d=$(curl -s "ctrl.pash.ndr.md/job=fetch_runs&count=50&benchmark=PERFORMANCE");
+    curl_data=$(echo $curl_d | base64 | tr -d "\n")
+    echo "local_data = Base64.decode(\`$curl_data\`);" >> $DIR/client.js
+    echo "running_on_website = true;" >> $DIR/client.js
+
+
     template="benchmarks.html"
 fi
 elif [[ "$type" = "annotations" ]] || [[ "$type" = "compiler" ]] || [[ "$type" = "runtime" ]]; then
