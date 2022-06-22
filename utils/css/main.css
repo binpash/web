@@ -233,6 +233,10 @@ footer {
   margin-bottom: 1em;
 }
 
+footer a {
+  color: #c98b72;
+}
+
 footer a img {
 	margin-bottom: -0.25em;
   height:18px;
