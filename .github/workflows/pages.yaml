@@ -18,27 +18,12 @@ jobs:
       - name: Building Github Pages
         run: |
           sudo apt-get update -y
-          sudo apt-get install nodejs pandoc pandoc-citeproc git -y
-          git clone https://github.com/binpash/pash --depth 1
-          cp -r web pash/
-          cd pash/
-          export PASH_TOP=$PWD
-          mkdir ~/public
-          cd web/
-          bash utils/make.sh
-          cd ../
-          cp -r index.html ~/public/
-          cp -r docs ~/public/
-          cp -r annotations ~/public/
-          cp -r compiler ~/public/
-          cp -r evaluation/ ~/public/
-          cp -r runtime/ ~/public/
-          cp -r web/utils ~/public/
-          cp -r web/favicon.ico ~/public/
+          sudo apt-get install nodejs pandoc git -y
+          bash web/utils/make.sh
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@4.1.5
         with:
           branch: gh-pages
-          folder: ~/public
+          folder: public
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
