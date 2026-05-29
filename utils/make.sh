@@ -1,12 +1,21 @@
 #!/bin/bash
 set -e
+
+SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
+WEB_DIR=$(cd "$SCRIPT_DIR/.." && pwd)
+REPO_ROOT=$(cd "$WEB_DIR/.." && pwd)
+DEFAULT_PASH_TOP="$REPO_ROOT/.cache/pash"
+PASH_TOP=${PASH_TOP:-$DEFAULT_PASH_TOP}
+DEFAULT_TRY_TOP="$REPO_ROOT/.cache/try"
+TRY_TOP=${TRY_TOP:-$DEFAULT_TRY_TOP}
+PUBLIC_DIR=${PUBLIC_DIR:-$REPO_ROOT/public}
+PASH_REF=${PASH_REF:-osdi22-ae}
+TRY_REF=${TRY_REF:-osdi26-ae}
+
+cd "$WEB_DIR"
+
 # nice getopts template:
 # http://stackoverflow.com/a/10789394
-
-if [[ -z "$PASH_TOP" ]]; then
-    echo "Need to provide PASH_TOP"
-    exit 1
-fi
 
 arg0=$(basename $0.sh)
 
@@ -15,14 +24,48 @@ function usage {
     exit 1
 }
 
-version=$(grep __version__ $PASH_TOP/compiler/config.py | awk '{print $3}' | sed 's/"//g' || echo '"version": "0.1"')
+version=$(grep __version__ "$PASH_TOP"/src/pash/__init__.py 2>/dev/null | awk '{print $3}' | sed 's/"//g' || true)
 VERSION=${VERSION:-$(echo $version | sed "s/^.*\"version\":[ ]*\"\(.*\)\".*$/\1/")};
+release_json=$(curl -fsSL https://api.github.com/repos/binpash/pash/releases/latest 2>/dev/null || true)
+RELEASE_TAG=${RELEASE_TAG:-$(printf '%s\n' "$release_json" | sed -n 's/.*"tag_name": "\(.*\)",/\1/p' | head -n1)}
+RELEASE_URL=${RELEASE_URL:-$(printf '%s\n' "$release_json" | sed -n 's/.*"html_url": "\(.*\)",/\1/p' | head -n1)}
+RELEASE_TAG=${RELEASE_TAG:-$VERSION}
+RELEASE_URL=${RELEASE_URL:-https://github.com/binpash/pash/releases/latest}
 UPDATED=$(LANG=en_us_88591; date +'%R'; date +'%m/%d/%Y')
 
 # cleanup
 function cleanup {
     rm ./utils/inc.html
     rm ./utils/css.html
+}
+
+function ensure-pash-source {
+    mkdir -p "$(dirname "$PASH_TOP")"
+    rm -rf "$PASH_TOP"
+    git init "$PASH_TOP" >/dev/null
+    (
+        cd "$PASH_TOP"
+        git remote add origin https://github.com/binpash/pash
+        git fetch --depth 1 origin "$PASH_REF"
+        git checkout --detach FETCH_HEAD
+    )
+}
+
+function ensure-try-source {
+    mkdir -p "$(dirname "$TRY_TOP")"
+    rm -rf "$TRY_TOP"
+    git init "$TRY_TOP" >/dev/null
+    (
+        cd "$TRY_TOP"
+        git remote add origin https://github.com/binpash/try
+        git fetch --depth 1 origin "$TRY_REF"
+        git checkout --detach FETCH_HEAD
+    )
+}
+
+function sedi {
+    sed -i.bak "$1" "$2"
+    rm -f "$2.bak"
 }
 
 function commit-msg {
@@ -72,11 +115,51 @@ DIR=${dir:-"."}
 CSSDIR="./" 
 template=template.html
 type=$(basename $dir)
+input_file="$DIR/$filename"
+out_dir="$PUBLIC_DIR"
+page_title="PaSh: Light-touch Data-Parallel Shell Scripting"
+repo_url="http://github.com/binpash/pash"
+repo_release_url="$RELEASE_URL"
+repo_ref_label="version"
+page_version="$VERSION"
+if [[ "$1" == "$WEB_DIR/utils/landing.html" ]]; then
+    DIR="$WEB_DIR"
+    input_file="/dev/null"
+elif [[ "$1" == "$PASH_TOP/docs/README.md" ]]; then
+    out_dir="$PUBLIC_DIR/docs"
+elif [[ "$1" == "$PASH_TOP/docs/install/README.md" ]]; then
+    out_dir="$PUBLIC_DIR/docs/install"
+elif [[ "$1" == "$PASH_TOP/docs/tutorial/tutorial.md" ]]; then
+    out_dir="$PUBLIC_DIR/docs/tutorial"
+elif [[ "$1" == "$PASH_TOP/docs/contributing/contrib.md" ]]; then
+    out_dir="$PUBLIC_DIR/docs/contributing"
+elif [[ "$1" == "$PASH_TOP/annotations/README.md" ]]; then
+    out_dir="$PUBLIC_DIR/annotations"
+elif [[ "$1" == "$PASH_TOP/annotations/p_stats/README.md" ]]; then
+    out_dir="$PUBLIC_DIR/annotations/p_stats"
+elif [[ "$1" == "$PASH_TOP/compiler/README.md" ]]; then
+    out_dir="$PUBLIC_DIR/compiler"
+elif [[ "$1" == "$PASH_TOP/compiler/parser/README.md" ]]; then
+    out_dir="$PUBLIC_DIR/compiler/parser"
+elif [[ "$1" == "$PASH_TOP/runtime/README.md" ]]; then
+    out_dir="$PUBLIC_DIR/runtime"
+elif [[ "$1" == "$WEB_DIR/docs/benchmarks/README.md" ]]; then
+    out_dir="$PUBLIC_DIR/docs/benchmarks"
+elif [[ "$1" == "$TRY_TOP/README.md" ]]; then
+    out_dir="$PUBLIC_DIR/try"
+    page_title="try"
+    repo_url="https://github.com/binpash/try"
+    repo_release_url="https://github.com/binpash/try/tree/$TRY_REF"
+    repo_ref_label="branch"
+    page_version="$TRY_REF"
+fi
+mkdir -p "$out_dir"
+out_file="$out_dir/index.html"
 if [[ "$type" = "docs" ]]; then
     export self_tab=$(cat <<-END
 <a href="./tutorial/index.html">tutorial</a> /     
 <a class="self" href="./index.html">docs</a> /
-<a href="./benchmarks/index.html">benchmarks</a> / 
+<a href="https://github.com/binpash/pash/blob/main/evaluation/benchmarks/README.md">benchmarks</a> / 
 END
 )
 CSSDIR="../"
@@ -84,7 +167,7 @@ elif [[ "$type" = "tutorial" ]];  then
     export self_tab=$(cat <<-END
 <a class="self" href="./index.html">tutorial</a> /
 <a href="../index.html">docs</a>  /
-<a href="../benchmarks/index.html">benchmarks</a> /
+<a href="https://github.com/binpash/pash/blob/main/evaluation/benchmarks/README.md">benchmarks</a> /
 END
 )
 CSSDIR="../.."
@@ -93,7 +176,7 @@ CSSDIR="../.."
     export self_tab=$(cat <<-END
 <a class="self" href="../tutorial/index.html">tutorial</a> /
 <a href="../index.html">docs</a>  /
-<a href="../benchmarks/index.html">benchmarks</a> /
+<a href="https://github.com/binpash/pash/blob/main/evaluation/benchmarks/README.md">benchmarks</a> /
 END
 )
 elif [[ "$type" = "p_stats" ]] || [[ "$type" = "parser" ]]; then
@@ -101,11 +184,12 @@ CSSDIR="../.."
     export self_tab=$(cat <<-END
 <a class="self" href="../../docs/tutorial/index.html">tutorial</a> /
 <a href="../index.html">docs</a>  /
-<a href="../benchmarks/index.html">benchmarks</a> /
+<a href="https://github.com/binpash/pash/blob/main/evaluation/benchmarks/README.md">benchmarks</a> /
 END
 )
 elif [[ "$type" = "benchmarks" ]]; then
     CSSDIR="../.."
+    template=benchmarks.html
     # when building the evaluation/benchmarks/
     if grep -q 'evaluation' <<< "$DIR"; then
     export self_tab=$(cat <<-END
@@ -121,39 +205,28 @@ END
 <a class="self" href="../benchmarks/index.html">benchmarks</a> /
 END
 )
-    wget ctrl.pash.ndr.md/client.js -O $DIR/client.js
-    commit_hash=$(cd $DIR/;git rev-parse --short HEAD);
-    # fetch the correctness tests
-    curl_d=$(run_correctness_current_hash $commit_hash)
-    echo "let v = $curl_d;" > d.js
-    echo "" >> d.js
-    cat fetch_table.js >> d.js
-    compiler=$(node d.js Compiler "$commit_hash");
-    interface="$(node d.js Interface "$commit_hash")";
-    posix="$(node d.js Posix "$commit_hash")";
-    intro="$(node d.js Intro "$commit_hash")";
-    agg="$(node d.js Aggregator "$commit_hash")"; 
-    curl_d=$(curl -s "ctrl.pash.ndr.md/job=fetch_runs&count=50&benchmark=PERFORMANCE");
-    curl_data=$(echo $curl_d | base64 | tr -d "\n")
-    echo "local_data = Base64.decode(\`$curl_data\`);" >> $DIR/client.js
-    echo "running_on_website = true;" >> $DIR/client.js
-
-
-    template="benchmarks.html"
 fi
 elif [[ "$type" = "annotations" ]] || [[ "$type" = "compiler" ]] || [[ "$type" = "runtime" ]]; then
     CSSDIR="../"
-export self_tab=$(cat <<-END
+    export self_tab=$(cat <<-END
 <a href="../docs/tutorial/index.html">tutorial</a> /     
 <a href="../docs/index.html">docs</a>  /
-<a href="../docs/benchmarks/index.html">benchmarks</a> /
+<a href="https://github.com/binpash/pash/blob/main/evaluation/benchmarks/README.md">benchmarks</a> /
+END
+)
+elif [[ "$1" == "$TRY_TOP/README.md" ]]; then
+    CSSDIR="../"
+    export self_tab=$(cat <<-END
+<a href="../docs/tutorial/index.html">tutorial</a> /     
+<a href="../docs/index.html">docs</a>  /
+<a href="https://github.com/binpash/pash/blob/main/evaluation/benchmarks/README.md">benchmarks</a> /
 END
 )
 else
     export self_tab=$(cat <<-END
 <a href="./docs/tutorial/index.html">tutorial</a> /     
 <a href="./docs/index.html">docs</a>  /
-<a href="./docs/benchmarks/index.html">benchmarks</a> /
+<a href="https://github.com/binpash/pash/blob/main/evaluation/benchmarks/README.md">benchmarks</a> /
 END
 )
 bash fetch_issues.sh
@@ -170,14 +243,19 @@ template="landing.html"
 fi
 
 generate-styles $CSSDIR
-pandoc -s $DIR/$filename\
+pandoc -s "$input_file"\
     --variable revision="$(cd $DIR/;git rev-parse --short HEAD)"\
-    --variable version="$VERSION"\
+    --variable release_tag="$RELEASE_TAG"\
+    --variable release_url="$RELEASE_URL"\
+    --variable version="$page_version"\
     --variable more="${2}"\
     --variable msg="$(cd $DIR/;commit-msg)"\
     --variable where="$DIR"\
     --variable pash_logo="$CSSDIR/utils/img/pash_logo2.jpg"\
-    --variable title="PaSh: Light-touch Data-Parallel Shell Scripting"\
+    --variable title="$page_title"\
+    --variable repo_url="$repo_url"\
+    --variable repo_release_url="$repo_release_url"\
+    --variable repo_ref_label="$repo_ref_label"\
     --variable self_page="$self_tab"\
     --variable issue1="$issue1"\
     --variable issue1_text="$issue1_text"\
@@ -193,82 +271,89 @@ pandoc -s $DIR/$filename\
     --variable intro="$intro"\
     --variable agg="$agg"\
     --variable UPDATED="$UPDATED"\
+    --from=markdown\
     --to=html5\
     --default-image-extension=svg\
     --template=./utils/$template\
     --highlight-style=pygments\
     --section-divs\
     --toc\
+    --citeproc\
     --css="$CSSDIR"/utils/css/main.css\
-    --filter pandoc-citeproc\
     --include-in-header=./utils/css.html\
     --include-after-body=./utils/inc.html\
-    -o $DIR/index.html
+    -o "$out_file"
 
   # fix the huge title
   if [[ "$type" = "docs" ]]; then
-      sed -i 's/>PaSh Documentation/ class="title">PaSh Documentation/g' $DIR/index.html
+      sedi 's/>PaSh Documentation/ class="title">PaSh Documentation/g' "$out_file"
       # Fix shortcuts redirections
-      sed -i 's/videos-video-presentations/videos--video-presentations/g' $DIR/index.html
-      sed -i 's/academic-papers-events/academic-papers--events/g' $DIR/index.html
+      sedi 's/videos-video-presentations/videos--video-presentations/g' "$out_file"
+      sedi 's/academic-papers-events/academic-papers--events/g' "$out_file"
       # fix tutorial links
-      sed -i 's/tutorial#/tutorial\/index.html#/g' $DIR/index.html
+      sedi 's/tutorial#/tutorial\/index.html#/g' "$out_file"
       # fix annotations links
-      sed -i 's/annotations#/annotations\/index.html#/g' $DIR/index.html
+      sedi 's/annotations#/annotations\/index.html#/g' "$out_file"
       # fix compiler links
-      sed -i 's/compiler#/compiler\/index.html#/g' $DIR/index.html
+      sedi 's/compiler#/compiler\/index.html#/g' "$out_file"
       # fix runtime links
-      sed -i 's/runtime#/runtime\/index.html#/g' $DIR/index.html
+      sedi 's/runtime#/runtime\/index.html#/g' "$out_file"
       # fix evaluation links
-      sed -i 's/evaluation\/benchmarks\//evaluation\/benchmarks\/index.html/g' $DIR/index.html
+      sedi 's/evaluation\/benchmarks\//evaluation\/benchmarks\/index.html/g' "$out_file"
   elif [[ "$type" = "tutorial" ]]; then
-      sed -i 's/>A Short PaSh Tutorial/ class="title">A Short PaSh Tutorial/g' $DIR/index.html
+      sedi 's/>A Short PaSh Tutorial/ class="title">A Short PaSh Tutorial/g' "$out_file"
       # open the correct installation file
-      sed -i 's/href="..\/install\/"/href="..\/install\/index.html"/g' $DIR/index.html
+      sedi 's/href="..\/install\/"/href="..\/install\/index.html"/g' "$out_file"
       # fix contrib
-      sed -i 's/..\/..\/contributing\/contrib.md/..\/..\/contributing\/index.html/g' $DIR/index.html
-      # fix annotations link
-      sed -i 's/..\/..\/annotations\//..\/..\/annotations\/index.html/g' $DIR/index.html
-      # fix compiler link
-      sed -i 's/..\/..\/compiler/..\/..\/compiler\/index.html/g' $DIR/index.html
-      # fix runtime link
-      sed -i 's/..\/..\/runtime/..\/..\/runtime\/index.html/g' $DIR/index.html
+      sedi 's/..\/..\/contributing\/contrib.md/..\/..\/contributing\/index.html/g' "$out_file"
       # fix docs link
-      sed -i 's/..\/..\/docs/..\/..\/docs\/index.html/g' $DIR/index.html
-      # fix evaluation link
-      sed -i 's/..\/..\/evaluation/..\/..\/evaluation\/index.html/g' $DIR/index.html
+      sedi 's/..\/..\/docs/..\/..\/docs\/index.html/g' "$out_file"
+      # restore local links for generated pages
+      sedi 's#href="../../annotations/"#href="../../annotations/index.html"#g' "$out_file"
+      sedi 's#href="../../annotations/index.html"#href="../../annotations/index.html"#g' "$out_file"
+      sedi 's#href="../../compiler"#href="../../compiler/index.html"#g' "$out_file"
+      sedi 's#href="../../compiler/index.html"#href="../../compiler/index.html"#g' "$out_file"
+      sedi 's#href="../../runtime"#href="../../runtime/index.html"#g' "$out_file"
+      sedi 's#href="../../runtime/index.html"#href="../../runtime/index.html"#g' "$out_file"
+      # keep missing pages on upstream
+      sedi 's#href="../../evaluation"#href="https://github.com/binpash/pash/tree/'"$PASH_REF"'/evaluation"#g' "$out_file"
+      sedi 's#href="../../evaluation/index.html"#href="https://github.com/binpash/pash/tree/'"$PASH_REF"'/evaluation"#g' "$out_file"
+      sedi 's#href="../../docs/index.html/contributing/contrib.md"#href="../contributing/index.html"#g' "$out_file"
+      sedi 's|href="../README.md#academic-papers--events"|href="https://github.com/binpash/pash/tree/'"$PASH_REF"'/docs#academic-papers--events"|g' "$out_file"
 
   elif [[ "$type" = "pash" ]]; then
       # this is the base case for the landing page
-      sed -i 's/href="docs\/tutorial"/href="docs\/tutorial\/index.html"/g' $DIR/index.html
+      sedi 's/href="docs\/tutorial"/href="docs\/tutorial\/index.html"/g' "$out_file"
   elif [[ "$type" = "install" ]]; then
       # correct the title
-      sed -i 's/>Installation/ class="title">Installation/g' $DIR/index.html
-      sed -i 's/..\/contributing\/contrib.md/..\/contributing\/index.html/g' $DIR/index.html
+      sedi 's/>Installation/ class="title">Installation/g' "$out_file"
+      sedi 's/..\/contributing\/contrib.md/..\/contributing\/index.html/g' "$out_file"
   elif [[ "$type" = "annotations" ]]; then
-      sed -i 's/>Parallelizability/ class="title">Parallelizability Classes/g' $DIR/index.html
+      sedi 's/>Parallelizability/ class="title">Parallelizability Classes/g' "$out_file"
       # fix redirection links
-      sed -i 's/#parallelizability-study-of-commands-in-gnu--posix/#parallelizability-study-of-commands-in-gnu-posix/g' $DIR/index.html
-      sed -i 's/href=".\/p_stats"/href=".\/p_stats\/index.html"/g' $DIR/index.html
-      sed -i 's/#Issues/#issues/g' $DIR/index.html
+      sedi 's/#parallelizability-study-of-commands-in-gnu--posix/#parallelizability-study-of-commands-in-gnu-posix/g' "$out_file"
+      sedi 's/href=".\/p_stats"/href=".\/p_stats\/index.html"/g' "$out_file"
+      sedi 's/#Issues/#issues/g' "$out_file"
   elif [[ "$type" = "compiler" ]]; then
-      sed -i 's/>The PaSh Compiler/ class="title">The PaSh Compiler/g' $DIR/index.html
+      sedi 's/>The PaSh Compiler/ class="title">The PaSh Compiler/g' "$out_file"
       # fix annotations links
-      sed -i 's/annotations#/annotations\/index.html#/g' $DIR/index.html
+      sedi 's/annotations#/annotations\/index.html#/g' "$out_file"
       # fix broken parser link
-      sed -i 's/href=".\/parser"/href=".\/parser\/index.html"/g' $DIR/index.html
+      sedi 's/href=".\/parser"/href=".\/parser\/index.html"/g' "$out_file"
       # fix runtime link
-      sed -i 's/..\/runtime/..\/runtime\/index.html#/g' $DIR/index.html
+      sedi 's/..\/runtime/..\/runtime\/index.html#/g' "$out_file"
   elif [[ "$type" = "runtime" ]]; then
-      sed -i 's/>Runtime Support/ class="title">Runtime Support/g' $DIR/index.html
+      sedi 's/>Runtime Support/ class="title">Runtime Support/g' "$out_file"
   elif [[ "$type" = "parser" ]]; then
       # fix title
-      sed -i 's/<h2>Instructions<\/h2>/<h1 class="title">Instructions<\/h1>/g' $DIR/index.html
+      sedi 's/<h2>Instructions<\/h2>/<h1 class="title">Instructions<\/h1>/g' "$out_file"
       # fix redirection
   elif [[ "$type" = "benchmarks" ]]; then
     # this is used for the evaluation/benchmarks/index.html
-    sed -i 's/#unix-50-from-bell-labs/#unix50-from-bell-labs/g' $DIR/index.html;
-    sed -i 's/>Experimental Evaluation/ class="title">Experimental Evaluation/g' $DIR/index.html
+    sedi 's/#unix-50-from-bell-labs/#unix50-from-bell-labs/g' "$out_file";
+    sedi 's/>Experimental Evaluation/ class="title">Experimental Evaluation/g' "$out_file"
+  elif [[ "$1" == "$TRY_TOP/README.md" ]]; then
+      sedi 's#https://raw.githubusercontent.com/binpash/try/main/try#https://raw.githubusercontent.com/binpash/try/'"$TRY_REF"'/try#g' "$out_file"
   fi
   cleanup $CSSDIR
 }
@@ -287,21 +372,25 @@ function generate-styles {
     echo '<link rel="stylesheet" type="text/css" href="UDIR/utils/fbox/helpers/jquery.fancybox-thumbs.css?v=1.0.7" />' | sed "s;UDIR;$1;" >> ./utils/css.html
 }
 
-echo "Building all the pages"
-rm -f $PASH_TOP/README.md
-touch $PASH_TOP/README.md
-mkdir -p $PASH_TOP/docs/benchmarks/
-touch $PASH_TOP/docs/benchmarks/README.md
-generate-html $PASH_TOP/docs/benchmarks/README.md
-generate-html $PASH_TOP/docs/install/README.md
-generate-html $PASH_TOP/README.md
-generate-html $PASH_TOP/docs/README.md
-generate-html $PASH_TOP/docs/tutorial/tutorial.md
-generate-html $PASH_TOP/docs/contributing/contrib.md
-generate-html $PASH_TOP/annotations/README.md
-generate-html $PASH_TOP/annotations/p_stats/README.md
-generate-html $PASH_TOP/compiler/README.md
-generate-html $PASH_TOP/compiler/parser/README.md
-generate-html $PASH_TOP/runtime/README.md
-generate-html $PASH_TOP/evaluation/benchmarks/README.md
-generate-html $PASH_TOP/evaluation/micro/README.md
+echo "Building website"
+ensure-pash-source
+ensure-try-source
+rm -rf "$PUBLIC_DIR"
+mkdir -p "$PUBLIC_DIR"
+generate-html "$WEB_DIR/utils/landing.html"
+generate-html "$PASH_TOP/docs/install/README.md"
+generate-html "$PASH_TOP/docs/README.md"
+generate-html "$PASH_TOP/docs/tutorial/tutorial.md"
+generate-html "$PASH_TOP/docs/contributing/contrib.md"
+generate-html "$PASH_TOP/annotations/README.md"
+generate-html "$PASH_TOP/annotations/p_stats/README.md"
+generate-html "$PASH_TOP/compiler/README.md"
+generate-html "$PASH_TOP/compiler/parser/README.md"
+generate-html "$PASH_TOP/runtime/README.md"
+generate-html "$TRY_TOP/README.md"
+
+mkdir -p "$PUBLIC_DIR/try/docs"
+cp "$TRY_TOP/docs/try_logo.png" "$PUBLIC_DIR/try/docs/"
+cp "$TRY_TOP/docs/try_pip_install_example.gif" "$PUBLIC_DIR/try/docs/"
+cp -R "$REPO_ROOT/web/utils" "$PUBLIC_DIR/"
+cp "$REPO_ROOT/web/favicon.ico" "$PUBLIC_DIR/"

@@ -52,10 +52,10 @@ table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
         </style>
                                         <link rel="stylesheet" href=".//utils/css/main.css">
                           
- <link rel="stylesheet" type="text/css" href=".//utils/css/mystyle.css" media="screen" />
- <link rel="stylesheet" type="text/css" href=".//utils/fbox/jquery.fancybox.css?v=2.1.5" media="screen" />
- <link rel="stylesheet" type="text/css" href=".//utils/fbox/helpers/jquery.fancybox-buttons.css?v=1.0.5" />
- <link rel="stylesheet" type="text/css" href=".//utils/fbox/helpers/jquery.fancybox-thumbs.css?v=1.0.7" />              
+<link rel="stylesheet" type="text/css" href=".//utils/css/mystyle.css" media="screen" />
+<link rel="stylesheet" type="text/css" href=".//utils/fbox/jquery.fancybox.css?v=2.1.5" media="screen" />
+<link rel="stylesheet" type="text/css" href=".//utils/fbox/helpers/jquery.fancybox-buttons.css?v=1.0.5" />
+<link rel="stylesheet" type="text/css" href=".//utils/fbox/helpers/jquery.fancybox-thumbs.css?v=1.0.7" />              
 
     </head>
     <body>
@@ -65,7 +65,7 @@ table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
                     <div class="navigation">
                         <a href="./docs/tutorial/">tutorial</a> /
                         <a href="./docs/">docs</a>  /
-                        <a href="./docs/benchmarks/">benchmarks</a> /
+                        <a href="https://github.com/binpash/pash/blob/main/evaluation/benchmarks/README.md">benchmarks</a> /
                         <a href="http://github.com/binpash">github</a>
                     </div>
                     <div class="breadcrumb">
@@ -78,13 +78,13 @@ table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
             </header>
                         
 
-            <h1 class="title">PaSh<sup><sup><a href="https://github.com/binpash/pash/releases" class="top-version" style="color:white">0.9</a></sup></sup></h1>
+            <h1 class="title">PaSh<sup><sup><a href="https://github.com/binpash/pash/releases/tag/v0.16" class="top-version" style="color:white">v0.16</a></sup></sup></h1>
             <h3 class="extras">Light-touch Data-Parallel Shell Scripting</h3>
 
             <div style="font-size: xx-large; text-align: center; display:
-              block;">
-                The <a href="https://docs.google.com/document/d/1sAwonBVJr4tCBQdaoXGRAr5R4pi-Jw7Oumf_VQg-nQs/edit?usp=sharing">3rd PaSh workshop is held at Brown University</a>, between Oct. 18–20, 2023. Join us!
+              block;"> 
                 <!--
+                The <a href="https://docs.google.com/document/d/1sAwonBVJr4tCBQdaoXGRAr5R4pi-Jw7Oumf_VQg-nQs/edit?usp=sharing">3rd PaSh workshop is organized at Brown University</a>, between Oct. 18–20, 2023. Join us!
                 Between Oct. 11–13, 2022 PaSh will be at  <br> <a href="https://www.usenix.org/conference/osdi22">OSDI'22, in Carlsbad, CA</a>!
                 -->
             </div>
@@ -94,7 +94,7 @@ table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
             <p>PaSh aims at the correct and automated parallelization of POSIX shell scripts. Broadly, PaSh includes three components: (1) a compiler that, given as input a POSIX shell script, emits a POSIX shell script that includes explicit data-parallel fragments for which PaSh has deemed such parallelization semantics-preserving, (2) a set of PaSh-related runtime primitives for supporting the execution of the parallel script fragments, available as in the <code>PATH</code> as normal commands, and (3) a crowd-sourced library of annotations characterizing several properties of common Unix/Linux commands relevant to parallelization.</p>
             <p>To parallelize, say, <code>./evaluation/intro/hello-world.sh</code> with a parallelization width of <code>2</code>, from the top-level directory of the repository run:</p>
             <div class="sourceCode" id="cb1"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">./pa.sh</span> ./evaluation/intro/hello-world.sh</span></code></pre></div>
-                <p>Run <code>./pa.sh --help</code> to get more information about the available commands. See <a href="docs/tutorial/index.html">docs/tutorial</a> for a longer tutorial.</p>
+                <p>Run <code>./pa.sh --help</code> to get more information about the available commands. See <a href="docs/tutorial">docs/tutorial</a> for a longer tutorial.</p>
                 <section id="quick-setup" class="level2">
 
                     <h2>Quick Setup</h2>
@@ -130,6 +130,7 @@ table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
                             <li>GitHub <a href="https://github.com/binpash/">organization</a></li>
                             <li>Installation <a href="./docs/tutorial#installation">instructions</a></li>
                             <li>Short <a href="./docs/tutorial">tutorial</a></li>
+                            <li><a href="./try/index.html">try</a> artifact and README</li>
                             <li>Academic <a href="https://github.com/binpash/pash/tree/main/docs#academic-papers--events">papers</a></li>
                             <li>Contribution <a href="https://github.com/binpash/pash/blob/main/docs/contributing/contrib.md">guide</a></li>
                         </ul>
@@ -143,10 +144,10 @@ table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
                     <div class="twoLeft">
                         <p><strong>Issues That Need Help</strong></p>
                         <ul>
-                            <li><a href="https://github.com/binpash/pash/issues/613">#613</a> Bump PaSh's python dependency to 3.7..</li>
-                            <li><a href="https://github.com/binpash/pash/issues/573">#573</a> Parse error in gnulib-tool..</li>
-                            <li><a href="https://github.com/binpash/pash/issues/571">#571</a> Incompatibility with POSIX sh returns incorrect results...</li>
-                            <li><a href="https://github.com/binpash/pash/issues/557">#557</a> Evaluation timing result consistency..</li>
+                            <li><a href="https://github.com/binpash/pash/issues/765">#765</a> Change pa.sh to be a python script..</li>
+                            <li><a href="https://github.com/binpash/pash/issues/756">#756</a> -bash flag failures in KOALA from the..</li>
+                            <li><a href="https://github.com/binpash/pash/issues/754">#754</a> missing annotations for these commands using KOALA_PASH..</li>
+                            <li><a href="https://github.com/binpash/pash/issues/752">#752</a> Explore the limits of --bash flag in..</li>
                         </ul>
                     </div>
 
@@ -186,8 +187,8 @@ table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
             <table border="0" class="foot">
                 <tr class="foot">
                     <td align="left" class="foot">
-                        version <a href="http://github.com/binpash/pash/releases/tag/v0.9">0.9</a> | revision <a href="http://github.com/binpash/pash"> ea962cc </a> | Merge pull request #611 from binpash/future | Updated: 00:36
-07/23/2022
+                        version <a href="http://github.com/binpash/pash/releases/tag/v"></a> | revision <a href="http://github.com/binpash/pash"> d9c1576 </a> | Add README | Updated: 16:59
+05/29/2026
                     </td>
                     <td align="right" class="foot">
                         <a href="http://status.binpa.sh"><img src="https://img.shields.io/badge/status-OK-red.svg?style=flat" alt="Status OK"></a>
@@ -206,9 +207,9 @@ table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
         </footer>
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
                  
-        <script type="text/javascript" src=".//utils/fbox/jquery.fancybox.js?v=2.1.5"></script>
-        <script type="text/javascript" src=".//utils/fbox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
-        <script type="text/javascript" src=".//utils/fbox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
-         <script src=".//utils/js/main.js"></script>
+                <script type="text/javascript" src=".//utils/fbox/jquery.fancybox.js?v=2.1.5"></script>
+                <script type="text/javascript" src=".//utils/fbox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+                <script type="text/javascript" src=".//utils/fbox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+                 <script src=".//utils/js/main.js"></script>
             </body>
 </html>

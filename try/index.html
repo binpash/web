@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html>
+    <head>
+                <title>try</title>
+                <meta charset="utf-8">
+        <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+        <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:100,200,300,400">
+        <style type="text/css">code{white-space: pre;}</style>
+        <!--[if lt IE 9]>
+            <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+        <style type="text/css">
+.twoWrapper { display: table;  width: 100%;}
+.twoLeft { display: table-cell; width: 70%; }
+.twoRight { display: table-cell; width: 30%; }
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+    margin: 0; padding: 0; vertical-align: baseline; border: none; }
+  table.sourceCode { width: 100%; line-height: 100%; }
+  td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+  td.sourceCode { padding-left: 5px; }
+  code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+  code > span.dt { color: #902000; } /* DataType */
+  code > span.dv { color: #40a070; } /* DecVal */
+  code > span.bn { color: #40a070; } /* BaseN */
+  code > span.fl { color: #40a070; } /* Float */
+  code > span.ch { color: #4070a0; } /* Char */
+  code > span.st { color: #4070a0; } /* String */
+  code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+  code > span.ot { color: #007020; } /* Other */
+  code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+  code > span.fu { color: #06287e; } /* Function */
+  code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+  code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  code > span.cn { color: #880000; } /* Constant */
+  code > span.sc { color: #4070a0; } /* SpecialChar */
+  code > span.vs { color: #4070a0; } /* VerbatimString */
+  code > span.ss { color: #bb6688; } /* SpecialString */
+  code > span.im { } /* Import */
+  code > span.va { color: #19177c; } /* Variable */
+  code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+  code > span.op { color: #666666; } /* Operator */
+  code > span.bu { } /* BuiltIn */
+  code > span.ex { } /* Extension */
+  code > span.pp { color: #bc7a00; } /* Preprocessor */
+  code > span.at { color: #7d9029; } /* Attribute */
+  code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+  code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+  code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+  code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+        </style>
+                                <style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+        </style>
+                        <link rel="stylesheet" href="..//utils/css/main.css">
+                          
+<link rel="stylesheet" type="text/css" href="..//utils/css/mystyle.css" media="screen" />
+<link rel="stylesheet" type="text/css" href="..//utils/fbox/jquery.fancybox.css?v=2.1.5" media="screen" />
+<link rel="stylesheet" type="text/css" href="..//utils/fbox/helpers/jquery.fancybox-buttons.css?v=1.0.5" />
+<link rel="stylesheet" type="text/css" href="..//utils/fbox/helpers/jquery.fancybox-thumbs.css?v=1.0.7" />              
+    </head>
+    <body>
+        <div class="container-fluid">
+            <header>
+                <div class="column">
+                    <div class="navigation">
+                        <a href="../docs/tutorial/index.html">tutorial</a> /     
+                        <a href="../docs/index.html">docs</a>  /
+                        <a href="https://github.com/binpash/pash/blob/main/evaluation/benchmarks/README.md">benchmarks</a> /
+                        <a href="http://github.com/binpash">github</a>
+                    </div>
+                    <div class="breadcrumb">
+                        <a href="/">
+                            <img class="logo" src=..//utils/img/pash_logo2.jpg width="15%"/>
+                        </a>
+                    </div>
+                </div>
+            </header>
+                        <section id="try" class="level1">
+                        <h1>try</h1>
+                        <p><img src="docs/try_logo.png" alt="try logo" width="100" height="130"></p>
+                        <p>“Do, or do not. There is no try.”</p>
+                        <p>We’re setting out to change that:
+                        <code>try cmd</code> and commit—or not.</p>
+                        <section id="description" class="level2">
+                        <h2>Description</h2>
+                        <p><a
+                        href="https://github.com/binpash/try/actions/workflows/test.yaml"><img
+                        src="https://github.com/binpash/try/actions/workflows/test.yaml/badge.svg"
+                        alt="Main workflow" /></a> <a
+                        href="#license"><img
+                        src="https://img.shields.io/badge/License-MIT-blue.svg"
+                        alt="License" /></a> <a
+                        href="https://github.com/binpash/try/issues"><img
+                        src="https://img.shields.io/github/issues/binpash/try.svg"
+                        alt="issues - try" /></a></p>
+                        <p><code>try</code> lets you run a command and
+                        inspect its effects before changing your live
+                        system. <code>try</code> uses Linux’s <a
+                        href="https://docs.kernel.org/userspace-api/unshare.html">namespaces
+                        (via <code>unshare</code>)</a> and the <a
+                        href="https://docs.kernel.org/filesystems/overlayfs.html">overlayfs</a>
+                        union filesystem.</p>
+                        <p>If <code>try</code> is useful to you, please
+                        use the following citation:</p>
+                        <div class="sourceCode" id="cb1"><pre
+                        class="sourceCode bib"><code class="sourceCode bibtex"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="va">@inproceedings</span>{<span class="ot">try:osdi:2026</span>,</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">title</span>     = {Controlling Opaque-Component Effects with Semisolates and Try},</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">author</span>    = {Lamprou, Evangelos and Zhu, Tianyu (Ezri) and Jin, Di and Ntousakis, Grigoris and and Liargkovas, Georgios and Eng, Calvin and Kallas, Konstantinos and Greenberg, Michael and Vasilakis, Nikos},</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">booktitle</span> = {20th USENIX Symposium on Operating Systems Design and Implementation (OSDI 26)},</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">year</span>      = {2026},</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">publisher</span> = {USENIX Association},</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="dt">tags</span>      = {correctness, security}</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+                        <p>Using <code>try</code> to inspect a
+                        <code>pip install</code> command’s effects and
+                        optionally commit them to your live system:
+                        <img src="docs/try_pip_install_example.gif" alt="try gif"></p>
+                        </section>
+                        <section id="getting-started" class="level2">
+                        <h2>Getting Started</h2>
+                        <section id="dependencies" class="level3">
+                        <h3>Dependencies</h3>
+                        <p><code>try</code> relies on the following
+                        Debian packages</p>
+                        <ul>
+                        <li><code>attr</code> (for
+                        <code>getfattr</code>)</li>
+                        <li><code>pandoc</code> and
+                        <code>autoconf</code> (if working from a GitHub
+                        clone)</li>
+                        </ul>
+                        <p>In cases where overlayfs doesn’t work on
+                        nested mounts, you will need either <a
+                        href="https://github.com/trapexit/mergerfs">mergerfs</a>
+                        or <a
+                        href="https://github.com/rpodgorny/unionfs-fuse">unionfs</a>.
+                        <code>try</code> should be able to autodetect
+                        them, but you can specify the path to mergerfs
+                        or unionfs with -U
+                        (e.g. <code>try -U ~/.local/bin/unionfs</code>)</p>
+                        <p>To run <code>try</code>’s test suite
+                        (<code>scripts/run_tests.sh</code>), you will
+                        need:</p>
+                        <ul>
+                        <li><code>bash</code></li>
+                        <li><code>expect</code></li>
+                        <li><code>curl</code></li>
+                        </ul>
+                        <p><code>try</code> has been tested on the
+                        following distributions:</p>
+                        <ul>
+                        <li><code>Ubuntu 20.04 LTS</code> or later</li>
+                        <li><code>Debian 12</code></li>
+                        <li><code>Fedora 38</code></li>
+                        <li><code>Centos 9 Stream 5.14.0-325.el9</code></li>
+                        <li><code>Arch 6.1.33-1-lts</code></li>
+                        <li><code>Alpine 6.1.34-1-lts</code></li>
+                        <li><code>Rocky 9 5.14.0-284.11.1.el9_2</code></li>
+                        <li><code>SteamOS 3.4.8 5.13.0-valve36-1-neptune</code></li>
+                        </ul>
+                        <p><em>Note that try will only work on <a
+                        href="https://github.com/torvalds/linux/commit/92dbc9dedccb9759c7f9f2f0ae6242396376988f">Linux
+                        5.11</a> or higher for overlayfs to work in a
+                        user namespace.</em></p>
+                        </section>
+                        <section id="installing" class="level3">
+                        <h3>Installing</h3>
+                        <p>There are three ways to install try:</p>
+                        <ol type="1">
+                        <li><p><strong>The quick and janky way: grab the
+                        script.</strong> You only need the <a
+                        href="https://raw.githubusercontent.com/binpash/try/osdi26-ae/try"><code>try</code>
+                        script</a>. Put it in your <code>PATH</code> and
+                        you’re ready to go. You won’t have documentation
+                        or utility support, but it should work as
+                        is.</p></li>
+                        <li><p><strong>By cloning the
+                        repository.</strong> Run the following:</p></li>
+                        </ol>
+                        <pre class="shellsession"><code>$ git clone https://github.com/binpash/try.git
+$ autoconf &amp;&amp; ./configure &amp;&amp; make &amp;&amp; sudo make install</code></pre>
+                        <p>You should now have a fully featured
+                        <code>try</code>, including the support
+                        utilities (which should help <code>try</code>
+                        run faster) and manpage. Run
+                        <code>make test</code> to confirm that
+                        everything works.</p>
+                        <ol start="3" type="1">
+                        <li><strong>By using a source
+                        distribution.</strong> Download
+                        <code>try-XXX.tgz</code> from <a
+                        href="https://github.com/binpash/try/releases">the
+                        release page</a>. You can get the latest
+                        prerelease by downloading <a
+                        href="https://github.com/binpash/try/releases/download/latest/try-latest.tgz"><code>try-latest.tgz</code></a>.
+                        You can then install similarly to the
+                        above:</li>
+                        </ol>
+                        <pre class="shellsession"><code>$ git clone https://github.com/binpash/try.git
+$ ./configure &amp;&amp; make &amp;&amp; sudo make install</code></pre>
+                        <p>The repository and source distribution are
+                        slightly different: the repository does not
+                        include the <code>configure</code> script
+                        (generated by <code>autoconf</code>) or the
+                        manpage (generated by <code>pandoc</code>), but
+                        the source distribution does.</p>
+                        <section id="arch-linux" class="level4">
+                        <h4>Arch Linux</h4>
+                        <p><code>try</code> is present in <a
+                        href="https://aur.archlinux.org/packages/try">AUR</a>,
+                        you can install it with your preferred AUR
+                        helper:</p>
+                        <pre class="shellsession"><code>yay -S try</code></pre>
+                        <p>or manually:</p>
+                        <pre class="shellsession"><code>git clone https://aur.archlinux.org/try.git
+cd try
+makepkg -sic</code></pre>
+                        </section>
+                        <section id="nixnixos" class="level4">
+                        <h4>Nix/NixOS</h4>
+                        <p><code>try</code> is present in <a
+                        href="https://search.nixos.org/packages?channel=unstable&amp;show=try&amp;from=0&amp;size=50&amp;sort=relevance&amp;type=packages&amp;query=try">nixpkgs</a>
+                        and maintained by us.</p>
+                        <pre class="shellsession"><code>nix-shell -p try</code></pre>
+                        </section>
+                        </section>
+                        </section>
+                        <section id="example-usage" class="level2">
+                        <h2>Example Usage</h2>
+                        <p><code>try</code> is a higher-order command,
+                        like <code>xargs</code>, <code>exec</code>,
+                        <code>nohup</code>, or <code>find</code>. For
+                        example, to install a package via
+                        <code>pip3</code>, you can invoke
+                        <code>try</code> as follows:</p>
+                        <pre class="shellsession"><code>$ try pip3 install libdash
+... # output continued below</code></pre>
+                        <p>By default, <code>try</code> will ask you to
+                        commit the changes made at the end of its
+                        execution.</p>
+                        <pre class="shellsession"><code>...
+Defaulting to user installation because normal site-packages is not writeable
+Collecting libdash
+  Downloading libdash-0.3.1-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (254 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 254.6/254.6 KB 2.1 MB/s eta 0:00:00
+Installing collected packages: libdash
+Successfully installed libdash-0.3.1
+WARNING: Running pip as the &#39;root&#39; user can result in broken permissions and conflicting behaviour with the system package manager. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv
+
+Changes detected in the following files:
+
+/tmp/tmp.zHCkY9jtIT/upperdir/home/gliargovas/.local/lib/python3.10/site-packages/libdash/ast.py (modified/added)
+/tmp/tmp.zHCkY9jtIT/upperdir/home/gliargovas/.local/lib/python3.10/site-packages/libdash/_dash.py (modified/added)
+/tmp/tmp.zHCkY9jtIT/upperdir/home/gliargovas/.local/lib/python3.10/site-packages/libdash/__init__.py (modified/added)
+/tmp/tmp.zHCkY9jtIT/upperdir/home/gliargovas/.local/lib/python3.10/site-packages/libdash/__pycache__/printer.cpython-310.pyc (modified/added)
+/tmp/tmp.zHCkY9jtIT/upperdir/home/gliargovas/.local/lib/python3.10/site-packages/libdash/__pycache__/ast.cpython-310.pyc (modified/added)
+&lt;snip&gt;
+
+Commit these changes? [y/N] y</code></pre>
+                        <p>Sometimes, you might want to pre-execute a
+                        command and commit its result at a later time.
+                        Running <code>try -n</code> will print the
+                        overlay directory on STDOUT without committing
+                        the result.</p>
+                        <pre class="shellsession"><code>$ try -n &quot;curl https://sh.rustup.rs | sh&quot;
+/tmp/tmp.uCThKq7LBK</code></pre>
+                        <p>Alternatively, you can specify your own
+                        existing overlay directory using the
+                        <code>-D [dir]</code> flag:</p>
+                        <pre class="shellsession"><code>$ mkdir rustup-sandbox
+$ try -D rustup-sandbox &quot;curl https://sh.rustup.rs | sh&quot;
+$ ls rustup-sandbox
+temproot  upperdir  workdir</code></pre>
+                        <p>As you can see from the output above,
+                        <code>try</code> has created an overlay
+                        environment in the <code>rustup-sandbox</code>
+                        directory.</p>
+                        <p>Manually inspecting upperdir reveals the
+                        changes to the files made inside the overlay
+                        during the execution of the previous command
+                        with <em>try</em>:</p>
+                        <pre class="shellsession"><code>~/try/rustup-sandbox/upperdir$ du -hs .
+1.2G    .</code></pre>
+                        <p>You can inspect the changes made inside a
+                        given overlay directory using
+                        <code>try</code>:</p>
+                        <pre class="shellsession"><code>$ try summary rustup-sandbox/ | head
+
+Changes detected in the following files:
+
+rustup-sandbox//upperdir/home/ubuntu/.profile (modified/added)
+rustup-sandbox//upperdir/home/ubuntu/.bashrc (modified/added)
+rustup-sandbox//upperdir/home/ubuntu/.rustup/update-hashes/stable-x86_64-unknown-linux-gnu (modified/added)
+rustup-sandbox//upperdir/home/ubuntu/.rustup/settings.toml (modified/added)
+rustup-sandbox//upperdir/home/ubuntu/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/libstd-8389830094602f5a.so (modified/added)
+rustup-sandbox//upperdir/home/ubuntu/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/etc/lldb_commands (modified/added)
+rustup-sandbox//upperdir/home/ubuntu/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/etc/gdb_lookup.py (modified/added)</code></pre>
+                        <p>You can also choose to commit the overlay
+                        directory contents:</p>
+                        <pre class="shellsession"><code>$ try commit rustup-sandbox</code></pre>
+                        <p>You can also run <code>try explore</code> to
+                        open your current shell in try, or
+                        <code>/try explore /tmp/tmp.X6OQb5tJwr</code> to
+                        explore an existing sandbox.</p>
+                        <p>To specify multiple lower directories for
+                        overlay (by merging them together), you can use
+                        the <code>-L</code> (implies <code>-n</code>)
+                        flag followed by a colon-separated list of
+                        directories. The directories on the left have
+                        higher precedence and can overwrite the
+                        directories on the right:</p>
+                        <pre class="shellsession"><code>$ try -D /tmp/sandbox1 &quot;echo &#39;File 1 Contents - sandbox1&#39; &gt; file1.txt&quot;
+$ try -D /tmp/sandbox2 &quot;echo &#39;File 2 Contents - sandbox2&#39; &gt; file2.txt&quot;
+$ try -D /tmp/sandbox3 &quot;echo &#39;File 2 Contents - sandbox3&#39; &gt; file2.txt&quot;
+
+# Now use the -L flag to merge both sandbox directories together, with sandbox3 having precedence over sandbox2
+$ try -L &quot;/tmp/sandbox3:/tmp/sandbox2:/tmp/sandbox1&quot; &quot;cat file1.txt file2.txt&quot;
+File 1 Contents - sandbox1
+File 2 Contents - sandbox3</code></pre>
+                        <p>In this example, <code>try</code> will merge
+                        <code>/sandbox1</code>, <code>/sandbox2</code>
+                        and <code>/sandbox3</code> together before
+                        mounting the overlay. This way, you can combine
+                        the contents of multiple <code>try</code>
+                        sandboxes.</p>
+                        </section>
+                        <section id="artifact-evaluation"
+                        class="level2">
+                        <h2>Artifact evaluation:</h2>
+                        <p>To evaluate the artifact for the OSDI’26
+                        paper titled “Controlling Opaque-Component
+                        Effects with Semisolates and Try”, jump straight
+                        to <a
+                        href="https://github.com/binpash/try/blob/osdi26-ae/INSTRUCTIONS.md"><code>INSTRUCTIONS.md</code></a>.</p>
+                        </section>
+                        <section id="known-issues" class="level2">
+                        <h2>Known Issues</h2>
+                        <p>Any command that interacts with other
+                        users/groups will fail since only the current
+                        user’s UID/GID are mapped. However, the <a
+                        href="https://github.com/binpash/try/tree/future">future
+                        branch</a> has support for uid/mapping; please
+                        refer to the that branch’s readme for
+                        installation instructions for the
+                        <code>try-gidmapper</code> helper (root access
+                        is required for installation).</p>
+                        <p>Shell quoting may be unintuitive, you may
+                        expect <code>try bash -c "echo a"</code> to
+                        work, however, try will actually execute
+                        <code>bash -c echo a</code>, which will not
+                        result in <code>a</code> being printed. <a
+                        href="https://github.com/binpash/try/issues/155#issuecomment-2078556237">We
+                        are currently not planning on resolving this
+                        behavior.</a></p>
+                        <p>Please also report any issue you run into
+                        while using the future branch!</p>
+                        </section>
+                        <section id="version-history" class="level2">
+                        <h2>Version History</h2>
+                        <ul>
+                        <li>v0.2.0 - 2023-07-24
+                        <ul>
+                        <li>Refactor tests.</li>
+                        <li>Improved linting.</li>
+                        <li>Hide <code>try</code>-internal variables
+                        from scripts.</li>
+                        <li>Style guide.</li>
+                        <li>Testing in Vagrant.</li>
+                        <li>Support nested mounts.</li>
+                        <li>Resolve issues with
+                        <code>userxattr</code>.</li>
+                        <li>Better support for
+                        <code>unionfs</code>.</li>
+                        <li>Use <code>/bin/sh</code>, not
+                        <code>/bin/bash</code>.</li>
+                        <li><code>-i</code> flag to ignore paths.</li>
+                        <li>Interactive improvements.</li>
+                        </ul></li>
+                        <li>v0.1.0 - 2023-06-25
+                        <ul>
+                        <li>Initial release.</li>
+                        </ul></li>
+                        </ul>
+                        </section>
+                        <section id="see-also" class="level2">
+                        <h2>See Also</h2>
+                        <p><a
+                        href="http://checkinstall.izto.org/">checkinstall</a>
+                        (unmaintained)</p>
+                        <p>checkinstall keeps track of all the files
+                        created or modified by your installation script,
+                        builds a standard binary package and installs it
+                        in your system. This package can then be easily
+                        installed, managed, and removed using the
+                        package manager of your Linux distribution. It
+                        helps in maintaining a clean and organized
+                        system by keeping track of installed software
+                        and its dependencies.</p>
+                        </section>
+                        <section id="license" class="level2">
+                        <h2>License</h2>
+                        <p>This project is licensed under the MIT
+                        License - see LICENSE for details.</p>
+                        <p>Copyright (c) 2023 The PaSh Authors.</p>
+                        </section>
+                        </section>
+        </div>  <!-- /.container -->
+        <footer>
+            <table border="0" class="foot">
+                <tr class="foot">
+                    <td align="left" class="foot">
+                        branch <a href="https://github.com/binpash/try/tree/osdi26-ae">osdi26-ae</a> | revision <a href="https://github.com/binpash/try"> 5ff69c1 </a> | Make AE header | Updated: 16:59
+05/29/2026
+                    </td>
+                    <td align="right" class="foot">
+                        <a href="http://status.binpa.sh"><img src="https://img.shields.io/badge/status-OK-red.svg?style=flat" alt="Status OK"></a>
+                    </td>
+                </tr>
+                <tr class="foot">
+                    <td align="left" class="foot">
+                        <br>
+                        Copyright PaSh Project a Series of LF Projects, LLC. For website
+                        terms of use, privacy policy, trademark <br>guidelines and other policies 
+                        please see <a href="https://www.lfprojects.org/policies/">www.lfprojects.org/policies/</a>.
+                    </td>
+                </tr>
+
+            </table>
+        </footer>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+                 
+                <script type="text/javascript" src="..//utils/fbox/jquery.fancybox.js?v=2.1.5"></script>
+                <script type="text/javascript" src="..//utils/fbox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+                <script type="text/javascript" src="..//utils/fbox/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+                 <script src="..//utils/js/main.js"></script>
+            </body>
+</html>
