@@ -69,19 +69,26 @@ th, td {
 
 #description {
     width: 100%;
+    max-width: none;
+    clear: both;
     display:block;
     font-size:17px;
 }
 
+#description p:first-of-type {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px;
+}
+
 #description p:first-of-type a {
-    display: inline-block;
-    margin: 0 6px 6px 0;
+    display: inline-flex;
 }
 
 #description p:first-of-type img {
-    display: inline-block;
+    display: block;
     margin: 0;
-    vertical-align: middle;
 }
 
 
