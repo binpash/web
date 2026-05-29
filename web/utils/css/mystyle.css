@@ -68,9 +68,20 @@ th, td {
 }
 
 #description {
-    width: 50%;
+    width: 100%;
     display:block;
-    font-size:14px;
+    font-size:17px;
+}
+
+#description p:first-of-type a {
+    display: inline-block;
+    margin: 0 6px 6px 0;
+}
+
+#description p:first-of-type img {
+    display: inline-block;
+    margin: 0;
+    vertical-align: middle;
 }
 
 
