@@ -51,8 +51,9 @@ table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
   code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
         </style>
                                 <style type="text/css">
+html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -357,7 +358,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a><span class="kw">{</span> <span class="ex">/home/eurosys21/pash/runtime/eager.sh</span> <span class="st">&quot;#file29&quot;</span> <span class="st">&quot;#file40&quot;</span> <span class="st">&quot;/tmp/pash_eager_intermediate_#file9&quot;</span> <span class="kw">&amp;</span> <span class="kw">}</span></span>
 <span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a><span class="kw">{</span> <span class="ex">/home/eurosys21/pash/runtime/eager.sh</span> <span class="st">&quot;#file10&quot;</span> <span class="st">&quot;#file41&quot;</span> <span class="st">&quot;/tmp/pash_eager_intermediate_#file10&quot;</span> <span class="kw">&amp;</span> <span class="kw">}</span></span>
 <span id="cb12-30"><a href="#cb12-30" aria-hidden="true" tabindex="-1"></a><span class="kw">{</span> <span class="fu">comm</span> <span class="at">-13</span> scripts/input/dict.txt <span class="st">&quot;#file41&quot;</span> <span class="kw">&amp;</span> <span class="kw">}</span></span>
-<span id="cb12-31"><a href="#cb12-31" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> /home/eurosys21/pash/runtime/wait_for_output_and_sigpipe_rest.sh <span class="va">${</span><span class="op">!</span><span class="va">}</span></span>
+<span id="cb12-31"><a href="#cb12-31" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> /home/eurosys21/pash/runtime/wait_for_output_and_sigpipe_rest.sh <span class="va">${!}</span></span>
 <span id="cb12-32"><a href="#cb12-32" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span> <span class="at">-f</span> <span class="st">&quot;#file2&quot;</span></span>
 <span id="cb12-33"><a href="#cb12-33" aria-hidden="true" tabindex="-1"></a><span class="ex">...</span></span></code></pre></div>
                         <p>Note that most stages in the pipeline are
@@ -465,8 +466,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <table border="0" class="foot">
                 <tr class="foot">
                     <td align="left" class="foot">
-                        version <a href="https://github.com/binpash/pash/releases/tag/v0.16"></a> | revision <a href="http://github.com/binpash/pash"> bf30e0c </a> | Minor plotting | Updated: 04:29
-11/15/2026
+                        version <a href="https://github.com/binpash/pash/releases/tag/v0.16"></a> | revision <a href="http://github.com/binpash/pash"> bf30e0c </a> | Minor plotting | Updated: 04:25
+11/16/2026
                     </td>
                     <td align="right" class="foot">
                         <a href="http://status.binpa.sh"><img src="https://img.shields.io/badge/status-OK-red.svg?style=flat" alt="Status OK"></a>

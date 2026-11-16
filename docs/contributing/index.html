@@ -51,8 +51,9 @@ table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
   code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
         </style>
                                 <style type="text/css">
+html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -276,7 +277,7 @@ docker cp A B                    # copy host&lt;-&gt;container; A B can be `NN:/
                         <p>Install WSL2 with with a given
                         distribution</p>
                         <div class="sourceCode" id="cb5"><pre
-                        class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>wsl <span class="op">--</span>install <span class="op">-</span>d <span class="op">&lt;</span>distribution<span class="op">-</span>name<span class="op">-</span>from<span class="op">-</span>above<span class="op">&gt;</span></span></code></pre></div>
+                        class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>wsl <span class="op">--</span>install <span class="op">-</span>d <span class="op">&lt;</span>distribution-name-from-above<span class="op">&gt;</span></span></code></pre></div>
                         <p>Restart your machine</p>
                         <div class="sourceCode" id="cb6"><pre
                         class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Restart-Computer</span></span></code></pre></div>
@@ -286,11 +287,11 @@ docker cp A B                    # copy host&lt;-&gt;container; A B can be `NN:/
                         <h4>Everyone else (most people)</h4>
                         <p>Enable WSL:</p>
                         <div class="sourceCode" id="cb7"><pre
-                        class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>dism<span class="op">.</span><span class="fu">exe</span> <span class="op">/</span>online <span class="op">/</span>enable<span class="op">-</span>feature <span class="op">/</span>featurename<span class="op">:</span>Microsoft<span class="op">-</span>Windows<span class="op">-</span>Subsystem<span class="op">-</span>Linux <span class="op">/</span>all <span class="op">/</span>norestart</span></code></pre></div>
+                        class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>dism<span class="op">.</span><span class="fu">exe</span> <span class="op">/</span>online <span class="op">/</span>enable-feature <span class="op">/</span>featurename<span class="op">:</span>Microsoft-Windows-Subsystem-Linux <span class="op">/</span>all <span class="op">/</span>norestart</span></code></pre></div>
                         <p>Enable Virtual Machine Platform (required for
                         Hyper-V and WSL2):</p>
                         <div class="sourceCode" id="cb8"><pre
-                        class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>dism<span class="op">.</span><span class="fu">exe</span> <span class="op">/</span>online <span class="op">/</span>enable<span class="op">-</span>feature <span class="op">/</span>featurename<span class="op">:</span>VirtualMachinePlatform <span class="op">/</span>all <span class="op">/</span>norestart</span></code></pre></div>
+                        class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>dism<span class="op">.</span><span class="fu">exe</span> <span class="op">/</span>online <span class="op">/</span>enable-feature <span class="op">/</span>featurename<span class="op">:</span>VirtualMachinePlatform <span class="op">/</span>all <span class="op">/</span>norestart</span></code></pre></div>
                         <p>Restart your machine:</p>
                         <div class="sourceCode" id="cb9"><pre
                         class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Restart-Computer</span></span></code></pre></div>
@@ -302,7 +303,7 @@ docker cp A B                    # copy host&lt;-&gt;container; A B can be `NN:/
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">Remove-Item</span> <span class="st">&quot;C:/Windows/Temp/wsl2.msi&quot;</span></span></code></pre></div>
                         <p>Set WSL2 as default WSL version</p>
                         <div class="sourceCode" id="cb11"><pre
-                        class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>wsl <span class="op">--</span>set<span class="op">-</span>default<span class="op">-</span>version 2</span></code></pre></div>
+                        class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>wsl <span class="op">--</span>set-default-version <span class="dv">2</span></span></code></pre></div>
                         <p>Install one of the Linux distributions on
                         which PaSh has been tested from the Microsoft
                         Store:</p>
@@ -392,14 +393,14 @@ docker cp A B                    # copy host&lt;-&gt;container; A B can be `NN:/
                         this, from the main/master branch on your local
                         machine:</p>
                         <div class="sourceCode" id="cb13"><pre
-                        class="sourceCode sh"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> checkout <span class="at">-b</span> <span class="op">&lt;</span>NAME<span class="op">&gt;</span>    # create a new branch and switch to it</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push <span class="at">-u</span> origin <span class="op">&lt;</span>NAME<span class="op">&gt;</span> # push the new branch as a new branch on github</span></code></pre></div>
+                        class="sourceCode sh"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> checkout <span class="at">-b</span> <span class="op">&lt;</span>NAME<span class="op">&gt;</span>    <span class="co"># create a new branch and switch to it</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push <span class="at">-u</span> origin <span class="op">&lt;</span>NAME<span class="op">&gt;</span> <span class="co"># push the new branch as a new branch on github</span></span></code></pre></div>
                         <p>You can always fetch changes into the
                         main/master:</p>
                         <div class="sourceCode" id="cb14"><pre
                         class="sourceCode sh"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> checkout master        <span class="co"># switch to main/master</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> pull                   <span class="co"># fetch remote changes</span></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> checkout <span class="op">&lt;</span>NAME<span class="op">&gt;</span>        # switch back to your branch</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> checkout <span class="op">&lt;</span>NAME<span class="op">&gt;</span>        <span class="co"># switch back to your branch</span></span>
 <span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> merge master           <span class="co"># fetch changes from main/master</span></span></code></pre></div>
                         <p>(You can use <code>rebase</code> instead of
                         <code>merge</code> if your branch is local and
@@ -433,8 +434,8 @@ docker cp A B                    # copy host&lt;-&gt;container; A B can be `NN:/
             <table border="0" class="foot">
                 <tr class="foot">
                     <td align="left" class="foot">
-                        version <a href="https://github.com/binpash/pash/releases/tag/v0.16"></a> | revision <a href="http://github.com/binpash/pash"> bf30e0c </a> | Minor plotting | Updated: 04:29
-11/15/2026
+                        version <a href="https://github.com/binpash/pash/releases/tag/v0.16"></a> | revision <a href="http://github.com/binpash/pash"> bf30e0c </a> | Minor plotting | Updated: 04:25
+11/16/2026
                     </td>
                     <td align="right" class="foot">
                         <a href="http://status.binpa.sh"><img src="https://img.shields.io/badge/status-OK-red.svg?style=flat" alt="Status OK"></a>
